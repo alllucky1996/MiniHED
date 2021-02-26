@@ -1,0 +1,376 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.layers.nt</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.layers.nt.LayerFactory">
+            <summary>
+            The LayerFactor is responsible for creating all layers implemented in the MyCaffe.layers.ssd namespace.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.nt.LayerFactory.CreateDouble(MyCaffe.common.CudaDnn{System.Double},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.CancelEvent,MyCaffe.basecode.IXImageDatabaseBase)">
+            <summary>
+            Create the layers when using the <i>double</i> base type.
+            </summary>
+            <param name="cuda">Specifies the connection to the low-level CUDA interfaces.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="p">Specifies the layer parameter.</param>
+            <param name="evtCancel">Specifies the cancellation event.</param>
+            <param name="imgDb">Specifies an interface to the image database, who's use is optional.</param>
+            <returns>If supported, the layer is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.layers.nt.LayerFactory.CreateSingle(MyCaffe.common.CudaDnn{System.Single},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.CancelEvent,MyCaffe.basecode.IXImageDatabaseBase)">
+            <summary>
+            Create the layers when using the <i>float</i> base type.
+            </summary>
+            <param name="cuda">Specifies the connection to the low-level CUDA interfaces.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="p">Specifies the layer parameter.</param>
+            <param name="evtCancel">Specifies the cancellation event.</param>
+            <param name="imgDb">Specifies an interface to the image database, who's use is optional.</param>
+            <returns>If supported, the layer is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.layers.nt.EventLayer`1">
+            <summary>
+            The EventLayer provides an event that fires on the forward pass and another that fires on the backward pass.
+            </summary>
+            <remarks>
+            This layer allows for creating a custom layer.  When either the forward or backward pass event is not implemented,
+            the layer merely acts as a pass-through.
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="E:MyCaffe.layers.nt.EventLayer`1.OnLayerSetup">
+            <summary>
+            Defines the event that fires from within the LayerSetup function.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.layers.nt.EventLayer`1.OnReshape">
+            <summary>
+            Defines the event that fires from within the Reshape function.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.layers.nt.EventLayer`1.OnForward">
+            <summary>
+            Defines the event that fires from within the forward pass.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.layers.nt.EventLayer`1.OnBackward">
+            <summary>
+            Defines the event that fires from within the backward pass.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.nt.EventLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The EventLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.EventLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.EventLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.EventLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Either fires the OnForward event, or acts as a pass-through.
+            </summary>
+            <param name="colBottom">bottom input blob vector (length 1)
+             -# @f$ (N \times C \times H \times W) @f$
+                the inputs x</param>
+            <param name="colTop">top output blob vector (length 1)
+             -# @f$ (N \times C \times H \times W) @f$
+                the outputs y</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.EventLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t. the absolute value inputs.
+            </summary>
+            <param name="colTop">top output blob vector (length 1), providing the error gradient
+            with respect to outputs
+             -# @f$ (N \times C \times H \times W) @f$
+                containing error gradients @f$ \frac{\partial E}{\partial y} @f$ with
+                respect to computed outputs.</param>
+            <param name="rgbPropagateDown">propagate_down see Layer::Backward.</param>
+            <param name="colBottom">bottom input blob vector (length 2)
+             -# @f$ (N \times C \times H \times W) @f$
+                the inputs @f$ x @f$; Backward fills their diff with gradients,
+                if propagate_down[0] == true.</param>
+        </member>
+        <member name="T:MyCaffe.layers.nt.GramLayer`1">
+            <summary>
+            The GramLayer computes the Gram matrix used in Neural Style.
+            </summary>
+            <remarks>
+            @see [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576) by Leon A. Gatys, Alexander S. Ecker, and Matthias Bethge, 2015 
+            @see [ftokarev/caffe-neural-style Github](https://github.com/ftokarev/caffe-neural-style) by ftokarev, 2017. 
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.nt.GramLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The GramLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter.</param>
+        </member>
+        <member name="P:MyCaffe.layers.nt.GramLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of bottom blobs (e.g. 1)
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.nt.GramLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of bottom blobs (e.g. 1)
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.nt.GramLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.GramLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.GramLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the Gram matrix values.
+            </summary>
+            <param name="colBottom">bottom input blob vector (length 1)
+             -# @f$ (N \times C \times H \times W) @f$
+                the inputs x</param>
+            <param name="colTop">top output blob vector (length 1)
+             -# @f$ (N \times C \times H \times W) @f$
+                the computed outputs for the Gram matrix.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.GramLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t. the absolute value inputs.
+            </summary>
+            <param name="colTop">top output blob vector (length 1), providing the error gradient
+            with respect to outputs
+             -# @f$ (N \times C \times H \times W) @f$</param>
+            <param name="rgbPropagateDown">propagate_down see Layer::Backward.</param>
+            <param name="colBottom">bottom input blob vector (length 1)</param>
+        </member>
+        <member name="T:MyCaffe.layers.nt.OneHotLayer`1">
+            <summary>
+            The OneHotLayer is a layer for converting real values into a one-hot vector where a 1 is placed
+            within the bucketized range for which the input value falls.
+            </summary>
+            <remarks>
+            The min/max define the range spanning the num_outputs which defines the number of buckets.
+            
+            For example, when using a min/max range of -1,1 spread across 8 vector items (num_output), inputs
+            less than or equal to -1 go in the first bucket, inputs greater than or equal to 1 go in the last
+            bucket and values in between -1 and 1 go into their repsective buckets (e.g input -0.12 goes into bucket
+            index 3 and input 0.12 goes into bucket 4)
+            
+            8 inputs span across -1 to 1 range creates the following buckets:
+            
+            index:        0            1            2            3           4           5           6           7 
+            bucket: [-1.00,-0.75][-0.75,-0.50][-0.50,-0.25][-0.25, 0.00][0.00, 0.25][0.25, 0.50][0.50, 0.75][0.75, 1.00]
+            
+            input: -0.75 or less set bucket #0 = 1
+            input:  0.75 or greater set bucket #7 = 1
+            
+            Except for end buckets, inputs are placed in bucket where:  bucket min &lt;= input &lt; bucket max.
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.nt.OneHotLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The OneHotLayer constructor
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">provides OneHotLayer embed_param,
+            with OneHotLayer options:
+            - num_output (/bdefault = 16). The number of outputs for the Layer (which defines the number of buckets in the one-hot vector output).
+            
+            - axis (/bdefault = 2). The axis who's input is to be bucketized.  The count at this axis (and below) should equal 1.  
+            
+            - min (/bdefault = -1.0). The minimum of the input data range to bucketize.
+            
+            - max (/bdefault = 1.0). The maximum of the input data range to bucketize.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.OneHotLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.nt.OneHotLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (intput) Blobs: input.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.nt.OneHotLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: onehot
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.nt.OneHotLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.OneHotLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.OneHotLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            The Forward computation.
+            </summary>
+            <param name="colBottom">input blob vector (length 1)</param>
+            <param name="colTop">output blob vector (length 1)</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.OneHotLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t. the input.
+            </summary>
+            <param name="colTop">top output Blob vector (length 1).</param>
+            <param name="rgbPropagateDown">see Layer::Backward</param>
+            <param name="colBottom">bottom input Blob vector (length 1).</param>
+        </member>
+        <member name="T:MyCaffe.layers.nt.ScalarLayer`1">
+            <summary>
+            The ScalarLayer computes the operation with the value on the input.
+            </summary>
+            <remarks>
+            Computes @f$ y = val operation x @f$
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.nt.ScalarLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The ScalarLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.ScalarLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.ScalarLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes @f$ y = val operation x @f$
+            </summary>
+            <param name="colBottom">bottom input blob vector (length 1)
+             -# @f$ (N \times C \times H \times W) @f$
+                the inputs x</param>
+            <param name="colTop">top output blob vector (length 1)
+             -# @f$ (N \times C \times H \times W) @f$
+                the computed outputs @f$ y = val operation x @f$</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.ScalarLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reverses the previous scalar operation.
+            </summary>
+            <param name="colTop">top output blob vector (length 1), providing the error gradient
+            with respect to outputs
+             -# @f$ (N \times C \times H \times W) @f$
+                containing error gradients @f$ \frac{\partial E}{\partial y} @f$ with
+                respect to computed outputs.</param>
+            <param name="rgbPropagateDown">propagate_down see Layer::Backward.</param>
+            <param name="colBottom">bottom input blob vector (length 2)
+             -# @f$ (N \times C \times H \times W) @f$
+                the inputs @f$ x @f$; Backward fills their diff with gradients @f$
+                    \frac{\partial E}{\partial x} = \mathrm{sign}{x} \frac{\partial E}{\partial y}
+                @f$
+                if propagate_down[0] == true.</param>
+        </member>
+        <member name="T:MyCaffe.layers.nt.TVLossLayer`1">
+            <summary>
+            The TVLossLayer computes total variation loss as described by 'Mahendran' et al., and used in Neural Style.
+            </summary>
+            <remarks>
+            @see [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576) by Leon A. Gatys, Alexander S. Ecker, and Matthias Bethge, 2015 
+            @see [ftokarev/caffe-neural-style Github](https://github.com/ftokarev/caffe-neural-style) by ftokarev, 2017. 
+            @see [Understanding Deep Image Representations by Inverting Them](https://arxiv.org/abs/1412.0035) by A. Mahendran and A. Vedaldi, CVPR, 2015.
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.nt.TVLossLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The TVLossLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter.</param>
+        </member>
+        <member name="P:MyCaffe.layers.nt.TVLossLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of bottom blobs (e.g. 1)
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.nt.TVLossLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of bottom blobs (e.g. 1)
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.nt.TVLossLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.TVLossLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.TVLossLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the Gram matrix values.
+            </summary>
+            <param name="colBottom">bottom input blob vector (length 1)
+             -# @f$ (N \times C \times H \times W) @f$
+                the inputs x</param>
+            <param name="colTop">top output blob vector (length 1)
+             -# @f$ (N \times C \times H \times W) @f$
+                the computed outputs for the Gram matrix.</param>
+        </member>
+        <member name="M:MyCaffe.layers.nt.TVLossLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t. the absolute value inputs.
+            </summary>
+            <param name="colTop">top output blob vector (length 1), providing the error gradient
+            with respect to outputs
+             -# @f$ (N \times C \times H \times W) @f$</param>
+            <param name="rgbPropagateDown">propagate_down see Layer::Backward.</param>
+            <param name="colBottom">bottom input blob vector (length 1)</param>
+        </member>
+    </members>
+</doc>

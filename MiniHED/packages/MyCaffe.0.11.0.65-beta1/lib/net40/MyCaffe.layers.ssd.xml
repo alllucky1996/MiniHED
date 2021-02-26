@@ -1,0 +1,806 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.layers.ssd</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.layers.ssd.LayerFactory">
+            <summary>
+            The LayerFactor is responsible for creating all layers implemented in the MyCaffe.layers.ssd namespace.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.LayerFactory.CreateDouble(MyCaffe.common.CudaDnn{System.Double},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.CancelEvent,MyCaffe.basecode.IXImageDatabaseBase)">
+            <summary>
+            Create the layers when using the <i>double</i> base type.
+            </summary>
+            <param name="cuda">Specifies the connection to the low-level CUDA interfaces.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="p">Specifies the layer parameter.</param>
+            <param name="evtCancel">Specifies the cancellation event.</param>
+            <param name="imgDb">Specifies an interface to the image database, who's use is optional.</param>
+            <returns>If supported, the layer is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.LayerFactory.CreateSingle(MyCaffe.common.CudaDnn{System.Single},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.CancelEvent,MyCaffe.basecode.IXImageDatabaseBase)">
+            <summary>
+            Create the layers when using the <i>float</i> base type.
+            </summary>
+            <param name="cuda">Specifies the connection to the low-level CUDA interfaces.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="p">Specifies the layer parameter.</param>
+            <param name="evtCancel">Specifies the cancellation event.</param>
+            <param name="imgDb">Specifies an interface to the image database, who's use is optional.</param>
+            <returns>If supported, the layer is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.layers.ssd.AnnotatedDataLayer`1">
+            <summary>
+            The AnnotatedDataLayer provides  annotated data to the Net by assigning top Blobs directly.
+            This layer is initialized with the MyCaffe.param.AnnotatedDataParameter.
+            </summary>
+            <remarks>
+            @see [SSD: Single Shot MultiBox Detector](https://arxiv.org/abs/1512.02325) by Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg, 2016.
+            @see [GitHub: SSD: Single Shot MultiBox Detector](https://github.com/weiliu89/caffe/tree/ssd), by weiliu89/caffe, 2016
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_db">
+            <summary>
+            Specifies the database.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_cursor">
+            <summary>
+            Specifies the database used to traverse through the database.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_AnnoType">
+            <summary>
+            Specifies the annotation type used if any.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_rgBatchSamplers">
+            <summary>
+            Specifies the list of batch samplers.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_strLabelMapFile">
+            <summary>
+            Specifies the label map file.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_swTimerBatch">
+            <summary>
+            Specifies a first timer used to calcualte the batch time.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_swTimerTransaction">
+            <summary>
+            Specfies a second timer used to calculate the transaction time.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_dfReadTime">
+            <summary>
+            Specifies the read time.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.AnnotatedDataLayer`1.m_dfTransTime">
+            <summary>
+            Specifies the transaction time.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.AnnotatedDataLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.IXImageDatabaseBase,MyCaffe.basecode.CancelEvent)">
+            <summary>
+            The AnnotatedDataLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">provides LayerParameter annotated_data_param.</param>
+            <param name="db">Specifies the external database to use.</param>
+            <param name="evtCancel">Specifies the CancelEvent used to cancel any pre-fetching operations.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.AnnotatedDataLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.AnnotatedDataLayer`1.ExactNumBottomBlobs">
+            <summary>
+            No bottom blobs are used by this layer.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.AnnotatedDataLayer`1.MinTopBlobs">
+            <summary>
+            Specifies the minimum number of required top (output) Blobs: data
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.AnnotatedDataLayer`1.DataLayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the DataLayer by starting up the pre-fetching.
+            </summary>
+            <param name="colBottom">Not used.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.AnnotatedDataLayer`1.Next">
+            <summary>
+            Retrieves the next item from the database and rolls the cursor over once the end 
+            of the dataset is reached.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.AnnotatedDataLayer`1.Skip">
+            <summary>
+            Skip to the next value - used when training in a multi-GPU scenario.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.AnnotatedDataLayer`1.load_batch(MyCaffe.layers.Batch{`0})">
+            <summary>
+            Load a batch of data in the background (this is run on an internal thread within the BasePrefetchingDataLayer class).
+            </summary>
+            <param name="batch">Specifies the Batch of data to load.</param>
+        </member>
+        <member name="T:MyCaffe.layers.ssd.DetectionEvaluateLayer`1">
+            <summary>
+            The DetectionEvaluateLayer generates the detection evaluation based on the DetectionOutputLayer and 
+            ground truth bounding box labels.
+            </summary>
+            <remarks>
+            @see [SSD: Single Shot MultiBox Detector](https://arxiv.org/abs/1512.02325) by Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg, 2016.
+            @see [GitHub: SSD: Single Shot MultiBox Detector](https://github.com/weiliu89/caffe/tree/ssd), by weiliu89/caffe, 2016
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The DetectionEvaluateLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type DETECTION_EVALUATE with parameter detection_evaluate_param.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (input) Blobs: det res, gt
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: det
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Evaluate the detection output.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 2)
+             -# @f$ (1 \times 1 \times N \times 7) @f$ N detection results.
+             -# @f$ (1 \times 1 \times M \times 7) @f$ M ground truth.
+            </param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (1 \times 1 \times N \times 4) @f$ N is the number of detections, and each row is: [image_id, label, confidence, true_pos, false_pos].
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionEvaluateLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Does not implement.
+            </summary>
+            <param name="colTop">Not used.</param>
+            <param name="rgbPropagateDown">Not used.</param>
+            <param name="colBottom">Not Used.</param>
+        </member>
+        <member name="T:MyCaffe.layers.ssd.DetectionOutputLayer`1">
+            <summary>
+            The DetectionOutputLayer generates the detection output based on location and confidence predictions by doing non maximum supression.  Intended for use with MultiBox detection method used in SSD.
+            </summary>
+            <remarks>
+            @see [SSD: Single Shot MultiBox Detector](https://arxiv.org/abs/1512.02325) by Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg, 2016.
+            @see [GitHub: SSD: Single Shot MultiBox Detector](https://github.com/weiliu89/caffe/tree/ssd), by weiliu89/caffe, 2016
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionOutputLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The DetectionOutputLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type DETECTION_OUTPUT with parameter detection_output_param.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionOutputLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.DetectionOutputLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.DetectionOutputLayer`1.MinBottomBlobs">
+            <summary>
+            Returns the minimum number of bottom (input) Blobs: loc pred, conf pred, prior bbox
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.DetectionOutputLayer`1.MaxBottomBlobs">
+            <summary>
+            Returns the maximum number of bottom (input) Blobs: loc pred, conf pred, prior bbox
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.DetectionOutputLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: det
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionOutputLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionOutputLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionOutputLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Do non-maximum suppression (nms) on prediction results.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (at least 2)
+             -# @f$ (N \times C1 \times 1 \times 1) @f$ the location predictions with C1 predictions.
+             -# @f$ (N \times C2 \times 1 \times 1) @f$ the confidence predictions with C2 predictions.
+             -# @f$ (N \times 2 \times C3 \times 1) @f$ the prior bounding boxes with C3 values.
+            </param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (1 \times 1 \times N \times 7) @f$ N is the number of detections after, and each row is: [image_id, label, confidence, xmin, ymin, xmax, ymax].
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.DetectionOutputLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Does not implement.
+            </summary>
+            <param name="colTop">Not used.</param>
+            <param name="rgbPropagateDown">Not used.</param>
+            <param name="colBottom">Not Used.</param>
+        </member>
+        <member name="T:MyCaffe.layers.ssd.MultiBoxLossLayer`1">
+            <summary>
+            The MultiBoxLossLayer performs multibox operations including the following:
+            
+            - decode the predictions.
+            - perform matching between priors/predictions and ground truth.
+            - use matched boxes and confidences to compute loss.
+            </summary>
+            <remarks>
+            @see [SSD: Single Shot MultiBox Detector](https://arxiv.org/abs/1512.02325) by Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg, 2016.
+            @see [GitHub: SSD: Single Shot MultiBox Detector](https://github.com/weiliu89/caffe/tree/ssd), by weiliu89/caffe, 2016
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.MultiBoxLossLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="cuda">Cuda engine.</param>
+            <param name="log">General log.</param>
+            <param name="p">provides MultiBoxLossParameter multiboxloss_param
+            with MultiBoxLossLayer.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.MultiBoxLossLayer`1.dispose">
+            <summary>
+            Release any resources used.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.MultiBoxLossLayer`1.internal_blobs">
+            <summary>
+            Returns the internal blobs of this layer.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.MultiBoxLossLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of bottom blobs required: input
+            </summary>
+            <remarks>
+            bottom[0] stores the location predictions.
+            bottom[1] stores the confidence predictions
+            bottom[2] stores the prior bounding boxes.
+            bottom[3] stores the ground truth bounding boxes.
+            </remarks>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.MultiBoxLossLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of top blobs required: argmax
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.MultiBoxLossLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.MultiBoxLossLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.MultiBoxLossLayer`1.forwardGpu(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Forward GPU computation.
+            </summary>
+            <param name="colBottom">input blob vector.</param>
+            <param name="colTop">output blob vector.</param>
+            <remarks>
+            Work in progress - NOT COMPLETE YET.
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.MultiBoxLossLayer`1.forwardCpu(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Forward computation.
+            </summary>
+            <param name="colBottom">input blob vector.
+            </param>
+            <param name="colTop">output blob vector.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.MultiBoxLossLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Forward computation.
+            </summary>
+            <param name="colBottom">input blob vector.
+            </param>
+            <param name="colTop">output blob vector.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.MultiBoxLossLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the multibox loss error gradient w.r.t the predictions.
+            </summary>
+            <remarks>
+            Gradients cannot be computed with respect to the label inputs (bottom[1]),
+            so this method ignores bottom[1] and requires !propagate_down[1], crashing
+            if propagate_down[1] == true.
+            </remarks>
+            <param name="colTop">top output blob vector, providing the error gradient with
+            respect to the outputs.
+            </param>
+            <param name="rgbPropagateDown">see Layer::Backward.  propagate_down[1] must be false as
+            we can't compute gradients with respect to the labels.</param>
+            <param name="colBottom">bottom input blob vector
+            </param>
+        </member>
+        <member name="T:MyCaffe.layers.ssd.Normalization2Layer`1">
+            <summary>
+            The Normalization2Layer performs normalization used by the SSD algorithm.
+            This layer is initialized with the MyCaffe.param.Normalization2Parameter.
+            </summary>
+            <remarks>
+            @see [SSD: Single Shot MultiBox Detector](https://arxiv.org/abs/1512.02325) by Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg, 2016.
+            @see [GitHub: SSD: Single Shot MultiBox Detector](https://github.com/weiliu89/caffe/tree/ssd), by weiliu89/caffe, 2016
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.Normalization2Layer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The Normalization2Layer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type NORMALIZATION2 with parameter normalization1_param,
+            with options:
+              - across_spatial (\b optional, default true). Normalize across spatial dimensions.
+              - channel_shared (\b optional, default true). Whether or not to scale parameters are shared across channels.
+              - eps (\b optional, default = 1e-10f). The epsilon to avoid dividing by zero while normalizing variance.
+              - scale_filler (\b optional, default = 'constant',1.0). The filler for the initial value of scale.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.Normalization2Layer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.Normalization2Layer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.Normalization2Layer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (input) Blobs: data
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.Normalization2Layer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: norm
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.Normalization2Layer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.Normalization2Layer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.Normalization2Layer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the forward calculation.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the inputs.</param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the outputs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.Normalization2Layer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t the inputs.
+            </summary>
+            <param name="colTop">top output Blob vector (Length 1), providing the error gradient
+            with respect to computed outputs.</param>
+            <param name="rgbPropagateDown">propagate down see Layer::Backward</param>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+            </param>
+        </member>
+        <member name="T:MyCaffe.layers.ssd.PermuteLayer`1">
+            <summary>
+            The PermuteLayer performs permutation on the input blob by changing the memory order of the data which is used by the SSD algorithm.
+            This layer is initialized with the MyCaffe.param.PermuteParameter.
+            </summary>
+            <remarks>
+            @see [SSD: Single Shot MultiBox Detector](https://arxiv.org/abs/1512.02325) by Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg, 2016.
+            @see [GitHub: SSD: Single Shot MultiBox Detector](https://github.com/weiliu89/caffe/tree/ssd), by weiliu89/caffe, 2016
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PermuteLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The PermuteLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type PERMUTE with parameter permute_param,
+            with options:
+              - order Specifies the order of the permuations.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PermuteLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.PermuteLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.PermuteLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (input) Blobs: data
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.PermuteLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: permute
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PermuteLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PermuteLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PermuteLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the forward calculation.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the inputs.</param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the outputs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PermuteLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t the inputs.
+            </summary>
+            <param name="colTop">top output Blob vector (Length 1), providing the error gradient
+            with respect to computed outputs.</param>
+            <param name="rgbPropagateDown">propagate down see Layer::Backward</param>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+            </param>
+        </member>
+        <member name="T:MyCaffe.layers.ssd.PriorBoxLayer`1">
+            <summary>
+            The PriorBoxLayer generates prior boxes of designated sizes and aspect ratios across all dimensions of @f$ (H \times W) @f$ which is used by the SSD algorithm.
+            This layer is initialized with the MyCaffe.param.ssd.PriorBoxParameter.
+            </summary>
+            <remarks>
+            @see [SSD: Single Shot MultiBox Detector](https://arxiv.org/abs/1512.02325) by Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg, 2016.
+            @see [GitHub: SSD: Single Shot MultiBox Detector](https://github.com/weiliu89/caffe/tree/ssd), by weiliu89/caffe, 2016
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PriorBoxLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The PriorBoxLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type PRIORBOX with parameter prior_box_param,
+            with options:
+              - min_size (\b minimum box size in pixels, can be multiple items - required!).
+              - max_size (\b maximum box size in pixels, can be ignored or same as the # of min_size).
+              - aspect_ratio (\b optional aspect ratios of the boxes, can be multiple items).
+              - flip (\b optional bool, default true)  If set, flip the aspect ratio.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PriorBoxLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.PriorBoxLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.PriorBoxLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (input) Blobs: data
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.PriorBoxLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: permute
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PriorBoxLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PriorBoxLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PriorBoxLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Generates prior boxes for a layer with specified parameters.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length - at least 2)
+             -# @f$ (N \times C \times H_i \times W_i) @f$ the input layer @f$ x_i @f$.
+             -# @f$ (N \times C \times H_0 \times W_0) @f$ the data layer @f$ x_0 @f$.
+            </param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times 2 \times K*4) @f$ where @f$ K @f$ are the prior numbers.  
+             By default, a box of aspect ratio 1 and min_size and a box of aspect ratio 1
+             and sqrt(min_size * max_size) is created.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.PriorBoxLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            @brief Not implemented.
+        </member>
+        <member name="T:MyCaffe.layers.ssd.SmoothL1LossLayer`1">
+            <summary>
+            Fast R-CNN
+            Copyright (c) Microsoft
+            Licensed under The MIT License [see fast-rcnn/LICENSE for details]
+            Originally written in C by Ross Girshick
+            Modified by Wei Liu in C
+            Rewritten in C# by SignalPop LLC
+            
+            Computes the SmoothL1 loss as introduced in: 
+            Fast R-CNN, Ross Girschick, ICCV 2015
+            </summary>
+            <remarks>
+            @see [Fast R-CNN](https://arxiv.org/abs/1504.08083) by Ross Girshick, 2015
+            @see [GitHub: rbgirshick/fast-rcnn](https://github.com/rbgirshick/fast-rcnn), by Ross Girschick, 2015
+            @see [Large-Margin Softmax Loss for Convolutional Neural Networks](https://arxiv.org/abs/1612.02295) by Weiyang Liu, Yandong Wen, Zhiding Yu and Meng Yang, 2016. 
+            @see [Generalisation and Sharing in Triplet Convnets for Sketch based Visual Search](https://arxiv.org/abs/1611.05301v1) by Tu Bui, Leonardo Ribeiro, Moacir Ponti, and John Collomosse, 2016.
+            </remarks>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.SmoothL1LossLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="cuda">Cuda engine.</param>
+            <param name="log">General log.</param>
+            <param name="p">provides LossParameter loss_param, with options:
+             - ignore_label (optional)
+               Specify a label value that whould be ignored when computing the loss.
+             - normalize (optional, default true)
+               If true, the loss is normalized by the number of (nonignored) labels
+               present; otherwise the loss is imply summed over spatial locations.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.SmoothL1LossLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.SmoothL1LossLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.SmoothL1LossLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (output) Blobs as variable.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.SmoothL1LossLayer`1.MinBottomBlobs">
+            <summary>
+            Returns the minimum number of required top (output) Blobs: loss, labels
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.SmoothL1LossLayer`1.MaxBottomBlobs">
+            <summary>
+            Returns the maximum number of required top (output) Blobs: loss, labels, weights
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.SmoothL1LossLayer`1.AllowForceBackward(System.Int32)">
+            <summary>
+            Unlike most loss layers, in the SmoothL1LossLayer we can backpropagate
+            to both inputs -- override to return true and always allow force_backward.
+            </summary>
+            <param name="nBottomIdx"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.SmoothL1LossLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.SmoothL1LossLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.SmoothL1LossLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            The forward computation.
+            </summary>
+            <param name="colBottom">bottom input blob vector (length 2)
+             -# @f$ (N \times C \times H \times W) @f$
+                the predictions @f$ x @f$, a blob with values in
+                @f$ [-\infty, +\infty] @f$ indicating the predicted score for eachy of
+                the K = CHW classes.  This layer maps these scores to a
+                probability distribution over classes using the softmax function @f$
+                \hat{p}_{nk} = \exp(x_{nk}) /
+                \left[\sum_{k'} \exp(x_{nk'})\right] @f$ (see SoftmaxLayer).
+             -# @f$ (N \times 1 \times 1 \times 1) @f$
+                the labels l, an integer valued blob with values @f$ l_n \in [0, 1, 2, ..., K-1] @f$
+                indicating the correct class label among the K classes.</param>
+            <param name="colTop">top output blob vector (length 1)
+                the computed cross_entropy classification loss: @f$ E = 
+                \frac{-1}{N} \sum\limits_{n=1}^N \log(\hat{p}_{n,l_n})
+                @f$ for softmax output class probabilities @f$ \hat{p} @f$.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.SmoothL1LossLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the smooth L1 loss error gradient w.r.t the predictions.
+            </summary>
+            <remarks>
+            Gradients cannot be computed with respect to the label inputs (bottom[1]),
+            so this method ignores bottom[1] and requires !propagate_down[1], crashing
+            if propagate_down[1] == true.
+            </remarks>
+            <param name="colTop">top output blob vector (length 1), providing the error gradient with
+            respect to the outputs.
+              -# @f$ (1 \times 1 \times 1 \times 1) @f$
+                 This blob's diff will simply contain the loss_weight * @f$ \lambda @f$ as
+                 @f$ \lambda @f$ is the coefficient of this layer's output
+                 @f$ \ell_i @f$ in the overall Net loss.
+                 @f$ E = \lambda_i \ell_i + \mbox{other loss terms}; hence
+                   \frac{partial E}{\partial \ell_i} = \lambda_i
+                 @f$
+                   (*Assuming that this top blob is not used as a bottom (input) by any
+                   other layer of the Net.)
+            </param>
+            <param name="rgbPropagateDown">see Layer::Backward.  propagate_down[1] must be false as
+            we can't compute gradients with respect to the labels.</param>
+            <param name="colBottom">bottom input blob vector (length 2)
+             -# @f$ (N \times C \times H \times W) @f$
+                the predictions @f$ x @f$; backward computes diff @f$
+                  \frac{\partial E}{\partial x}
+                @f$
+             -# @f$ (N \times 1 \times 1 \times 1) @f$
+                the labels -- ignored as we can't compute their error gradients.
+            </param>
+        </member>
+        <member name="T:MyCaffe.layers.ssd.VideoDataLayer`1">
+            <summary>
+            The VideoDataLayer provides data to the Net from a WebCam or Video file.
+            This layer is initialized with the MyCaffe.param.VideoDataParameter.
+            </summary>
+            <remarks>
+            @see [SSD: Single Shot MultiBox Detector](https://arxiv.org/abs/1512.02325) by Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg, 2016.
+            @see [GitHub: SSD: Single Shot MultiBox Detector](https://github.com/weiliu89/caffe/tree/ssd), by weiliu89/caffe, 2016
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.VideoDataLayer`1.m_swTimerBatch">
+            <summary>
+            Specifies a first timer used to calcualte the batch time.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.VideoDataLayer`1.m_swTimerTransaction">
+            <summary>
+            Specfies a second timer used to calculate the transaction time.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.VideoDataLayer`1.m_dfReadTime">
+            <summary>
+            Specifies the read time.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.layers.ssd.VideoDataLayer`1.m_dfTransTime">
+            <summary>
+            Specifies the transaction time.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.VideoDataLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.IXImageDatabaseBase,MyCaffe.basecode.CancelEvent)">
+            <summary>
+            The VideoDataLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">provides LayerParameter annotated_data_param.</param>
+            <param name="db">Specifies the external database to use.</param>
+            <param name="evtCancel">Specifies the CancelEvent used to cancel any pre-fetching operations.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.VideoDataLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.ssd.VideoDataLayer`1.ExactNumBottomBlobs">
+            <summary>
+            No bottom blobs are used by this layer.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.ssd.VideoDataLayer`1.MinTopBlobs">
+            <summary>
+            Specifies the minimum number of required top (output) Blobs: data
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.VideoDataLayer`1.DataLayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the DataLayer by starting up the pre-fetching.
+            </summary>
+            <param name="colBottom">Not used.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.ssd.VideoDataLayer`1.load_batch(MyCaffe.layers.Batch{`0})">
+            <summary>
+            Load a batch of data in the background (this is run on an internal thread within the BasePrefetchingDataLayer class).
+            </summary>
+            <param name="batch">Specifies the Batch of data to load.</param>
+        </member>
+    </members>
+</doc>

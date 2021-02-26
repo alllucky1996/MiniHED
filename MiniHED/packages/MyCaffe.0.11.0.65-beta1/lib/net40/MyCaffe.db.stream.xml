@@ -1,0 +1,1186 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.db.stream</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.db.stream.CustomQueryCollection">
+            <summary>
+            The CustomQueryCollection manages the external Custom Queries placed in the \code{.cpp}'/CustomQuery'\endcode directory relative to the 
+            streaming database assembly.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.CustomQueryCollection.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.CustomQueryCollection.Load">
+            <summary>
+            Loads all custom query DLL's (if found).
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.CustomQueryCollection.Add(MyCaffe.db.stream.IXCustomQuery)">
+            <summary>
+            Directly adds a custom query to the list.
+            </summary>
+            <param name="iqry">Specifies the custom query interface.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.CustomQueryCollection.Find(System.String)">
+            <summary>
+            Locates a custom query by name and returns it.
+            </summary>
+            <param name="strName">Specifies the custom query name.</param>
+            <returns>When found the custom query interface is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.DataItem">
+            <summary>
+            The DataItem manages one synchronized data item where the first element is the sync field.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItem.#ctor(System.Int32)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="nFieldCount">Specifies the total number of fields to be collected.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItem.Add(System.Int32,System.Int32,System.Double[],System.Int32)">
+            <summary>
+            Adds a new set of raw data to the synchronized data.
+            </summary>
+            <param name="nFieldIdx">Specifies the field index where the data is to be added.</param>
+            <param name="nItemIdx">Specifies the item index of the data.</param>
+            <param name="rg">Specifies the raw data.</param>
+            <param name="nFieldCount">Specifies the local number of fields contained in the 'rg' parameter.</param>
+            <returns>The next field index is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItem.Add(System.Int32,System.Double)">
+            <summary>
+            Add a new data item at a specified field index.
+            </summary>
+            <param name="nFieldIdx">Specifies the field index.</param>
+            <param name="df">Specifies the raw data.</param>
+            <returns>When the data item fields are full, <i>true</i> is returned, otherwise <i>false</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItem.GetData">
+            <summary>
+            Returns the synchronized data fields.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItem.Reset">
+            <summary>
+            Clears the data fields and the filled status.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.DataItemCollection">
+            <summary>
+            The DataItemCollection contains the collection of synchronized data items collected from all custom queries.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItemCollection.#ctor(System.Int32)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="nAtCount">Specifies the number of items that trigger the 'AtCount' event.</param>
+        </member>
+        <member name="P:MyCaffe.db.stream.DataItemCollection.Count">
+            <summary>
+            Returns the number of items in the queue.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.DataItemCollection.Cancel">
+            <summary>
+            Cancels the internal WaitForCount.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.DataItemCollection.QueryEnd">
+            <summary>
+            The QueryEnd is set when the data reaches the data end.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItemCollection.WaitForCount(System.Int32)">
+            <summary>
+            The WaitForCount function waits for the data queue to either fill to a given number of items (e.g. the 'at count'), or 
+            if no items remain in the queue and the query end has been reached, or the cancel event has been set.
+            </summary>
+            <param name="nWait">Specifies the maximum amount of time to wait.</param>
+            <returns><i>true</i> is returned if there is an 'at count' amount of data in the queue, otherwise <i>false</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItemCollection.Add(MyCaffe.db.stream.DataItem)">
+            <summary>
+            Add a new data item to the queue.
+            </summary>
+            <param name="di">Specifies the synchronized data item.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItemCollection.GetData(System.Int32)">
+            <summary>
+            Returns the next data item from the back of the queue.
+            </summary>
+            <param name="nWait">Specifies the amount of time to wait for the data.</param>
+            <returns>The synchronized data item is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItemCollection.WaitData(System.Int32)">
+            <summary>
+            The WaitData function waits a given amount of time for data to be ready.
+            </summary>
+            <param name="nWait">Specifies the amount of time to wait.</param>
+            <returns>When data is ready, <i>true</i> is returned, otherwise <i>false</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataItemCollection.Clear">
+            <summary>
+            The Clear method removes all data from the data queue.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.DataQuery">
+            <summary>
+            The DataQuery manages a custom query interface and queues data from the custom query via an internal query thread.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.#ctor(MyCaffe.db.stream.IXCustomQuery,System.DateTime,System.TimeSpan,System.Int32,System.Int32)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="iquery">Specifies the custom query managed.</param>
+            <param name="dtStart">Specifies the start date for queries.</param>
+            <param name="tsInc">Specifies the time increment between data items within a query.</param>
+            <param name="nSegmentSize">Specifies the number of items to collect on each query.</param>
+            <param name="nMaxCount">Specifies the maximum number of items to store in memory.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.Dispose">
+            <summary>
+            Release all resources used and shutdown.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.Shutdown">
+            <summary>
+            Stop the internal query thread.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.DataQuery.FieldCount">
+            <summary>
+            Returns the number of fields (including the sync field) that this query manages.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.DataQuery.EnableQueueThread">
+            <summary>
+            Enable/disable the internal query thread.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.DataQuery.Count">
+            <summary>
+            Returns the number of items in the data queue.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.DataReady(System.Int32)">
+            <summary>
+            Returns <i>true</i> when data is ready, <i>false</i> otherwise.
+            </summary>
+            <param name="nCount">Specifies the number of items in the data queue required to consider the data 'ready'.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.DataDone">
+            <summary>
+            Returns <i>true</i> when there is no more data to query.
+            </summary>
+            <returns>Returns <i>true</i> when there is no more data to query.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.PeekDataAt(System.Int32)">
+            <summary>
+            Returns data at an index within the queue without removing it, or <i>null</i> if no data exists at the index.
+            </summary>
+            <param name="nIdx">Specifies the index to check.</param>
+            <returns>The data at the index is returned, or <i>null</i> if not data exists at that index.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.PeekDataAt(System.Int32,System.Int32)">
+            <summary>
+            Returns data at an index and field within the queue without removing it.
+            </summary>
+            <param name="nIdx">Specifies the index to check.</param>
+            <param name="nFieldIdx">Specifies the field to check.</param>
+            <returns>The data at the index and field is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.GetNextData">
+            <summary>
+            Returns the next data and removes it from the queue.
+            </summary>
+            <returns>The next data is returned.  When no data exists, <i>null</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.Reset(System.Int32)">
+            <summary>
+            Reset the data query to and offset from the start date.
+            </summary>
+            <param name="nStartOffset">Specifies the offset to use.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQuery.queryThread">
+            <summary>
+            The query thread is where all data is collected from the underlying custom query managed.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.DataQueryCollection">
+            <summary>
+            The DataQueryCollection manages all active data queries.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQueryCollection.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQueryCollection.Dispose">
+            <summary>
+            Release all data queries.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQueryCollection.Start">
+            <summary>
+            Enable all data queries allowing each to actively query data, filling their internal queues.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQueryCollection.Stop">
+            <summary>
+            Stop all data queries from actively querying data.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.DataQueryCollection.Shutdown">
+            <summary>
+            Shutdown all data queries, stopping their internal query threads.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.QUERY_TYPE">
+            <summary>
+            Defines the query type to use.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.QUERY_TYPE.GENERAL">
+            <summary>
+            Specifies to use a general query.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.QUERY_TYPE.SYNCHRONIZED">
+            <summary>
+            Specifies to use a synchronized query.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.IXStreamDatabase">
+            <summary>
+            The IXStreamDatabase interface is the main interface to the MyCaffe Streaing Database.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXStreamDatabase.Initialize(MyCaffe.db.stream.QUERY_TYPE,System.String)">
+            <summary>
+            Initialize the streaming database by loading the initial queues.
+            </summary>
+            <param name="qt">Specifies the query type to use (see remarks).</param>
+            <param name="strSchema">Specifies the query schema to use.</param>
+            <remarks>
+            Additional settings for each query type are specified in the 'strSchema' parameter as a set
+            of key=value pairs for each of the settings.  The following are the query specific settings
+            that are expected for each QUERY_TYPE.
+            
+            qt = TIME:
+               'QueryCount' - Specifies the number of items to include in each query.
+               'Start' - Specifies the start date of the stream.
+               'TimeSpanInMs' - Specifies the time increment between data items in the stream in milliseconds.
+               'SegmentSize' - Specifies the segment size of data queried from the database.
+               'MaxCount' - Specifies the maximum number of items to load into memory for each custom query.
+               
+            qt = GENERAL:
+               none at this time.
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXStreamDatabase.Shutdown">
+            <summary>
+            Shutdown the database.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXStreamDatabase.Reset(System.Int32)">
+            <summary>
+            Reset the query postion to the start established during Initialize.
+            </summary>
+            <param name="nStartOffset">Optionally, specifies an offset from the start to use (default = 0).</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXStreamDatabase.Query(System.Int32)">
+            <summary>
+            Query a setgment of data from the internal queueus.
+            </summary>
+            <param name="nWait">Optionally, specifies the amount of time to wait for data in ms. (default = 1000ms).</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXStreamDatabase.QuerySize">
+            <summary>
+            Returns the Query size using the Blob sizing methodology.
+            </summary>
+            <returns>The data size is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXStreamDatabase.QueryInfo">
+            <summary>
+            The Query information returns information about the data queried such as header information.
+            </summary>
+            <returns>The information about the data is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.IXQuery">
+            <summary>
+            The IXQuery interface is implemented by each MgrQuery within the MyCaffeStreamDatabase.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.CUSTOM_QUERY_TYPE">
+            <summary>
+            Defines the custom query type to use.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.CUSTOM_QUERY_TYPE.BYTE">
+            <summary>
+            Each custom query supporting the BYTE query, must implement the QueryByte function.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.CUSTOM_QUERY_TYPE.REAL_FLOAT">
+            <summary>
+            Each custom query supporting the REAL query, where the base type is <i>float</i>, must implement the QueryReal function.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.CUSTOM_QUERY_TYPE.REAL_DOUBLE">
+            <summary>
+            Each custom query supporting the REAL query, where the base type is <i>double</i>, must implement the QueryReal function.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.CUSTOM_QUERY_TYPE.TIME">
+            <summary>
+            Each custom query supporting the TIME query, must implement the QueryByTime funtion.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.IXCustomQuery">
+            <summary>
+            The custom query interface defines the functions implemented by each Custom Query object used
+            to specifically query the tables of the underlying database.
+            </summary>
+            <remarks>
+            Each Custom Query implementation DLL must be placed within the \code{.cpp}'./CustomQuery'\endcode directory that
+            is relative to the MyCaffe.db.stream.dll file location. For example, see the following directory
+            structure:
+            \code{.cpp}
+            c:/temp/MyCaffe.db.stream.dll
+            c:/temp/CustomQuery/mycustomquery.dll  - implements the IXCustomQuery interface.
+            \endcode
+            </remarks>
+        </member>
+        <member name="P:MyCaffe.db.stream.IXCustomQuery.QueryType">
+            <summary>
+            Returns the custom query type supported by the custom query.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.IXCustomQuery.Name">
+            <summary>
+            Returns the name of the Custom Query.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.IXCustomQuery.FieldCount">
+            <summary>
+            Returns the field count for this query.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.Open">
+            <summary>
+            Open a connection to the underlying database using the connection string specified.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.Close">
+            <summary>
+            Close a currently open connection.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.GetQuerySize">
+            <summary>
+            Returns the query count for the current query.
+            </summary>
+            <returns>The query size is returned..</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.QueryByTime(System.DateTime,System.TimeSpan,System.Int32)">
+            <summary>
+            Query the fields specified (in the Open function) starting from the date-time specified.
+            </summary>
+            <remarks>Items are returned in column-major format (e.g. datetime, val1, val2, datetime, val1, val2...)</remarks>
+            <param name="dt">Specifies the start date-time where the query should start.  Note, using ID based querying assumes that all other Custom Queries used have synchronized date-time fields.</param>
+            <param name="ts">Specifies the timespan between data items.</param>
+            <param name="nCount">Specifies the number of items to query.</param>
+            <returns>A two dimensional array is returned containing the items for each field queried.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.QueryBytes">
+            <summary>
+            Query the raw bytes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.QueryRealD">
+            <summary>
+            Query the data as a set one or more double arrays.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.QueryRealF">
+            <summary>
+            Query the data as a set one or more float arrays.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.QueryInfo">
+            <summary>
+            The Query information returns information about the data queried such as header information.
+            </summary>
+            <returns>The information about the data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.Clone(System.String)">
+            <summary>
+            Return a new instance of the custom query.
+            </summary>
+            <param name="strParam">Specifies the custom query parameters.</param>
+            <returns>A new instance of the custom query is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.Reset">
+            <summary>
+            Reset the custom query.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.IXCustomQuery.ConvertOutput(System.Single[],System.String@)">
+            <summary>
+            Converts the output values into the native type used by the CustomQuery.
+            </summary>
+            <param name="rg">Specifies the raw output data.</param>
+            <param name="strType">Returns the output type.</param>
+            <returns>The converted output data is returned as a byte stream.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.ParamPacker">
+            <summary>
+            The ParamPacker is use to pack and unpack parameters sent to each custom query.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.ParamPacker.Pack(System.String)">
+            <summary>
+            Pack the custom query parameters.
+            </summary>
+            <param name="str">Specifies the parameters.</param>
+            <returns>The packed parameters are returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.ParamPacker.UnPack(System.String)">
+            <summary>
+            Unpack the custom query parameters.
+            </summary>
+            <param name="str">Specifies the parameters.</param>
+            <returns>The unpacked parameters are returned.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.MgrQueryGeneral">
+            <summary>
+            The MgrQueryTime class manages the collection of data queries, and the internal data queue that contains all synchronized data items from
+            the data queries, all fused together.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryGeneral.#ctor(System.String,System.Collections.Generic.List{MyCaffe.db.stream.IXCustomQuery})">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strSchema">Specifies the database schema.</param>
+            <param name="rgCustomQueries">Optionally, specifies any custom queries to diretly add.</param>
+            <remarks>
+            The database schema defines the number of custom queries to use along with their names.  A simple key=value; list
+            defines the streaming database schema using the following format:
+            \code{.cpp}
+             "ConnectionCount=1;
+              Connection0_CustomQueryName=Test1;
+              Connection0_CustomQueryParam=param_string1
+            \endcode
+            Each param_string specifies the parameters of the custom query and may include the database connection string, database
+            table, and database fields to query.
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryGeneral.AddDirectQuery(MyCaffe.db.stream.IXCustomQuery)">
+            <summary>
+            Add a custom query directly to the streaming database.
+            </summary>
+            <remarks>
+            By default, the streaming database looks in the \code{.cpp}'./CustomQuery'\endcode folder relative
+            to the streaming database assembly to look for CustomQuery DLL's that implement
+            the IXCustomQuery interface.  When found, these assemblies are added to the list
+            accessible via the schema.  Alternatively, custom queries may be added directly
+            using this method.
+            </remarks>
+            <param name="iqry">Specifies the custom query to add.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryGeneral.Reset(System.Int32)">
+            <summary>
+            Reset the query to the start date used in Initialize, optionally with an offset from the start.
+            </summary>
+            <param name="nStartOffset">Optionally, specifies the offset from the start to use (default = 0).</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryGeneral.Shutdown">
+            <summary>
+            Shutdown the data queries and consolidation thread.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryGeneral.GetQuerySize">
+            <summary>
+            Returns the query size of the data in the form:
+            [0] = channels
+            [1] = height
+            [2] = width.
+            </summary>
+            <returns>The query size is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryGeneral.Query(System.Int32)">
+            <summary>
+            Query the next data in the streaming database.
+            </summary>
+            <param name="nWait">Specfies the maximum amount of time (in ms.) to wait for data.</param>
+            <returns>A simple datum containing the data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryGeneral.ConvertOutput(System.Single[],System.String@)">
+            <summary>
+            Converts the output values into the native type used by the CustomQuery.
+            </summary>
+            <param name="rg">Specifies the raw output data.</param>
+            <param name="type">Returns the output type.</param>
+            <returns>The converted output data is returned as a byte stream.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryGeneral.QueryInfo">
+            <summary>
+            The Query information returns information about the data queried such as header information.
+            </summary>
+            <returns>The information about the data is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.MgrQueryTime">
+            <summary>
+            The MgrQueryTime class manages the collection of data queries, and the internal data queue that contains all synchronized data items from
+            the data queries, all fused together.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.#ctor(System.Int32,System.DateTime,System.Int32,System.Int32,System.Int32,System.String,System.Collections.Generic.List{MyCaffe.db.stream.IXCustomQuery})">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="nQueryCount">Specifies the size of each query.</param>
+            <param name="dtStart">Specifies the state date used for data collection.</param>
+            <param name="nTimeSpanInMs">Specifies the time increment used between each data item.</param>
+            <param name="nSegmentSize">Specifies the amount of data to query on the back-end from each custom query.</param>
+            <param name="nMaxCount">Specifies the maximum number of items to allow in memory.</param>
+            <param name="strSchema">Specifies the database schema.</param>
+            <param name="rgCustomQueries">Optionally, specifies any custom queries to add directly.</param>
+            <remarks>
+            The database schema defines the number of custom queries to use along with their names.  A simple key=value; list
+            defines the streaming database schema using the following format:
+            \code{.cpp}
+             "ConnectionCount=2;
+              Connection0_CustomQueryName=Test1;
+              Connection0_CustomQueryParam=param_string1
+              Connection1_CustomQueryName=Test2;
+              Connection1_CustomQueryParam=param_string2"
+            \endcode
+            Each param_string specifies the parameters of the custom query and may include the database connection string, database
+            table, and database fields to query.
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.consolidateThread">
+            <summary>
+            The consoldiate thread synchronized all data queries using their synchronization field (field #0) to make sure 
+            that all data items line up.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.AddDirectQuery(MyCaffe.db.stream.IXCustomQuery)">
+            <summary>
+            Add a custom query directly to the streaming database.
+            </summary>
+            <remarks>
+            By default, the streaming database looks in the \code{.cpp}'./CustomQuery'\endcode folder relative
+            to the streaming database assembly to look for CustomQuery DLL's that implement
+            the IXCustomQuery interface.  When found, these assemblies are added to the list
+            accessible via the schema.  Alternatively, custom queries may be added directly
+            using this method.
+            </remarks>
+            <param name="iqry">Specifies the custom query to add.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.Reset(System.Int32)">
+            <summary>
+            Reset the query to the start date used in Initialize, optionally with an offset from the start.
+            </summary>
+            <param name="nStartOffset">Optionally, specifies the offset from the start to use (default = 0).</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.Shutdown">
+            <summary>
+            Shutdown the data queries and consolidation thread.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.GetQuerySize">
+            <summary>
+            Returns the query size of the data in the form:
+            [0] = channels
+            [1] = height
+            [2] = width.
+            </summary>
+            <returns>The query size is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.Query(System.Int32)">
+            <summary>
+            Query the next data in the streaming database.
+            </summary>
+            <param name="nWait">Specfies the maximum amount of time (in ms.) to wait for data.</param>
+            <returns>A simple datum containing the data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.ConvertOutput(System.Single[],System.String@)">
+            <summary>
+            Converts the output values into the native type used by the CustomQuery.
+            </summary>
+            <param name="rg">Specifies the raw output data.</param>
+            <param name="type">Returns the output type.</param>
+            <returns>The converted output data is returned as a byte stream.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MgrQueryTime.QueryInfo">
+            <summary>
+            The Query information returns information about the data queried such as header information.
+            </summary>
+            <returns>The information about the data is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.MyCaffeStreamDatabase">
+            <summary>
+            The MyCaffeStreamDatabase provides a streaming data input source to MyCaffe gyms used as input for dynamic, reinforcement learning.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.#ctor(MyCaffe.basecode.Log)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="log">Specifies the output log.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="container">Specifies the container.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.Initialize(MyCaffe.db.stream.QUERY_TYPE,System.String)">
+            <summary>
+            The Initialize method initializes the streaming database component, preparing it for data queries.
+            </summary>
+            <param name="qt">Specifies the query type to use (see remarks).</param>
+            <param name="strSchema">Specifies the query schema to use.</param>
+            <remarks>
+            Additional settings for each query type are specified in the 'strSettings' parameter as a set
+            of key=value pairs for each of the settings.  The following are the query specific settings
+            that are expected for each QUERY_TYPE.
+            
+            qt = TIME:
+               'QueryCount' - Specifies the number of items to include in each query.
+               'Start' - Specifies the start date of the stream.
+               'TimeSpanInMs' - Specifies the time increment between data items in the stream in milliseconds.
+               'SegmentSize' - Specifies the segment size of data queried from the database.
+               'MaxCount' - Specifies the maximum number of items to load into memory for each custom query.
+               
+            qt = GENERAL:
+               none at this time.
+               
+            The database schema defines the number of custom queries to use along with their names.  A simple key=value; list
+            defines the streaming database schema using the following format:
+            
+            "ConnectionCount=2;
+             Connection0_CustomQueryName=Test1;
+             Connection0_CustomQueryParam=param_string1
+             Connection1_CustomQueryName=Test2;
+             Connection1_CustomQueryParam=param_string2"
+             
+            Each param_string specifies the parameters of the custom query and may include the database connection string, database
+            table, and database fields to query.
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.Shutdown">
+            <summary>
+            Shutdonw the streaming database.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.AddDirectQuery(MyCaffe.db.stream.IXCustomQuery)">
+            <summary>
+            Add a custom query directly to the streaming database.
+            </summary>
+            <remarks>
+            By default, the streaming database looks in the \code{.cpp}'./CustomQuery'\endcode folder relative
+            to the streaming database assembly to look for CustomQuery DLL's that implement
+            the IXCustomQuery interface.  When found, these assemblies are added to the list
+            accessible via the schema.  Alternatively, custom queries may be added directly
+            using this method.
+            </remarks>
+            <param name="iqry">Specifies the custom query to add.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.Query(System.Int32)">
+            <summary>
+            Query the next data in the streaming database.
+            </summary>
+            <param name="nWait">Specfies the maximum amount of time (in ms.) to wait for data.</param>
+            <returns>A simple datum containing the data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.QuerySize">
+            <summary>
+            Returns the query size of the data in the form:
+            [0] = channels
+            [1] = height
+            [2] = width.
+            </summary>
+            <returns>The query size is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.QueryInfo">
+            <summary>
+            The Query information returns information about the data queried such as header information.
+            </summary>
+            <returns>The information about the data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.Reset(System.Int32)">
+            <summary>
+            Reset the query to the start date used in Initialize, optionally with an offset from the start.
+            </summary>
+            <param name="nStartOffset">Optionally, specifies the offset from the start to use (default = 0).</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.ConvertOutput(System.Single[],System.String@)">
+            <summary>
+            Converts the output values into the native type used by the first CustomQuery.
+            </summary>
+            <param name="rg">Specifies the raw output data.</param>
+            <param name="type">Returns the output type.</param>
+            <returns>The converted output data is returned as a byte stream.</returns>
+        </member>
+        <member name="F:MyCaffe.db.stream.MyCaffeStreamDatabase.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MyCaffe.db.stream.MyCaffeStreamDatabase.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.StandardQueryWAVFile">
+            <summary>
+            The StandardQueryWAVFile provides queries that read sound frequencies from (*.WAV) files residing in a given directory.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.#ctor(System.String)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strParam">Specifies the parameters which shold contains the 'FilePath'=path key=value pair.</param>
+        </member>
+        <member name="P:MyCaffe.db.stream.StandardQueryWAVFile.QueryType">
+            <summary>
+            Returns the QUERY_TYPE of REAL_FLOAT.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.StandardQueryWAVFile.Name">
+            <summary>
+            Returns the custom query name 'StdWAVFileQuery'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.StandardQueryWAVFile.FieldCount">
+            <summary>
+            Returns the field count of 1.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.Clone(System.String)">
+            <summary>
+            Clone the custom query returning a new copy.
+            </summary>
+            <param name="strParam">Optionally, initialize the new copy with these parameters.</param>
+            <returns>The new copy is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.Close">
+            <summary>
+            Close the custom query.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.Open">
+            <summary>
+            Open the custom query.  The query must be opened before calling QueryBytes.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.QueryByTime(System.DateTime,System.TimeSpan,System.Int32)">
+            <summary>
+            The QueryByTime method is not implemented.
+            </summary>
+            <param name="dt">not used.</param>
+            <param name="ts">non used.</param>
+            <param name="nCount">not used.</param>
+            <returns>not used.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.QueryBytes">
+            <summary>
+            The QueryBytes method is not implemented.
+            </summary>
+            <returns>not used.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.QueryRealD">
+            <summary>
+            The QueryRealD method returns all samples of the next file in the directory.
+            </summary>
+            <returns>All samples along with the format are returned where the format is placed in the last array.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.QueryRealF">
+            <summary>
+            The QueryRealF method returns all samples of the next file in the directory.
+            </summary>
+            <returns>All samples along with the format are returned where the format is placed in the last array.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.QueryInfo">
+            <summary>
+            The Query information returns information about the data queried such as header information.
+            </summary>
+            <returns>The information about the data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.PackBytes(MyCaffe.db.stream.WaveFormat,System.Collections.Generic.List{System.Single[]})">
+            <summary>
+            The PackBytes method packs the wav file information into a byte stream.
+            </summary>
+            <param name="fmt">Specifies the wav file format.</param>
+            <param name="rgSamples">Specifies the wav file samples.</param>
+            <returns>The byte stream is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.UnPackBytes(System.Byte[],MyCaffe.db.stream.WaveFormat@)">
+            <summary>
+            The UnPackBytes method is used to unpack a byte stream into the Wav information.
+            </summary>
+            <param name="rg">Specifies the byte stream.</param>
+            <param name="fmt">Returns the WAV file format.</param>
+            <returns>Returns the WAV file samples.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.GetQuerySize">
+            <summary>
+            The GetQuerySize method returns the size of the query as {1,1,filesize}.
+            </summary>
+            <returns>The query size is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.Reset">
+            <summary>
+            Reset the file index to the first file.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryWAVFile.ConvertOutput(System.Single[],System.String@)">
+            <summary>
+            Converts the output values into the native type used by the CustomQuery.
+            </summary>
+            <param name="rg">Specifies the raw output data.</param>
+            <param name="strType">Returns the output type.</param>
+            <returns>The converted output data is returned as a byte stream.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.StandardQueryTextFile">
+            <summary>
+            The StandardQueryTextFile provides queries that read text (*.txt) files residing in a given directory.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.#ctor(System.String)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strParam">Specifies the parameters which shold contains the 'FilePath'=path key=value pair.</param>
+        </member>
+        <member name="P:MyCaffe.db.stream.StandardQueryTextFile.QueryType">
+            <summary>
+            Returns the QUERY_TYPE of BYTE.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.StandardQueryTextFile.Name">
+            <summary>
+            Returns the custom query name 'StdTextFileQuery'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.StandardQueryTextFile.FieldCount">
+            <summary>
+            Returns the field count of 1.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.Clone(System.String)">
+            <summary>
+            Clone the custom query returning a new copy.
+            </summary>
+            <param name="strParam">Optionally, initialize the new copy with these parameters.</param>
+            <returns>The new copy is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.Close">
+            <summary>
+            Close the custom query.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.Open">
+            <summary>
+            Open the custom query.  The query must be opened before calling QueryBytes.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.QueryByTime(System.DateTime,System.TimeSpan,System.Int32)">
+            <summary>
+            The QueryByTime method is not implemented for this custom query.
+            </summary>
+            <param name="dt">not used.</param>
+            <param name="ts">non used.</param>
+            <param name="nCount">not used.</param>
+            <returns>not used.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.QueryBytes">
+            <summary>
+            The QueryBytes method returns the bytes of the next file in the directory.
+            </summary>
+            <returns>All bytes of the file are returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.QueryRealD">
+            <summary>
+            The QueryRealD method is not implemented for this custom query.
+            </summary>
+            <returns>not used.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.QueryRealF">
+            <summary>
+            The QueryRealF method is not implemented for this custom query.
+            </summary>
+            <returns>not used.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.QueryInfo">
+            <summary>
+            The Query information returns information about the data queried such as header information.
+            </summary>
+            <returns>The information about the data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.GetQuerySize">
+            <summary>
+            The GetQuerySize method returns the size of the query as {1,1,filesize}.
+            </summary>
+            <returns>The query size is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.Reset">
+            <summary>
+            Reset the file index to the first file.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.StandardQueryTextFile.ConvertOutput(System.Single[],System.String@)">
+            <summary>
+            Converts the output values into the native type used by the CustomQuery.
+            </summary>
+            <param name="rg">Specifies the raw output data.</param>
+            <param name="strType">Returns the output type.</param>
+            <returns>The converted output data is returned as a byte stream.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.WaveFormatExtensible">
+            <summary>
+            The WaveFormatExtensible structure describes the extended set of information of a WAV file.
+            </summary>
+            <remarks>
+            @see [WAVE PCM soundfile format](http://soundfile.sapp.org/doc/WaveFormat/)
+            </remarks>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.wFormatTag">
+            <summary>
+            Specifies the AudioFormat where PCM = 1 for Linear quantization.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.nChannels">
+            <summary>
+            Specifies the number of channels in the data where Mono = 1 and Stero = 2.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.nSamplesPerSec">
+            <summary>
+            Specifies the sample rate (e.g. 8000, 44100, etc.)
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.nAvgBytesPerSec">
+            <summary>
+            Specifies the average byte rate per second (nSamplesPerSec * Channels * BitsPerSample / 8)
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.nBlockAlign">
+            <summary>
+            Specifies the block alignment (Channels * BitsPerSample / 8)
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.wBitsPerSample">
+            <summary>
+            Specifies the number of bits per sample (8, 16, 32, etc.)
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.cbSize">
+            <summary>
+            Specifies the extera parameter size.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.wValidBitsPerSample">
+            <summary>
+            Specifies the valid bits per sample.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.dwChannelMask">
+            <summary>
+            Specifies the channel mask.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormatExtensible.SubFormat">
+            <summary>
+            Specifies the sub format GUID.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.WaveFormat">
+            <summary>
+            The WaveFormat structure describes the header information of a WAV file.
+            </summary>
+            <remarks>
+            @see [WAVE PCM soundfile format](http://soundfile.sapp.org/doc/WaveFormat/)
+            </remarks>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormat.wFormatTag">
+            <summary>
+            Specifies the AudioFormat where PCM = 1 for Linear quantization.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormat.nChannels">
+            <summary>
+            Specifies the number of channels in the data where Mono = 1 and Stero = 2.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormat.nSamplesPerSec">
+            <summary>
+            Specifies the sample rate (e.g. 8000, 44100, etc.)
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormat.nAvgBytesPerSec">
+            <summary>
+            Specifies the average byte rate per second (nSamplesPerSec * Channels * BitsPerSample / 8)
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormat.nBlockAlign">
+            <summary>
+            Specifies the block alignment (Channels * BitsPerSample / 8)
+            </summary>
+        </member>
+        <member name="F:MyCaffe.db.stream.WaveFormat.wBitsPerSample">
+            <summary>
+            Specifies the number of bits per sample (8, 16, 32, etc.)
+            </summary>
+        </member>
+        <member name="T:MyCaffe.db.stream.WAVReader">
+            <summary>
+            The WAVReader is an extension of the BinaryReader and is used to read WAV files.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVReader.#ctor(System.IO.Stream)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="stream">Specifies the data stream to read.</param>
+        </member>
+        <member name="P:MyCaffe.db.stream.WAVReader.Format">
+            <summary>
+            Returns the WAV file header information.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.WAVReader.Samples">
+            <summary>
+            Returns the frequency samples of the WAV file.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.WAVReader.ExtraInformation">
+            <summary>
+            Returns the WAV file header information in a key=value format.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVReader.ReadToEnd(System.Boolean)">
+            <summary>
+            Reads the WAV file data.
+            </summary>
+            <param name="bReadHeaderOnly">Optionally, specifies to only read the header information.</param>
+            <returns>If read successfully this function returns <i>true</i>, otherwise <i>false</i>.</returns>
+        </member>
+        <member name="P:MyCaffe.db.stream.WAVReader.SampleCount">
+            <summary>
+            Returns the number of samples.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVReader.ByteArrayToStructure``1(System.Byte[])">
+            <summary>
+            Converts a byte array to a structure.
+            </summary>
+            <typeparam name="T">Specifies the structure type.</typeparam>
+            <param name="bytes">Specifies the byte array.</param>
+            <returns>The structure is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.WAVProcessor">
+            <summary>
+            The WAVProcessor is used to process WAV files and perform tasks such as downsampling.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVProcessor.#ctor(MyCaffe.db.stream.WaveFormat,System.Collections.Generic.List{System.Double[]},MyCaffe.basecode.Log,MyCaffe.basecode.CancelEvent)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="fmt">Specifies the WaveFormat.</param>
+            <param name="rgrgSamples">Specifies the WAV file frequency samples.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="evtCancel">Specifies the event used to cancel processes.</param>
+        </member>
+        <member name="P:MyCaffe.db.stream.WAVProcessor.Format">
+            <summary>
+            Returns the WaveFormat.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.WAVProcessor.Samples">
+            <summary>
+            Returns the WAV frequency samples.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVProcessor.DownSample(System.Int32)">
+            <summary>
+            The DownSample method reduces the number of samples per second in the resulting sample set.
+            </summary>
+            <param name="nNewSamplesPerSecond">Specifies the new (lower) samples per second - must be a factor of the original samples per second.</param>
+            <returns>A new WAVProcessor with the new downsamples samples is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.db.stream.WAVWriter">
+            <summary>
+            The WAVWriter is a special BinaryWriter used to write WAV files.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVWriter.#ctor(System.IO.Stream)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="stream">Specifies the output stream.</param>
+        </member>
+        <member name="P:MyCaffe.db.stream.WAVWriter.Format">
+            <summary>
+            Get/set the WaveFormat.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.db.stream.WAVWriter.Samples">
+            <summary>
+            Get/set the frequency samples.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVWriter.WriteAll(System.Int32)">
+            <summary>
+            The WriteAll method writes all WAV file data to the file.
+            </summary>
+            <param name="nNewSampleRate">Optionally, specifies a new sample rate to use, if any (default = 0, ignoring this parameter).</param>
+            <returns>On success, <i>true</i> is returned, otherwise <i>false</i>.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVWriter.ByteArrayToStructure``1(System.Byte[])">
+            <summary>
+            Converts a byte array into a structure.
+            </summary>
+            <typeparam name="T">Specifies the structure type.</typeparam>
+            <param name="bytes">Specifies the byte array.</param>
+            <returns>The structure is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.db.stream.WAVWriter.StructureToByteArray``1(``0)">
+            <summary>
+            Converts a structure into a byte array.
+            </summary>
+            <typeparam name="T">Specifies the structure type.</typeparam>
+            <param name="val">Specifies the structure.</param>
+            <returns>The byte array is returned.</returns>
+        </member>
+    </members>
+</doc>

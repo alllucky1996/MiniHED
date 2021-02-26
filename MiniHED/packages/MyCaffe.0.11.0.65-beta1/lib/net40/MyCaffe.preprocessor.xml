@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.preprocessor</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.preprocessor.Extension`1">
+            <summary>
+            The Extension class is used to add new pre-processor extension DLL's to MyCaffe.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:MyCaffe.preprocessor.Extension`1.FUNCTION">
+            <summary>
+            Defines the functions implemented by the extension pre-processor DLL.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.preprocessor.Extension`1.FUNCTION.INITIALIZE">
+            <summary>
+            Initialize the pre-processor.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.preprocessor.Extension`1.FUNCTION.CLEANUP">
+            <summary>
+            Clean-up the pre-processor.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.preprocessor.Extension`1.FUNCTION.SETMEMORY">
+            <summary>
+            Set all internal memory handles based on an input and output blob.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.preprocessor.Extension`1.FUNCTION.ADDDATA">
+            <summary>
+            Add new data to the input data.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.preprocessor.Extension`1.FUNCTION.PROCESSDATA">
+            <summary>
+            Process the data moving the results to the output data blob.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.preprocessor.Extension`1.FUNCTION.GETVISUALIZATION">
+            <summary>
+            Create the visualization data.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.preprocessor.Extension`1.FUNCTION.CLEAR">
+            <summary>
+            Clear the input data.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.Extension`1.#ctor(MyCaffe.common.IXMyCaffeExtension{`0})">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="iextension">Specifies the IXMyCaffeExtension interface implemented by the MyCaffeControl.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.Extension`1.Dispose">
+            <summary>
+            Release the processor extension.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.Extension`1.Initialize(System.String)">
+            <summary>
+            Initialize a new pre-processor extension and load it.
+            </summary>
+            <param name="strPath">Specifies the pre-processor DLL path to load.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.Extension`1.Run(MyCaffe.preprocessor.Extension{`0}.FUNCTION)">
+            <summary>
+            Run a function on the pre-processor DLL without any arguments.
+            </summary>
+            <param name="fn">Specifies the function to run.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.Extension`1.Run(MyCaffe.preprocessor.Extension{`0}.FUNCTION,System.Double[])">
+            <summary>
+            Run a function on the pre-processor DLL with arguments.
+            </summary>
+            <param name="fn">Specifies the function to run.</param>
+            <param name="rgParam">Specifies the arguments.</param>
+            <returns>The return values from the pre-processor DLL are returned.</returns>
+        </member>
+        <member name="M:MyCaffe.preprocessor.Extension`1.Run(MyCaffe.preprocessor.Extension{`0}.FUNCTION,System.Single[])">
+            <summary>
+            Run a function on the pre-processor DLL with arguments.
+            </summary>
+            <param name="fn">Specifies the function to run.</param>
+            <param name="rgParam">Specifies the arguments.</param>
+            <returns>The return values from the pre-processor DLL are returned.</returns>
+        </member>
+        <member name="T:MyCaffe.preprocessor.IXMyCaffePreprocessor`1">
+            <summary>
+            The IXPreprocessor interface is used to query pre-processed data from a streaming database.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.IXMyCaffePreprocessor`1.Initialize(MyCaffe.common.IXMyCaffe{`0},MyCaffe.db.stream.IXStreamDatabase,System.String,MyCaffe.basecode.PropertySet)">
+            <summary>
+            Initialize the pre-processor with an existing instance of MyCaffe and a streaming database.
+            </summary>
+            <param name="imycaffe">Specifies the MyCaffe instance to use.</param>
+            <param name="istrm">Specifies the streaming database instance to use.</param>
+            <param name="strPreProcessorDLLPath">Specifies the path to the pre-processor DLL to use so that pre-processing can occur using CUDA.</param>
+            <param name="properties">Specifies the initialization properties.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.IXMyCaffePreprocessor`1.Shutdown">
+            <summary>
+            Shutdown any internal threads used.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.IXMyCaffePreprocessor`1.Reset(System.Int32)">
+            <summary>
+            Reset the querying to the start specified within the streaming database, optionally with an offset.
+            </summary>
+            <param name="nStartOffset">Optionally, specifies an offset from the start (default = 0).</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.IXMyCaffePreprocessor`1.Step(System.Boolean,System.Int32)">
+            <summary>
+            Step through the data of the streaming database, pre-process it, and return the data as a Blob.
+            </summary>
+            <param name="bGetSimpleDatum">Specifies whether or not to return the simple datum of data for rendering.</param>
+            <param name="nWait">Specifies the maximum amount of time to wait for data.</param>
+            <returns>A tuple containing a Blob of the data on the GPU and optionally the SimpleDatum with the data on the CPU (for rendering).</returns>
+        </member>
+        <member name="M:MyCaffe.preprocessor.IXMyCaffePreprocessor`1.Render(MyCaffe.basecode.SimpleDatum)">
+            <summary>
+            Render the data within the 
+            </summary>
+            <param name="sd">Specifies the data to be rendered.</param>
+            <returns>A tuple containing the Bitmap of the data and the action data as a SimpleDatum is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.preprocessor.MgrPreprocessor`1">
+            <summary>
+            The MgrPreprocessor manages the operations of the data pre-processor.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MgrPreprocessor`1.#ctor(MyCaffe.common.IXMyCaffe{`0},MyCaffe.db.stream.IXStreamDatabase)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="imycaffe">Specifies the instance of the MyCaffeControl to use.</param>
+            <param name="idb">Specifies the instance of the streaming database to use.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MgrPreprocessor`1.Dispose">
+            <summary>
+            Release all resources used.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MgrPreprocessor`1.Initialize(System.String,System.Int32,System.Int32)">
+            <summary>
+            Initialize the pre-processor.
+            </summary>
+            <param name="strExtPath">Specifies the path to the pre-processor extension DLL to use.</param>
+            <param name="nFields">Specifies the number of fields that the pre-processor uses.</param>
+            <param name="nDepth">Specifies the depth of the pre-processor.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MgrPreprocessor`1.Reset(System.Int32)">
+            <summary>
+            Reset the streaming database to the data start or an offset from the start.
+            </summary>
+            <param name="nStartOffset">Specifies the offset from the start to use.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MgrPreprocessor`1.Step(System.Boolean,System.Int32)">
+            <summary>
+            Step to the next data in the streaming database and process it.
+            </summary>
+            <param name="bGetSimpleDatum">When <i>true</i>, specifies to create the SimpleDatum for data visualization.</param>
+            <param name="nWait">Specifies the amount of time in ms. to wait for data.</param>
+            <returns>A tuple containing the output data Blob and optionally a SimpleDatum for visualization is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1">
+            <summary>
+            The MyCaffeDataPreprocessor handles adding data from a streaming database to the GPU and then 
+            pre-processing the data once on the GPU making it ready for use with the Data Gym.
+            </summary>
+            <typeparam name="T">Specfies the base type of <i>float</i> or <i>double</i>.</typeparam>
+            <summary>
+            The MyCaffeDataPreprocessor handles adding data from a streaming database to the GPU and then 
+            pre-processing the data once on the GPU making it ready for use with the Data Gym.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="container">Specifies the container that holds this compoent.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.Initialize(MyCaffe.common.IXMyCaffe{`0},MyCaffe.db.stream.IXStreamDatabase,System.String,MyCaffe.basecode.PropertySet)">
+            <summary>
+            Initialize the Data Processor.
+            </summary>
+            <param name="imycaffe">Specifies the instance of MyCaffe to use.</param>
+            <param name="idb">Specifies the instance of the streaming database to use.</param>
+            <param name="strPreProcessorDLLPath">Specifies the path to the preprocessing DLL to use.</param>
+            <param name="properties">Specifies the property set to initialize with.  The property set contains the 'Fields' and 'Depth' values where each must be &gt; 0.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.Render(MyCaffe.basecode.SimpleDatum)">
+            <summary>
+            Create and return the visualization data.
+            </summary>
+            <param name="sd">Specifies the visualization data to render, this is the SimpleDatum returned from the Step function.</param>
+            <returns>A tuple containing a bitmap and SimpleDatum of the visualization data are returned.</returns>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.Reset(System.Int32)">
+            <summary>
+            Reset to the start of the data set, or to an offset from the start.
+            </summary>
+            <param name="nStartOffset">Optionally, specifies an offset from the start to use.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.Shutdown">
+            <summary>
+            Shutdown the preprocessor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.Step(System.Boolean,System.Int32)">
+            <summary>
+            Step to the next data in the streaming database and process it.
+            </summary>
+            <param name="bGetSimpleDatum">Specifies to get the simple datum for visualization purposes.</param>
+            <param name="nWait">Specifies an amount of time in ms. to wait for new data.</param>
+            <returns>A tuple containing the Blob of processed data and optionally a SimpleDatum for visualiation is returned.</returns>
+        </member>
+        <member name="F:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MyCaffe.preprocessor.MyCaffeDataPreprocessor`1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>

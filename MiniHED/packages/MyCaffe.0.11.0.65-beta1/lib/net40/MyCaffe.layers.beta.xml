@@ -1,0 +1,927 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.layers.beta</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.layers.beta.LayerFactory">
+            <summary>
+            The LayerFactor is responsible for creating all layers implemented in the MyCaffe.layers.ssd namespace.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.LayerFactory.CreateDouble(MyCaffe.common.CudaDnn{System.Double},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.CancelEvent,MyCaffe.basecode.IXImageDatabaseBase)">
+            <summary>
+            Create the layers when using the <i>double</i> base type.
+            </summary>
+            <param name="cuda">Specifies the connection to the low-level CUDA interfaces.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="p">Specifies the layer parameter.</param>
+            <param name="evtCancel">Specifies the cancellation event.</param>
+            <param name="imgDb">Specifies an interface to the image database, who's use is optional.</param>
+            <returns>If supported, the layer is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.layers.beta.LayerFactory.CreateSingle(MyCaffe.common.CudaDnn{System.Single},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.CancelEvent,MyCaffe.basecode.IXImageDatabaseBase)">
+            <summary>
+            Create the layers when using the <i>float</i> base type.
+            </summary>
+            <param name="cuda">Specifies the connection to the low-level CUDA interfaces.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="p">Specifies the layer parameter.</param>
+            <param name="evtCancel">Specifies the cancellation event.</param>
+            <param name="imgDb">Specifies an interface to the image database, who's use is optional.</param>
+            <returns>If supported, the layer is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.layers.beta.AccuracyDecodeLayer`1">
+            <summary>
+            The AccuracyDecodeLayer compares the labels output by the DecodeLayer with the expected labels output
+            by the DataLayer.
+            This layer is initialized with the MyCaffe.param.AccuracyParameter.
+            </summary>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyDecodeLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="cuda">Cuda engine.</param>
+            <param name="log">General log.</param>
+            <param name="p">provides AccuracyParameter accuracy_param,
+            with AccuracyDecodeLayer. 
+             - top_k (optional, default 1)
+                     Not used.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyDecodeLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.AccuracyDecodeLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the number of bottom blobs used: predicted, label
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.AccuracyDecodeLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the number of top blobs: accuracy
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyDecodeLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyDecodeLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyDecodeLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Forward compuation.
+            </summary>
+            <param name="colBottom">bottom input blob (length 2)
+             -# @f$ (N \times C \times 1 \times 1) @f$
+                the distance predictions @f$ x @f$, a blob with the minimum index a value in
+                @f$ l_n \in [0, 1, 2, ..., K-1] @f$
+                indicating the predicted class label among the @f$ K @f$ classes.
+             -# @f$ (N \times 1 \times 1 \times 1) @f$
+                the labels l, an integer-valued blob with values
+                @f$ l_n \in [0, 1, 2, ..., K-1] @f$
+                indicating the correct class label among the @f$ K @f$ classes.
+            </param>
+            <param name="colTop">top output blob vector (length 1)
+             -# @f$ (1 \times 1 \times 1 \times 1) @f$
+                the computed accuracy each calculated by finding the label with the minimum
+                distance to each encoding.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyDecodeLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            @brief Not implemented -- AccuracyDecodeLayer cannot be used as a loss.
+        </member>
+        <member name="T:MyCaffe.layers.beta.DecodeLayer`1">
+            <summary>
+            The DecodeLayer decodes the label of a classification for an encoding produced by a Siamese Network or similar type of net that creates 
+            an encoding mapped to a set of distances where the smallest distance indicates the label for which the encoding belongs.
+            </summary>
+            <remarks>
+            Centroids:
+            @see [A New Loss Function for CNN Classifier Based on Pre-defined Evenly-Distributed Class Centroids](https://arxiv.org/abs/1904.06008) by Qiuyu Zhu, Pengju Zhang, and Xin Ye, arXiv:1904.06008, 2019.
+            
+            KNN:
+            @see [Constellation Loss: Improving the efficiency of deep metric learning loss functions for optimal embedding](https://arxiv.org/abs/1905.10675) by Alfonso Medela and Artzai Picon, arXiv:1905.10675, 2019
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DecodeLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="cuda">Cuda engine.</param>
+            <param name="log">General log.</param>
+            <param name="p">provides the generic parameter for the DecodeLayer.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DecodeLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.DecodeLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.beta.DecodeLayer`1.MinBottomBlobs">
+            <summary>
+            Returns the minimum number of bottom blobs used: predicted (RUN phase)
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.DecodeLayer`1.MaxBottomBlobs">
+            <summary>
+            Returns the maximum number of bottom blobs used: predicted, label (TRAIN and TEST phase)
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.DecodeLayer`1.MinTopBlobs">
+            <summary>
+            Returns the min number of top blobs: distances
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.DecodeLayer`1.MaxTopBlobs">
+            <summary>
+            Returns the min number of top blobs: distances, centroids
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DecodeLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DecodeLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DecodeLayer`1.createPreGenTargets(MyCaffe.common.Blob{`0},System.Double)">
+            <summary>
+            Creates the pre-distanced pre-generated targets, only made public for testing.
+            </summary>
+            <param name="b">Specifies the blob to fill with pre-generated, pre-spaced targets.</param>
+            <param name="dfMinDist">Specifies the minimum acceptable distance between all targets.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DecodeLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Forward compuation.
+            </summary>
+            <param name="colBottom">bottom input blob (length 2)
+             -# @f$ (N \times C \times 1 \times 1) @f$
+                the encoding predictions @f$ x @f$, a blob with values in
+                @f$ [-\infty, +\infty] @f$ indicating the embedding of each of
+                the @f$ K @f$ classes.  Each embedding @f$ x @f$ is mapped to a predicted 
+                label.
+             -# @f$ (N \times 1 \times 1 \times 1) @f$
+                the labels l, an integer-valued blob with values
+                @f$ l_n \in [0, 1, 2, ..., K-1] @f$
+                indicating the correct class label among the @f$ K @f$ classes.
+            </param>
+            <param name="colTop">top output blob vector (length 1)
+             -# @f$ (N \times L \times 1 \times 1) @f$
+                the computed distance of each item where the label with the smallest
+                distance represents the selected label.  The L dimension size equals
+                the number of labels in the data set (e.g. with MNIST L = 10).
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DecodeLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            @brief Not implemented -- DecodeLayer cannot be used as a loss.
+        </member>
+        <member name="T:MyCaffe.layers.beta.AccuracyEncodingLayer`1">
+            <summary>
+            The AccuracyEncodingLayer computes the classification accuracy for an encoding used in a 
+            classification task that uses a Siamese Network or similar type of net that creates an encoding 
+            mapped to a label.
+            This layer is initialized with the MyCaffe.param.AccuracyParameter.
+            </summary>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyEncodingLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="cuda">Cuda engine.</param>
+            <param name="log">General log.</param>
+            <param name="p">provides AccuracyParameter accuracy_param,
+            with EncodingAccuracyLayer options:
+             - top_k (optional, default 1)
+                     Sets the maximumrank k at which prediction is considered
+                     correct, For example, if k = 5, a prediction is counted
+                     correct if the correct label is among the top 5 predicted labels.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyEncodingLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.AccuracyEncodingLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.beta.AccuracyEncodingLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the number of bottom blobs used: predicted, label
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.AccuracyEncodingLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the number of top blobs: accuracy
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyEncodingLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyEncodingLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyEncodingLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Forward compuation.
+            </summary>
+            <param name="colBottom">bottom input blob (length 2)
+             -# @f$ (N \times C \times 1 \times 1) @f$
+                the encoding predictions @f$ x @f$, a blob with values in
+                @f$ [-\infty, +\infty] @f$ indicating the embedding of each of
+                the @f$ K @f$ classes.  Each embedding @f$ x @f$ is mapped to a predicted 
+                label.
+             -# @f$ (N \times 1 \times 1 \times 1) @f$
+                the labels l, an integer-valued blob with values
+                @f$ l_n \in [0, 1, 2, ..., K-1] @f$
+                indicating the correct class label among the @f$ K @f$ classes.
+            </param>
+            <param name="colTop">top output blob vector (length 1)
+             -# @f$ (1 \times 1 \times 1 \times 1) @f$
+                the computed accuracy each calculated by finding the label with the minimum
+                distance to each encoding.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.AccuracyEncodingLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            @brief Not implemented -- EncodingAccuracyLayer cannot be used as a loss.
+        </member>
+        <member name="T:MyCaffe.layers.beta.GRNLayer`1">
+            <summary>
+            The GRNLayer performs an L2 normalization over the input data.
+            </summary>
+            <remarks>
+            Adapted from original C++ code by Beanfrog at http://research.beenfrog.com/code/2015/04/11/global-response-normalization-L2-layer-in-caffe.html
+            
+            @see [Layer Normalization](https://arxiv.org/abs/1607.06450) by Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E. Hinton, 2016.
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.GRNLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The GRNLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type GRN.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.GRNLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.GRNLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.beta.GRNLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (input) Blobs: data
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.GRNLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: norm
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.GRNLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.GRNLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.GRNLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the forward calculation.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the inputs.</param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the outputs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.GRNLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t the inputs.
+            </summary>
+            <param name="colTop">top output Blob vector (Length 1), providing the error gradient
+            with respect to computed outputs.</param>
+            <param name="rgbPropagateDown">propagate down see Layer::Backward</param>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+            </param>
+        </member>
+        <member name="T:MyCaffe.layers.beta.DataSequenceLayer`1">
+            <summary>
+            <H3>BETA</H3>
+            
+            DataSequence Layer - this caches inputs by label and then outputs data item tuplets that include
+            an 'anchor', optionally a 'positive' match, and at least one 'negative' match.
+            
+            This layer is initialized with the MyCaffe.param.DataSequenceParameter.
+            </summary>
+            <remarks>
+            SiameseNet's and TripletLoss based nets use this layer to help organize the data inputs to the 
+            parallel networks making up each network architecture.
+            
+            The following settings should be used with each network architecture.
+            
+            SiameseNet - k = 0, causing this layer to output (anchor, negative1)
+            TripletLoss1 - k = 1, causing this layer to output (anchor, positive, negative1)
+            TripletLoss5 - k = 5, causing this layer to output (anchor, positive, negative1, negative2, negative3, negative4, negative5)
+            </remarks> 
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DataSequenceLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The DataSequenceLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type DataSequence with parameter DataSequence_param,
+            with options:
+              - cache_size (\b optional, default 256). The size of each labeled image cache.
+              
+              - k (\b optional, default 0). When 0, output is an anchor and one negative match, when > 0 output is an anchor, positive match + 'k' negative matches.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DataSequenceLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.DataSequenceLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.beta.DataSequenceLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (intput) Blobs: data, label
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.DataSequenceLayer`1.MinTopBlobs">
+            <summary>
+            Returns the minimum number of required top (output) Blobs: anchor, positve (k > 0), negative (depending on k value), labels
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DataSequenceLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DataSequenceLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DataSequenceLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            During the forward pass, each input data item is cached by label and then sequencing is performed on the 
+            cached items to produce the desired data sequencing output.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the inputs.</param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times K \times 1 \times 1) @f$ computed outputs, where @f$ K @f$ equals 
+                the <i>num_output</i> parameter. 
+            </param>
+            <remarks>
+            IMPORTANT: The data batch size must be sufficiently large enough to contain at least one instance of each label in the dataset.
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.layers.beta.DataSequenceLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            @brief Not implemented - the DataSequence Layer does not perform backward.
+        </member>
+        <member name="T:MyCaffe.layers.beta.KnnLayer`1">
+            <summary>
+            <H3>BETA</H3>
+            
+            Knn Layer - this converts embeddings received into the nearest neighbor and outputs
+            the inverse sum of distances between the input and all previously received inputs.
+            
+            This layer is initialized with the MyCaffe.param.KnnParameter.
+            </summary>
+            <remarks>
+            As an example, when using a 128 item embedding for a 10 class problem, the Knn layer
+            takes each input and calculates the distance between the input and all other inputs
+            collected for each class.  The resulting collection of distances are then summed for
+            each class.  At this point the class with the lowest sum is the nearest neighbor.
+            
+            However, in order to work with the Accuracy, SoftmaxLoss and Softmax layers, the
+            summed values are normalized to the range between 0 and 1 and then inverted so that
+            the maximum value is accociated with the nearest neighbor class.
+            
+            IMPORTANT: The KNN layer requires that both the training and testing phases use 
+            the same batch sizes and requires both the 'data' and 'label' bottom items.
+            </remarks> 
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.KnnLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The KnnLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type KNN with parameter knn_param,
+            with options:
+              - num_output (\b optional, default 10). The number of output items (e.g. classes).
+              
+              - k (\b optional, default 100). The number of nearest neighbors to compare (per class).
+              
+              - max_stored_batches (\b optional, default = 1000). The maximum number of batches to store before releasing batches.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.KnnLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.KnnLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.beta.KnnLayer`1.MinBottomBlobs">
+            <summary>
+            Returns the minimum number of required bottom (intput) Blobs: data
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.KnnLayer`1.MaxBottomBlobs">
+            <summary>
+            Returns the maximum number of required bottom (intput) Blobs: data, label
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.KnnLayer`1.MinTopBlobs">
+            <summary>
+            Returns the minimum number of required top (output) Blobs: knn
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.KnnLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.KnnLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.KnnLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the forward calculation.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the inputs.</param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times K \times 1 \times 1) @f$ computed outputs, where @f$ K @f$ equals 
+                the <i>num_output</i> parameter. 
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.KnnLayer`1.forward_test(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the forward calculation, run during the Phase.TEST cycle to find the 
+            closest averaged distance stored in the inernal blobs.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the inputs.</param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times K \times 1 \times 1) @f$ computed outputs, where @f$ K @f$ equals 
+                the <i>num_output</i> parameter. 
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.KnnLayer`1.forward_save(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Save the data in the batch storage.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the inputs.</param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times K \times 1 \times 1) @f$ computed outputs, where @f$ K @f$ equals 
+                the <i>num_output</i> parameter. 
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.KnnLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            @brief Not implemented - the KNN Layer does not perform backward.
+        </member>
+        <member name="T:MyCaffe.layers.beta.Normalization1Layer`1">
+            <summary>
+            The Normalization1Layer performs an L2 normalization over the input data.
+            This layer is initialized with the MyCaffe.param.Normalization1Parameter.
+            </summary>
+            <remarks>
+            Original C++ code added by Binbin Xu; declanxu@gmail.com or declanxu@126.com
+            @see [Layer Normalization](https://arxiv.org/abs/1607.06450) by Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E. Hinton, 2016.
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.Normalization1Layer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The Normalization1Layer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type NORMALIZATION1 with parameter normalization1_param,
+            with options:
+              - norm (\b optional, default L2). The normalization mode to use: L1 or L2.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.Normalization1Layer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.Normalization1Layer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.beta.Normalization1Layer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of required bottom (input) Blobs: data
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.Normalization1Layer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: norm
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.Normalization1Layer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.Normalization1Layer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.Normalization1Layer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the forward calculation.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the inputs.</param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (N \times C \times H \times W) @f$ the outputs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.Normalization1Layer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t the inputs.
+            </summary>
+            <param name="colTop">top output Blob vector (Length 1), providing the error gradient
+            with respect to computed outputs.</param>
+            <param name="rgbPropagateDown">propagate down see Layer::Backward</param>
+            <param name="colBottom">bottom input Blob vector (Length 1)
+            </param>
+        </member>
+        <member name="T:MyCaffe.layers.beta.TripletLossLayer`1">
+             <summary>
+             <H3>PRE ALPHA</H3>
+             
+             TripletLoss Layer - this is the triplet loss layer used to calculate the triplet loss and gradients using the
+             triplet loss method of learning.  The triplet loss method involves image triplets using the following format:
+                 Anchor (A), Positives (P) and Negatives (N)
+                 
+             Use the DataSequenceLayer with k=1 with balanced_matches = false and output_labels = true to provide the required data sequencing noted above.
+                 
+             Where Anchors and Positives are from the same class and Negatives are from a different class.  In the basic algorithm,
+             the distance between AP and AN are determined and the learning occurs by shrinking the distance between AP and increasing
+             the distance between AN.
+             
+             This layer is initialized with the MyCaffe.param.beta.TripleLossParameter.
+             </summary>
+             <remarks>
+             * Python code for TripletLoss layer by luhaofang
+             @see https://github.com/luhaofang/tripletloss/blob/master/tripletloss/tripletlosslayer.py
+             
+             * C++ code for TripletLoss layer by eli-oscherovich in 'Triplet loss #3663' pull request on BVLC/caffe github.
+             @see https://github.com/BVLC/caffe/pull/3663/commits/c6518fb5752344e1922eaa1b1eb686bae5cc3964 - for triplet loss layer implementation
+             
+             For an explanation of the gradient calculations,
+             @see http://stackoverflow.com/questions/33330779/whats-the-triplet-loss-back-propagation-gradient-formula/33349475#33349475 - for gradient calculations
+            
+             @see [Deep Metric Learning Using Triplet Network](https://arxiv.org/pdf/1412.6622.pdf) by Hoffer and Ailon, 2018, for triplet loss function.
+             @see [One Shot learning, Siamese networks and Triplet Loss with Keras](https://medium.com/@crimy/one-shot-learning-siamese-networks-and-triplet-loss-with-keras-2885ed022352) by Craeymeersch, 2019.
+             @see [In Defense of the Triplet Loss for Person Re-Identification](https://arxiv.org/abs/1703.07737v2) by Alexander Hermans, Lucas Beyer, and Bastian Leibe, 2017. 
+             @see [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832) by Florian Schroff, and Dmitry Kalenichenko, and James Philbin, 2015.
+             @see [Generalisation and Sharing in Triplet Convnets for Sketch based Visual Search](https://arxiv.org/abs/1611.05301v1) by Tu Bui, Leonardo Ribeiro, Moacir Ponti, and John Collomosse, 2016.
+             </remarks> 
+             <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.TripletLossLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The TripletLossLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">Specifies the LayerParameter of type TRIPLET_LOSS with parameter triplet_loss_param.
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.TripletLossLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.TripletLossLayer`1.internal_blobs">
+            @copydoc Layer::internal_blobs 
+        </member>
+        <member name="P:MyCaffe.layers.beta.TripletLossLayer`1.ExactNumBottomBlobs">
+            <summary>
+            Returns the exact number of bottom blobs which are variable so -1 is returned.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.TripletLossLayer`1.MinBottomBlobs">
+            <summary>
+            Returns the minimum number of bottom blobs: anchor, positive, negative, label
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.TripletLossLayer`1.MaxBottomBlobs">
+            <summary>
+            Returns the maximum number of bottom blobs: anchor, positive, negative, label, centroids (from decode layer)
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.TripletLossLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the exact number of required top (output) Blobs: loss
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.TripletLossLayer`1.AllowForceBackward(System.Int32)">
+            <summary>
+            Returns <i>true</i> for all but the labels, for we want the loss value to be propagated back.
+            </summary>
+            <param name="nBottomIdx">Returns the index of the bottom for which the propagation should occur.</param>
+            <returns><i>true</i> is returned for each bottom index to propagate back.</returns>
+        </member>
+        <member name="M:MyCaffe.layers.beta.TripletLossLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.TripletLossLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.TripletLossLayer`1.loadPreGenTargets(MyCaffe.common.Blob{`0},MyCaffe.common.Blob{`0},MyCaffe.common.Blob{`0},MyCaffe.common.Blob{`0})">
+            <summary>
+            Loads the pre-gen targets, only made public for testing.
+            </summary>
+            <param name="lbl">Specifies the blob containing the labels.</param>
+            <param name="tgt">Specifies the blob containing the pre-generated targets.</param>
+            <param name="tgtNeg">Specifies the blob where the negatively matching targets are copied.</param>
+            <param name="tgtPos">Specifies the blob where the positively matching targets are copied.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.TripletLossLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the forward calculation.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (Length 4)
+             -# @f$ (N/3 \times C \times H \times W) @f$
+                the anchors.
+             -# @f$ (N/3 \times C \times H \times W) @f$
+                the positives.
+             -# @f$ (N/3 \times C \times H \times W) @f$
+                the negatives.
+             -# @f$ (N \times C \times H \times W) @f$
+                the labels.
+            </param>
+            <param name="colTop">top otuput Blob vector (Length 1)
+             -# @f$ (1 \times 1 \times 1 \times 1) @f$ 
+                computed loss. 
+            </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.TripletLossLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Computes the error gradient w.r.t the inputs.
+            </summary>
+            <param name="colTop">top output Blob vector (Length 1), providing the error gradient
+            with respect to computed outputs.
+             -# @f$ (1 \times 1 \times 1 \times 1) @f$ containing the loss.
+            </param>
+            <param name="rgbPropagateDown">propagate down see Layer::Backward</param>
+            <param name="colBottom">bottom input Blob vector (Length 3)
+             -# @f$ (N/3 \times C \times H \times W) @f$ 
+                the anchors.
+             -# @f$ (N/3 \times C \times H \times W) @f$ 
+                the positives.
+             -# @f$ (N/3 \times C \times H \times W) @f$ 
+                the negatives.
+            </param>
+        </member>
+        <member name="T:MyCaffe.layers.beta.UnPoolingLayer`1">
+            <summary>
+            <H3>BETA</H3>
+            
+            The UnPoolingLayer performs GPU based unpooling on the network like Zeiler's paper in ECCV 2014.
+            
+            This layer is initialized with the MyCaffe.param.UnPoolingParameter.
+            </summary>
+            <remarks>
+            * Original implementation at: https://github.com/HyeonwooNoh/caffe (merged into https://github.com/mariolew/caffe-unpooling)
+            
+            @see [A Deep Convolutional Auto-Encoder with Pooling - Unpooling Layers in Caffe](https://arxiv.org/abs/1701.04949) by Volodymyr Turchenko, Eric Chalmers, Artur Luczak, 2017.
+            @see [Visualizing and Understanding Convolutional Networks](https://arxiv.org/abs/1311.2901) by Matthew D. Zeiler and Rob Fergus, 2013.
+            @see [Decoupled Deep Neural Network for Semi-supervised Semantic Segmentation](https://arxiv.org/abs/1506.04924) by Seunghoon Hong, Hyeonwoo Noh, and Bohyung Han, 2015.
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The UnPoolingLayer constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">
+            Uses the same PoolingParameter unpooling_param as the PoolingLayer with options:
+             - num_output. The number of filters.
+             
+             - kernel_size / kernel_h / kernel_w.  The pooling dimensions, given by
+             kernel_size for square pooling or kernel_h and kernel-w for rectangular 
+             pooling.
+             
+             - stride / stride_h / stride_w. (\b optional, default 1).  The pool
+             stride, given by stride_size for equal dimensions of stride_h and stride_w
+             for different strides.  By default the pool is dense with stride 1.
+             
+             - pad / pad_h / pad_w. (\b optional, default 0). The zero-padding for
+             pooling, given by pad for equal dimensions or pad_h and pad_w for
+             different padding.  Input padding is computed implicitly instead of 
+             actual padding.
+             
+             - global_pooling (\b optional, default, false). Whether to use global
+             pooling or not.
+             
+             - engine: convolution has Engine.CAFFE (matrix multiplication) and Engine.CUDNN (library
+             kernels + stream parallelism) engines.
+             </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.UnPoolingLayer`1.MinBottomBlobs">
+            <summary>
+            Returns the minimum number of required bottom (input) Blobs: input
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.UnPoolingLayer`1.MaxBottomBlobs">
+            <summary>
+            Returns the maximum number of required bottom (input) Blobs: input, mask (only when using MAX)
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.UnPoolingLayer`1.ExactNumTopBlobs">
+            <summary>
+            Returns the required number of top (output) Blobs: unpool
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer for use with both Engine.CAFFE and Engine.CUDNN modes.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Run the Forward computation using the Engine.CAFFE mode only.
+            </summary>
+            <param name="colBottom">Specifies the bottom input Blob vector (length 1-2).</param>
+            <param name="colTop">Specifies the top output Blob vector (length 1).</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Run the Backward computation using the Engine.CAFFE mode only.
+            </summary>
+            <param name="colTop">Specifies the top output Blob vector (length 1).</param>
+            <param name="rgbPropagateDown">Specifies whether or not to propagagte down.</param>
+            <param name="colBottom">Specifies the bottom input Blob vector (length 1-2).</param>
+        </member>
+        <member name="T:MyCaffe.layers.beta.UnPoolingLayer1`1">
+            <summary>
+            <H3>BETA - DEPRECIATED</H3>
+            
+            The UnPoolingLayer1 performs CPU based unpooling on the network like Zeiler's paper in ECCV 2014.
+            
+            This layer is initialized with the MyCaffe.param.UnPoolingParameter.
+            </summary>
+            <remarks>
+            * Original implementation at: https://github.com/mariolew/caffe-unpooling
+            
+            @see [A Deep Convolutional Auto-Encoder with Pooling - Unpooling Layers in Caffe](https://arxiv.org/abs/1701.04949) by Turchenko, Volodymyr and Chalmers, Eric and Luczak, Artur, 2017.
+            @see [Visualizing and Understanding Convolutional Networks](https://arxiv.org/abs/1311.2901) by Zeiler, Matthew D. and Fergus, Rob, 2013.
+            @see [Decoupled Deep Neural Network for Semi-supervised Semantic Segmentation](https://arxiv.org/abs/1506.04924) by Hong, Seunghoon and Noh, Hyeonwoo and Han, Bohyung, 2015.
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer1`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter)">
+            <summary>
+            The UnPoolingLayer1 constructor.
+            </summary>
+            <param name="cuda">Specifies the CudaDnn connection to Cuda.</param>
+            <param name="log">Specifies the Log for output.</param>
+            <param name="p">
+            Uses the same PoolingParameter unpooling_param as the PoolingLayer with options:
+             - num_output. The number of filters.
+             
+             - kernel_size / kernel_h / kernel_w.  The pooling dimensions, given by
+             kernel_size for square pooling or kernel_h and kernel-w for rectangular 
+             pooling.
+             
+             - stride / stride_h / stride_w. (\b optional, default 1).  The pool
+             stride, given by stride_size for equal dimensions of stride_h and stride_w
+             for different strides.  By default the pool is dense with stride 1.
+             
+             - pad / pad_h / pad_w. (\b optional, default 0). The zero-padding for
+             pooling, given by pad for equal dimensions or pad_h and pad_w for
+             different padding.  Input padding is computed implicitly instead of 
+             actual padding.
+             
+             - global_pooling (\b optional, default, false). Whether to use global
+             pooling or not.
+             
+             - engine: convolution has Engine.CAFFE (matrix multiplication) and Engine.CUDNN (library
+             kernels + stream parallelism) engines.
+             </param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer1`1.dispose">
+            @copydoc Layer::dispose 
+        </member>
+        <member name="P:MyCaffe.layers.beta.UnPoolingLayer1`1.MinBottomBlobs">
+            <summary>
+            Returns the minimum number of required bottom (input) Blobs: input
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.UnPoolingLayer1`1.MaxBottomBlobs">
+            <summary>
+            Returns the maximum number of required bottom (input) Blobs: input, mask (only when using MAX)
+            </summary>
+        </member>
+        <member name="P:MyCaffe.layers.beta.UnPoolingLayer1`1.ExactNumTopBlobs">
+            <summary>
+            Returns the required number of top (output) Blobs: input
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer1`1.LayerSetUp(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Setup the layer for use with both Engine.CAFFE and Engine.CUDNN modes.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer1`1.Reshape(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Reshape the bottom (input) and top (output) blobs.
+            </summary>
+            <param name="colBottom">Specifies the collection of bottom (input) Blobs.</param>
+            <param name="colTop">Specifies the collection of top (output) Blobs.</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer1`1.forward(MyCaffe.common.BlobCollection{`0},MyCaffe.common.BlobCollection{`0})">
+            <summary>
+            Run the Forward computation using the Engine.CAFFE mode only.
+            </summary>
+            <param name="colBottom">bottom input Blob vector (length 1).</param>
+            <param name="colTop">top output Blob vector (length 1).</param>
+        </member>
+        <member name="M:MyCaffe.layers.beta.UnPoolingLayer1`1.backward(MyCaffe.common.BlobCollection{`0},System.Collections.Generic.List{System.Boolean},MyCaffe.common.BlobCollection{`0})">
+            @brief Currently, not implemented.
+        </member>
+    </members>
+</doc>

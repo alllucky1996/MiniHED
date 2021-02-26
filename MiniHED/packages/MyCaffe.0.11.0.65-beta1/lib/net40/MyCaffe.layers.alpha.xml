@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.layers.alpha</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.layers.alpha.LayerFactory">
+            <summary>
+            The LayerFactor is responsible for creating all layers implemented in the MyCaffe.layers.ssd namespace.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.layers.alpha.LayerFactory.CreateDouble(MyCaffe.common.CudaDnn{System.Double},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.CancelEvent,MyCaffe.basecode.IXImageDatabaseBase)">
+            <summary>
+            Create the layers when using the <i>double</i> base type.
+            </summary>
+            <param name="cuda">Specifies the connection to the low-level CUDA interfaces.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="p">Specifies the layer parameter.</param>
+            <param name="evtCancel">Specifies the cancellation event.</param>
+            <param name="imgDb">Specifies an interface to the image database, who's use is optional.</param>
+            <returns>If supported, the layer is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.layers.alpha.LayerFactory.CreateSingle(MyCaffe.common.CudaDnn{System.Single},MyCaffe.basecode.Log,MyCaffe.param.LayerParameter,MyCaffe.basecode.CancelEvent,MyCaffe.basecode.IXImageDatabaseBase)">
+            <summary>
+            Create the layers when using the <i>float</i> base type.
+            </summary>
+            <param name="cuda">Specifies the connection to the low-level CUDA interfaces.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="p">Specifies the layer parameter.</param>
+            <param name="evtCancel">Specifies the cancellation event.</param>
+            <param name="imgDb">Specifies an interface to the image database, who's use is optional.</param>
+            <returns>If supported, the layer is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+    </members>
+</doc>

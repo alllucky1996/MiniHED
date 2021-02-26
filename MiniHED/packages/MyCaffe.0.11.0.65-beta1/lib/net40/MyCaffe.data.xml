@@ -1,0 +1,333 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.data</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.data.BinaryFile">
+            <summary>
+            The BinaryFile class is used to manage binary files used by the MNIST dataset creator.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.BinaryFile.#ctor(System.String)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strFile">Specifies the filename.</param>
+        </member>
+        <member name="M:MyCaffe.data.BinaryFile.Dispose">
+            <summary>
+            Release all resources.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.BinaryFile.Reader">
+            <summary>
+            Returns the binary reader used.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.BinaryFile.ReadUInt32">
+            <summary>
+            Reads in a UINT32 and performs an endian swap.
+            </summary>
+            <returns>The endian swapped UINT32 is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.data.BinaryFile.ReadBytes(System.Int32)">
+            <summary>
+            Reads bytes from the file.
+            </summary>
+            <param name="nCount">Specifies the number of bytes to read.</param>
+            <returns>The bytes read are returned in an array.</returns>
+        </member>
+        <member name="T:MyCaffe.data.CiFar10DataLoader">
+            <summary>
+            The CiFar10DataLoader is used to create the CIFAR-10 dataset and load it into the database managed by the MyCaffe Image Database.
+            </summary>
+            <remarks>
+            @see [CIFAR-10 Dataset](https://www.cs.toronto.edu/~kriz/cifar.html)
+            </remarks>
+        </member>
+        <member name="E:MyCaffe.data.CiFar10DataLoader.OnProgress">
+            <summary>
+            The OnProgress event fires during the creation process to show the progress.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.data.CiFar10DataLoader.OnError">
+            <summary>
+            The OnError event fires when an error occurs.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.data.CiFar10DataLoader.OnCompleted">
+            <summary>
+            The OnComplete event fires once the dataset creation has completed.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.CiFar10DataLoader.#ctor(MyCaffe.data.CiFar10DataParameters,MyCaffe.basecode.Log,MyCaffe.basecode.CancelEvent)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="param">Specifies the creation parameters.</param>
+            <param name="log">Specifies the output log used to show status updates.</param>
+            <param name="evtCancel">Specifies the cancel event used to abort the creation process.</param>
+        </member>
+        <member name="M:MyCaffe.data.CiFar10DataLoader.LoadDatabase(System.Int32)">
+            <summary>
+            Create the dataset and load it into the database.
+            </summary>
+            <param name="nCreatorID">Specifies the creator ID.</param>
+            <returns>On successful creation, <i>true</i> is returned, otherwise <i>false</i> is returned on abort.</returns>
+        </member>
+        <member name="T:MyCaffe.data.CiFar10DataParameters">
+            <summary>
+            Contains the dataset parameters used to create the CIFAR-10 dataset.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.CiFar10DataParameters.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strDataBatchFile1">Specifies the first training dataset file 'data_batch_1.bin'.</param>
+            <param name="strDataBatchFile2">Specifies the second training dataset file 'data_batch_2.bin'.</param>
+            <param name="strDataBatchFile3">Specifies the third training dataset file 'data_batch_3.bin'.</param>
+            <param name="strDataBatchFile4">Specifies the fourth training dataset file 'data_batch_4.bin'.</param>
+            <param name="strDataBatchFile5">Specifies the fifth training dataset file 'data_batch_5.bin'</param>
+            <param name="strTestBatchFile">Specifies the testing dataset file 'test_batch.bin'.</param>
+        </member>
+        <member name="P:MyCaffe.data.CiFar10DataParameters.DataBatchFile1">
+            <summary>
+            Specifies the first training dataset file 'data_batch_1.bin'
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.CiFar10DataParameters.DataBatchFile2">
+            <summary>
+            Specifies the second training dataset file 'data_batch_2.bin'
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.CiFar10DataParameters.DataBatchFile3">
+            <summary>
+            Specifies the third training dataset file 'data_batch_3.bin'
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.CiFar10DataParameters.DataBatchFile4">
+            <summary>
+            Specifies the fourth training dataset file 'data_batch_4.bin'
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.CiFar10DataParameters.DataBatchFile5">
+            <summary>
+            Specifies the fifth training dataset file 'data_batch_5.bin'
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.CiFar10DataParameters.TestBatchFile">
+            <summary>
+            Specifies the testing dataset file 'test_batch.bin'
+            </summary>
+        </member>
+        <member name="T:MyCaffe.data.MnistDataLoader">
+            <summary>
+            The MnistDataLoader is used to create the MNIST dataset and load it into the database managed by the MyCaffe Image Database.
+            </summary>
+            <remarks>
+            @see [MNIST Dataset](http://yann.lecun.com/exdb/mnist/)
+            </remarks>
+        </member>
+        <member name="E:MyCaffe.data.MnistDataLoader.OnProgress">
+            <summary>
+            The OnProgress event fires during the creation process to show the progress.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.data.MnistDataLoader.OnError">
+            <summary>
+            The OnError event fires when an error occurs.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.data.MnistDataLoader.OnCompleted">
+            <summary>
+            The OnComplete event fires once the dataset creation has completed.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.MnistDataLoader.#ctor(MyCaffe.data.MnistDataParameters,MyCaffe.basecode.Log,MyCaffe.basecode.CancelEvent)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="param">Specifies the creation parameters.</param>
+            <param name="log">Specifies the output log used to show status updates.</param>
+            <param name="evtCancel">Specifies the cancel event used to abort the creation process.</param>
+        </member>
+        <member name="M:MyCaffe.data.MnistDataLoader.LoadDatabase(System.Int32)">
+            <summary>
+            Create the dataset and load it into the database.
+            </summary>
+            <param name="nCreatorID">Specifies the creator ID.</param>
+            <returns>On successful creation, <i>true</i> is returned, otherwise <i>false</i> is returned on abort.</returns>
+        </member>
+        <member name="T:MyCaffe.data.MnistDataParameters">
+            <summary>
+            Contains the dataset parameters used to create the MNIST dataset.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.MnistDataParameters.#ctor(System.String,System.String,System.String,System.String,System.Boolean,System.String)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strTrainImages">Specifies the training image file 'train-images-idx3-ubyte.gz'.</param>
+            <param name="strTrainLabels">Specifies the training label file 'train-labels-idx1.ubyte.gz'.</param>
+            <param name="strTestImages">Specifies the testing image file 't10k-images-idx3-ubyte.gz'.</param>
+            <param name="strTestLabels">Specifies the testing label file 't10k-labels-idx1-ubyte.gz'.</param>
+            <param name="bExportToFileOnly">Specifies to extract and export the *.gz files to all images files contained within each *.gz.</param>
+            <param name="strExportPath">Specifies the path where the images are to be exported.</param>
+        </member>
+        <member name="P:MyCaffe.data.MnistDataParameters.TrainImagesFile">
+            <summary>
+            Specifies the training image file 'train-images-idx3-ubyte.gz'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.MnistDataParameters.TrainLabelsFile">
+            <summary>
+            Specifies the training label file 'train-labels-idx1.ubyte.gz'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.MnistDataParameters.TestImagesFile">
+            <summary>
+            Specifies the testing image file 't10k-images-idx3-ubyte.gz'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.MnistDataParameters.TestLabelsFile">
+            <summary>
+            Specifies the testing label file 't10k-labels-idx1-ubyte.gz'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.MnistDataParameters.ExportPath">
+            <summary>
+            Specifies where to export the files when 'ExportToFile' = <i>true</i>.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.MnistDataParameters.ExportToFile">
+            <summary>
+            Specifies to export the images to a folder.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.data.ProgressArgs">
+            <summary>
+            Defines the arguments sent to the OnProgress and OnError events.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.ProgressArgs.#ctor(MyCaffe.data.ProgressInfo)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="pi">Specifies the progress information.</param>
+        </member>
+        <member name="P:MyCaffe.data.ProgressArgs.Progress">
+            <summary>
+            Returns the progress information.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.data.ProgressInfo">
+            <summary>
+            The ProgressInfo is used when reporting the overall progress of creating a dataset.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.ProgressInfo.#ctor(System.Int32,System.Int32,System.String,System.Exception,System.Nullable{System.Boolean})">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="nIdx">Specifies the current index in the process.</param>
+            <param name="nTotal">Specifies the total items to process.</param>
+            <param name="str">Specifies the message to display.</param>
+            <param name="err">Specifies an error if one occurred, or null.</param>
+            <param name="bAlive">Specifies whether or not the process is alive.</param>
+        </member>
+        <member name="P:MyCaffe.data.ProgressInfo.Percentage">
+            <summary>
+            Returns the percentage of the current process.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.ProgressInfo.Message">
+            <summary>
+            Returns the message as a string.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.ProgressInfo.Error">
+            <summary>
+            Returns the error if one occurred, or null.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.ProgressInfo.Alive">
+            <summary>
+            Returns whether or not the process is alive or not.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.data.VOCDataLoader">
+            <summary>
+            The VOCDataLoader is used to create the VOC0712 (VOC2007 and VOC2012) dataset and load it into the database managed by the MyCaffe Image Database.
+            </summary>
+            <remarks>
+            @see [VOC Dataset](http://host.robots.ox.ac.uk/pascal/VOC/)
+            </remarks>
+        </member>
+        <member name="E:MyCaffe.data.VOCDataLoader.OnProgress">
+            <summary>
+            The OnProgress event fires during the creation process to show the progress.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.data.VOCDataLoader.OnError">
+            <summary>
+            The OnError event fires when an error occurs.
+            </summary>
+        </member>
+        <member name="E:MyCaffe.data.VOCDataLoader.OnCompleted">
+            <summary>
+            The OnComplete event fires once the dataset creation has completed.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.VOCDataLoader.#ctor(MyCaffe.data.VOCDataParameters,MyCaffe.basecode.Log,MyCaffe.basecode.CancelEvent)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="param">Specifies the creation parameters.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="evtCancel">Specfies the cancel event used to cancel the process.</param>
+        </member>
+        <member name="M:MyCaffe.data.VOCDataLoader.LoadDatabase(System.Int32)">
+            <summary>
+            Create the dataset and load it into the database.
+            </summary>
+            <param name="nCreatorID">Specifies the creator ID.</param>
+            <returns>On successful creation, <i>true</i> is returned, otherwise <i>false</i> is returned on abort.</returns>
+        </member>
+        <member name="T:MyCaffe.data.VOCDataParameters">
+            <summary>
+            Contains the dataset parameters used to create the VOC0712 dataset.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.data.VOCDataParameters.#ctor(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strDataBatchFileTrain2007">Specifies the training file 'VOCtrain_06-Nov-2007.tar'.</param>
+            <param name="strDataBatchFileTrain2012">Specifies the training file 'VOCtrain_11-May-2012.tar'.</param>
+            <param name="strDataBatchFileTest2007">"Specifies the testing file 'VOCtest_06-Nov-2007.tar'.</param>
+            <param name="bExtractFiles">Specifies whether or not to extract the tar files (when false, the files must have already been extracted at least once).</param>
+        </member>
+        <member name="P:MyCaffe.data.VOCDataParameters.DataBatchFileTrain2007">
+            <summary>
+            Returns the training file 'VOCtrain_06-Nov-2007.tar'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.VOCDataParameters.DataBatchFileTrain2012">
+            <summary>
+            Specifies the training file 'OCtrain_11-May-2012.tar'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.VOCDataParameters.DataBatchFileTest2007">
+            <summary>
+            Returns the testing file 'VOCtest_06-Nov-2007.tar'.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.data.VOCDataParameters.ExtractFiles">
+            <summary>
+            Returns whether or not to extract the tar files.
+            </summary>
+        </member>
+    </members>
+</doc>

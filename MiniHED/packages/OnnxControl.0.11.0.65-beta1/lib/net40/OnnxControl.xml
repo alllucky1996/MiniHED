@@ -1,0 +1,1760 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OnnxControl</name>
+    </assembly>
+    <members>
+        <member name="T:OnnxControl.OnnxDefinitions">
+            <summary>
+            The OnnxDefinitions contains standard ONNX definitions that are missed during the conversion from proto to .cs.
+            </summary>
+        </member>
+        <member name="T:OnnxControl.OnnxDefinitions.DataType">
+            <summary>
+            Defines the ONNX basic data types as defined  by TensorProto on onnx.proto3.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.UNDEFINED">
+            <summary>
+            Specifies an undefined data type.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.FLOAT">
+            <summary>
+            Specifies a basic float.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.UINT8">
+            <summary>
+            Specifies a basic unint8.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.INT8">
+            <summary>
+            Specifies a basic int8
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.UINT16">
+            <summary>
+            Specifies a basic unint16.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.INT16">
+            <summary>
+            Specifies a basic int16.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.INT32">
+            <summary>
+            Specifies a basic int32 (or int).
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.INT64">
+            <summary>
+            Specifies a basic int64 (or long).
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.STRING">
+            <summary>
+            Specifies a basic string.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.BOOL">
+            <summary>
+            Specifies a basic boolean (true or false).
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.FLOAT16">
+            <summary>
+            IEEE754 half-precision floating-point format (16 bits wide).
+            This format has 1 sign bit, 5 exponent bits, and 10 mantissa bits.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.DOUBLE">
+            <summary>
+            Specifies a double value.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.UINT32">
+            <summary>
+            Specifies an unsigned int.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.UINT64">
+            <summary>
+            Specifies an unsigned long.
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.COMPLEX64">
+            <summary>
+            Complex with float32 real and imaginary components
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.COMPLEX128">
+            <summary>
+            Complex with float64 real and imaginary components
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.DataType.BFLOAT16">
+            <summary>
+            Non-IEEE floating-point format based on IEEE754 single-precision
+            floating-point number truncated to 16 bits.
+            This format has 1 sign bit, 8 exponent bits, and 7 mantissa bits.
+            </summary>
+        </member>
+        <member name="T:OnnxControl.OnnxDefinitions.OPERATORS">
+            <summary>
+            Defines the operators that are converted to string as specified as the NodeProto OpType value.
+            </summary>
+            <remarks>
+            @see [ONNX Operators](https://github.com/onnx/onnx/blob/master/docs/Operators.md) for more documentation on operators.
+            </remarks>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Abs">
+            <summary>
+            @see [Abs Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Abs)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Add">
+            <summary>
+            @see [Add Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Add)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.ArgMax">
+            <summary>
+            @see [ArgMax Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#ArgMax)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.AveragePool">
+            <summary>
+            @see [AveragePool Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#AveragePool)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.BatchNormalization">
+            <summary>
+            @see [BatchNormalization Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#BatchNormalization)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Clip">
+            <summary>
+            @see [Clip Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Clip)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Concat">
+            <summary>
+            @see [Concat Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Concat)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Conv">
+            <summary>
+            @see [Conv Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Conv)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Dropout">
+            <summary>
+            @see [Dropout Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Dropout)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Elu">
+            <summary>
+            @see [Elu Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Elu)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Exp">
+            <summary>
+            @see [Exp Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Exp)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Flatten">
+            <summary>
+            @see [Flatten Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Flatten)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Gemm">
+            <summary>
+            @see [Gemm Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Gemm)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.GlobalAveragePool">
+            <summary>
+            @see [GlobalAveragePool Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#GlobalAveragePool)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.GlobalMaxPool">
+            <summary>
+            @see [GlobalMaxPool Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#GlobalMaxPool)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.LRN">
+            <summary>
+            @see [LRN Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#LRN)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.LSTM">
+            <summary>
+            @see [LSTM Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#LSTM)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.LeakyRelu">
+            <summary>
+            @see [LeakyReLU Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#LeakyRelu)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Log">
+            <summary>
+            @see [Log Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Log)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Max">
+            <summary>
+            @see [Max Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Max)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.MaxPool">
+            <summary>
+            @see [MaxPool Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#MaxPool)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Mul">
+            <summary>
+            @see [Mul Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Mul)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.OneHot">
+            <summary>
+            @see [OneHot Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#OneHot)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.PRelu">
+            <summary>
+            @see [PRelu Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#PRelu)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Pow">
+            <summary>
+            @see [Pow Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Pow)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.RNN">
+            <summary>
+            @see [RNN Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#RNN)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.ReduceMax">
+            <summary>
+            @see [ReduceMax Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#ReduceMax)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.ReduceSum">
+            <summary>
+            @see [ReduceSum Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#ReduceSum)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.ReduceSumSquare">
+            <summary>
+            @see [ReduceSumSquare Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#ReduceSumSquare)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Relu">
+            <summary>
+            @see [Relu Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Relu)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Reshape">
+            <summary>
+            @see [Reshape Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Reshape)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Sigmoid">
+            <summary>
+            @see [Sigmoid Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Sigmoid)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Slice">
+            <summary>
+            @see [Slice Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Slice)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Softmax">
+            <summary>
+            @see [Softmax Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Softmax)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Split">
+            <summary>
+            @see [Split Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Split)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Sum">
+            <summary>
+            @see [Sum Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Sum)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Tanh">
+            <summary>
+            @see [Tanh Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Tanh)
+            </summary>
+        </member>
+        <member name="F:OnnxControl.OnnxDefinitions.OPERATORS.Tile">
+            <summary>
+            @see [Tile Operator](https://github.com/onnx/onnx/blob/master/docs/Operators.md#Tile)
+            </summary>
+        </member>
+        <member name="M:OnnxControl.OnnxDefinitions.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:OnnxControl.OnnxDefinitions.GetVersion(OnnxControl.OnnxDefinitions.OPERATORS)">
+            <summary>
+            Returns the version of a given operator, or -1 if the version information has yet to be added.
+            </summary>
+            <param name="op">Specifies the operator who's version to retrieve.</param>
+            <returns>The ONNX operator set version is returned for the operator specified.</returns>
+        </member>
+        <member name="M:OnnxControl.OnnxDefinitions.GetString(OnnxControl.OnnxDefinitions.OPERATORS)">
+            <summary>
+            Returns the string representation of the operator.
+            </summary>
+            <param name="op">Specifies the operator who's string to retrieve.</param>
+            <returns>The string representation of the operator used by ONNX is returned.</returns>
+        </member>
+        <member name="T:OnnxControl.PersistOnnx">
+            <summary>
+            The PersistOnnx class is used to load and save models (including weights) in the .onnx format.
+            </summary>
+            <remarks>
+            @see [ONNX Syntax](https://github.com/onnx/onnx/blob/master/docs/IR.md) for more information on the ONNX model file format.
+            </remarks>
+        </member>
+        <member name="M:OnnxControl.PersistOnnx.#ctor">
+            <summary>
+            The PersistOnnx constructor.
+            </summary>
+        </member>
+        <member name="P:OnnxControl.PersistOnnx.LatestSupportedVersion">
+            <summary>
+            Returns the latest ONNX version supported.
+            </summary>
+        </member>
+        <member name="M:OnnxControl.PersistOnnx.Load(System.String)">
+            <summary>
+            Load an .onnx model file and return the data in an Onnx.ModelProto.
+            </summary>
+            <param name="strFile">Specifies the .onnx model file.</param>
+            <returns>The loaded model is returned in the Onnx.ModelProto which includes the model architecture, weights and optionally, input data.</returns>
+        </member>
+        <member name="M:OnnxControl.PersistOnnx.Save(Onnx.ModelProto,System.String)">
+            <summary>
+            Save the data within a Onnx.ModelProto to an .onnx model file.
+            </summary>
+            <param name="model">Specifies the model data.</param>
+            <param name="strFile">Specifies the output file where the ModelProto data is to be saved.</param>
+        </member>
+        <member name="T:Onnx.OnnxReflection">
+            <summary>Holder for reflection information generated from onnx.proto3</summary>
+        </member>
+        <member name="P:Onnx.OnnxReflection.Descriptor">
+            <summary>File descriptor for onnx.proto3</summary>
+        </member>
+        <member name="T:Onnx.Version">
+             <summary>
+             Versioning
+            
+             ONNX versioning is specified in docs/IR.md and elaborated on in docs/Versioning.md
+            
+             To be compatible with both proto2 and proto3, we will use a version number
+             that is not defined by the default value but an explicit enum number.
+             </summary>
+        </member>
+        <member name="F:Onnx.Version.StartVersion">
+            <summary>
+            proto3 requires the first enum value to be zero.
+            We add this just to appease the compiler.
+            </summary>
+        </member>
+        <member name="F:Onnx.Version.IrVersion20171010">
+            <summary>
+            The version field is always serialized and we will use it to store the
+            version that the  graph is generated from. This helps us set up version
+            control. 
+            For the IR, we are using simple numbers starting with 0x00000001,
+            which was the version we published on Oct 10, 2017.
+            </summary>
+        </member>
+        <member name="F:Onnx.Version.IrVersion20171030">
+            <summary>
+            IR_VERSION 2 published on Oct 30, 2017
+            - Added type discriminator to AttributeProto to support proto3 users
+            </summary>
+        </member>
+        <member name="F:Onnx.Version.IrVersion2017113">
+            <summary>
+            IR VERSION 3 published on Nov 3, 2017
+            - For operator versioning:
+               - Added new message OperatorSetIdProto
+               - Added opset_import in ModelProto
+            - For vendor extensions, added domain in NodeProto
+            </summary>
+        </member>
+        <member name="F:Onnx.Version.IrVersion2019122">
+            <summary>
+            IR VERSION 4 published on Jan 22, 2019
+            - Relax constraint that initializers should be a subset of graph inputs
+            - Add type BFLOAT16
+            </summary>
+        </member>
+        <member name="F:Onnx.Version.IrVersion2019318">
+            <summary>
+            IR VERSION 5 published on March 18, 2019
+            - Add message TensorAnnotation.
+            - Add quantization annotation in GraphProto to map tensor with its scale and zero point quantization parameters.
+            </summary>
+        </member>
+        <member name="F:Onnx.Version.IrVersion2019919">
+            <summary>
+            IR VERSION 6 published on Sep 19, 2019
+            - Add support for sparse tensor constants stored in model.
+              - Add message SparseTensorProto
+              - Add sparse initializers
+            </summary>
+        </member>
+        <member name="F:Onnx.Version.IrVersion">
+            <summary>
+            IR VERSION 7 published on &lt;TBD>
+            - Add support to allow function body graph to rely on multiple external opreator sets.
+            - Add a list to promote inference graph's initializers to global and
+              mutable variables. Global variables are visible in all graphs of the
+              stored models.
+            - Add message TrainingInfoProto to store initialization
+              method and training algorithm. The execution of TrainingInfoProto
+              can modify the values of mutable variables.
+            - Make inference graph callable from TrainingInfoProto via GraphCall operator.
+            </summary>
+        </member>
+        <member name="T:Onnx.AttributeProto">
+             <summary>
+             Attributes
+            
+             A named attribute containing either singular float, integer, string, graph,
+             and tensor values, or repeated float, integer, string, graph, and tensor values.
+             An AttributeProto MUST contain the name field, and *only one* of the
+             following content fields, effectively enforcing a C/C++ union equivalent.
+             </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.Name">
+            <summary>
+            The name field MUST be present for this version of the IR.
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.RefAttrNameFieldNumber">
+            <summary>Field number for the "ref_attr_name" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.RefAttrName">
+            <summary>
+            if ref_attr_name is not empty, ref_attr_name is the attribute name in parent function.
+            In this case, this AttributeProto does not contain data, and it's a reference of attribute
+            in parent scope.
+            NOTE: This should ONLY be used in function (sub-graph). It's invalid to be used in main graph.
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.DocString">
+            <summary>
+            A human-readable documentation for this attribute. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.TypeFieldNumber">
+            <summary>Field number for the "type" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.Type">
+            <summary>
+            The type field MUST be present for this version of the IR.
+            For 0.0.1 versions of the IR, this field was not defined, and
+            implementations needed to use has_field heuristics to determine
+            which value field was in use.  For IR_VERSION 0.0.2 or later, this
+            field MUST be set and match the f|i|s|t|... field in use.  This
+            change was made to accommodate proto3 implementations.
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.FFieldNumber">
+            <summary>Field number for the "f" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.F">
+            <summary>
+            Exactly ONE of the following fields must be present for this version of the IR
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.IFieldNumber">
+            <summary>Field number for the "i" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.I">
+            <summary>
+            int
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.SFieldNumber">
+            <summary>Field number for the "s" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.S">
+            <summary>
+            UTF-8 string
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.TFieldNumber">
+            <summary>Field number for the "t" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.T">
+            <summary>
+            tensor value
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.GFieldNumber">
+            <summary>Field number for the "g" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.G">
+            <summary>
+            graph
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.SparseTensorFieldNumber">
+            <summary>Field number for the "sparse_tensor" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.SparseTensor">
+            <summary>
+            sparse tensor value
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.FloatsFieldNumber">
+            <summary>Field number for the "floats" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.Floats">
+            <summary>
+            list of floats
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.IntsFieldNumber">
+            <summary>Field number for the "ints" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.Ints">
+            <summary>
+            list of ints
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.StringsFieldNumber">
+            <summary>Field number for the "strings" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.Strings">
+            <summary>
+            list of UTF-8 strings
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.TensorsFieldNumber">
+            <summary>Field number for the "tensors" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.Tensors">
+            <summary>
+            list of tensors
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.GraphsFieldNumber">
+            <summary>Field number for the "graphs" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.Graphs">
+            <summary>
+            list of graph
+            </summary>
+        </member>
+        <member name="F:Onnx.AttributeProto.SparseTensorsFieldNumber">
+            <summary>Field number for the "sparse_tensors" field.</summary>
+        </member>
+        <member name="P:Onnx.AttributeProto.SparseTensors">
+            <summary>
+            list of sparse tensors
+            </summary>
+        </member>
+        <member name="T:Onnx.AttributeProto.Types">
+            <summary>Container for nested types declared in the AttributeProto message type.</summary>
+        </member>
+        <member name="T:Onnx.AttributeProto.Types.AttributeType">
+            <summary>
+            Note: this enum is structurally identical to the OpSchema::AttrType
+            enum defined in schema.h.  If you rev one, you likely need to rev the other.
+            </summary>
+        </member>
+        <member name="T:Onnx.ValueInfoProto">
+            <summary>
+            Defines information on value, including the name, the type, and
+            the shape of the value.
+            </summary>
+        </member>
+        <member name="F:Onnx.ValueInfoProto.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:Onnx.ValueInfoProto.Name">
+            <summary>
+            This field MUST be present in this version of the IR.
+            </summary>
+        </member>
+        <member name="F:Onnx.ValueInfoProto.TypeFieldNumber">
+            <summary>Field number for the "type" field.</summary>
+        </member>
+        <member name="P:Onnx.ValueInfoProto.Type">
+            <summary>
+            This field MUST be present in this version of the IR for
+            inputs and outputs of the top-level graph.
+            </summary>
+        </member>
+        <member name="F:Onnx.ValueInfoProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.ValueInfoProto.DocString">
+            <summary>
+            A human-readable documentation for this value. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="T:Onnx.NodeProto">
+             <summary>
+             Nodes
+            
+             Computation graphs are made up of a DAG of nodes, which represent what is
+             commonly called a "layer" or "pipeline stage" in machine learning frameworks.
+            
+             For example, it can be a node of type "Conv" that takes in an image, a filter 
+             tensor and a bias tensor, and produces the convolved output.
+             </summary>
+        </member>
+        <member name="F:Onnx.NodeProto.InputFieldNumber">
+            <summary>Field number for the "input" field.</summary>
+        </member>
+        <member name="P:Onnx.NodeProto.Input">
+            <summary>
+            namespace Value
+            </summary>
+        </member>
+        <member name="F:Onnx.NodeProto.OutputFieldNumber">
+            <summary>Field number for the "output" field.</summary>
+        </member>
+        <member name="P:Onnx.NodeProto.Output">
+            <summary>
+            namespace Value
+            </summary>
+        </member>
+        <member name="F:Onnx.NodeProto.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:Onnx.NodeProto.Name">
+            <summary>
+            An optional identifier for this node in a graph.
+            This field MAY be absent in ths version of the IR.
+            </summary>
+        </member>
+        <member name="F:Onnx.NodeProto.OpTypeFieldNumber">
+            <summary>Field number for the "op_type" field.</summary>
+        </member>
+        <member name="P:Onnx.NodeProto.OpType">
+            <summary>
+            The symbolic identifier of the Operator to execute.
+            </summary>
+        </member>
+        <member name="F:Onnx.NodeProto.DomainFieldNumber">
+            <summary>Field number for the "domain" field.</summary>
+        </member>
+        <member name="P:Onnx.NodeProto.Domain">
+            <summary>
+            The domain of the OperatorSet that specifies the operator named by op_type.
+            </summary>
+        </member>
+        <member name="F:Onnx.NodeProto.AttributeFieldNumber">
+            <summary>Field number for the "attribute" field.</summary>
+        </member>
+        <member name="P:Onnx.NodeProto.Attribute">
+            <summary>
+            Additional named attributes.
+            </summary>
+        </member>
+        <member name="F:Onnx.NodeProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.NodeProto.DocString">
+            <summary>
+            A human-readable documentation for this node. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="T:Onnx.TrainingInfoProto">
+             <summary>
+             Training information
+             TrainingInfoProto stores information for training a model.
+             In particular, this defines two functionalities: an initialization-step
+             and a training-algorithm-step. Initialization resets the model
+             back to its original state as if no training has been consumed.
+             Training algorithm improves the model based on input data.
+            
+             The semantics of the initialization-step is that the initializers
+             in ModelProto.graph and in TrainingInfoProto.algorithm are first
+             initialized as specified by the initializers in the graph, and then
+             updated by the "initialization_binding" in every instance in
+             ModelProto.training_info.
+            
+             The field "algorithm" defines a computation graph which represents a
+             training algorithm's step. After the execution of a
+             TrainingInfoProto.algorithm, the initializers specified by "update_binding"
+             may be immediately updated. If the targeted training algorithm contains
+             consecutive update stages (such as block coordinate descent methods),
+             the user needs to create a TrainingInfoProto for each stage.
+             </summary>
+        </member>
+        <member name="F:Onnx.TrainingInfoProto.InitializationFieldNumber">
+            <summary>Field number for the "initialization" field.</summary>
+        </member>
+        <member name="P:Onnx.TrainingInfoProto.Initialization">
+             <summary>
+             This field describes a graph to compute the initial tensors
+             upon starting the training process. Initialization graph has no input
+             and can have multiple outputs. Usually, trainable tensors in neural
+             networks are randomly initialized. To achieve that, for each tensor,
+             the user can put a random number operator such as RandomNormal or
+             RandomUniform in TrainingInfoProto.initialization.node and assign its
+             random output to the specific tensor using "initialization_binding".
+             This graph can also set the initializers in "algorithm" in the same
+             TrainingInfoProto; a use case is resetting the number of training
+             iteration to zero.
+            
+             By default, this field is an empty graph and its evaluation does not
+             produce any output.
+             </summary>
+        </member>
+        <member name="F:Onnx.TrainingInfoProto.AlgorithmFieldNumber">
+            <summary>Field number for the "algorithm" field.</summary>
+        </member>
+        <member name="P:Onnx.TrainingInfoProto.Algorithm">
+             <summary>
+             This field represents a training algorithm step. Given required inputs,
+             it computes outputs to update initializers in its own or inference graph's
+             initializer lists. In general, this graph contains loss node, gradient node,
+             optimizer node, increment of iteration count, and some calls to the inference
+             graph.
+            
+             The field algorithm.node is the only place the user can use GraphCall
+             operator. The only callable graph is the one stored in ModelProto.graph.
+            
+             By default, this field is an empty graph and its evaluation does not
+             produce any output.
+             </summary>
+        </member>
+        <member name="F:Onnx.TrainingInfoProto.InitializationBindingFieldNumber">
+            <summary>Field number for the "initialization_binding" field.</summary>
+        </member>
+        <member name="P:Onnx.TrainingInfoProto.InitializationBinding">
+             <summary>
+             This field specifies the bindings from the outputs of "initialization" to
+             some initializers in "ModelProto.graph.initializer" and 
+             the "algorithm.initializer" in the same TrainingInfoProto.
+             See "update_binding" below for details.
+            
+             By default, this field is empty and no initializer would be changed
+             by the execution of "initialization".
+             </summary>
+        </member>
+        <member name="F:Onnx.TrainingInfoProto.UpdateBindingFieldNumber">
+            <summary>Field number for the "update_binding" field.</summary>
+        </member>
+        <member name="P:Onnx.TrainingInfoProto.UpdateBinding">
+             <summary>
+             Gradient-based training is usually an iterative procedure. In one gradient
+             descent iteration, we apply
+            
+             x = x - r * g
+            
+             where "x" is the optimized tensor, "r" stands for learning rate, and "g" is
+             gradient of "x" with respect to a chosen loss. To avoid adding assignments
+             into the training graph, we split the update equation into
+            
+             y = x - r * g
+             x = y
+            
+             The user needs to save "y = x - r * g" into TrainingInfoProto.algorithm. To
+             tell that "y" should be assigned to "x", the field "update_binding" may
+             contain a key-value pair of strings, "x" (key of StringStringEntryProto)
+             and "y" (value of StringStringEntryProto).
+             For a neural network with multiple trainable (mutable) tensors, there can
+             be multiple key-value pairs in "update_binding".
+            
+             The initializers appears as keys in "update_binding" are considered
+             mutable and globally-visible variables. This implies some behaviors
+             as described below.
+            
+              1. We have only unique keys in all "update_binding"s so that two global
+                 variables may not have the same name. This ensures that one
+                 global variable is assigned up to once.
+              2. The keys must appear in names of "ModelProto.graph.initializer" or
+                 "TrainingInfoProto.algorithm.initializer".
+              3. The values must be output names of "algorithm".
+              4. If an optional input of a graph is omitted when using GraphCall, the
+                 global variable with the same name may be used.
+              5. When using GraphCall, the users always can pass values to optional 
+                 inputs of the called graph even if the associated initializers appears
+                 as keys in "update_binding"s.
+              6. The graphs in TrainingInfoProto's can use global variables as
+                 their operator inputs.
+              7. Mutable variables are initialized to the value specified by the
+                 corresponding initializer, and then potentially updated by
+                 "initializer_binding"s and "update_binding"s in "TrainingInfoProto"s.
+            
+             This field usually contains names of trainable tensors
+             (in ModelProto.graph), optimizer states such as momentums in advanced
+             stochastic gradient methods (in TrainingInfoProto.graph),
+             and number of training iterations (in TrainingInfoProto.graph).
+            
+             By default, this field is empty and no initializer would be changed
+             by the execution of "algorithm".
+             </summary>
+        </member>
+        <member name="T:Onnx.ModelProto">
+             <summary>
+             Models
+            
+             ModelProto is a top-level file/container format for bundling a ML model and
+             associating its computation graph with metadata.
+            
+             The semantics of the model are described by the associated GraphProto's.
+             </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.IrVersionFieldNumber">
+            <summary>Field number for the "ir_version" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.IrVersion">
+            <summary>
+            The version of the IR this model targets. See Version enum above.
+            This field MUST be present.
+            </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.OpsetImportFieldNumber">
+            <summary>Field number for the "opset_import" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.OpsetImport">
+             <summary>
+             The OperatorSets this model relies on.
+             All ModelProtos MUST have at least one entry that
+             specifies which version of the ONNX OperatorSet is
+             being imported.
+            
+             All nodes in the ModelProto's graph will bind against the operator
+             with the same-domain/same-op_type operator with the HIGHEST version
+             in the referenced operator sets.
+             </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.ProducerNameFieldNumber">
+            <summary>Field number for the "producer_name" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.ProducerName">
+            <summary>
+            The name of the framework or tool used to generate this model.
+            This field SHOULD be present to indicate which implementation/tool/framework
+            emitted the model.
+            </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.ProducerVersionFieldNumber">
+            <summary>Field number for the "producer_version" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.ProducerVersion">
+            <summary>
+            The version of the framework or tool used to generate this model.
+            This field SHOULD be present to indicate which implementation/tool/framework
+            emitted the model.
+            </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.DomainFieldNumber">
+            <summary>Field number for the "domain" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.Domain">
+             <summary>
+             Domain name of the model.
+             We use reverse domain names as name space indicators. For example:
+             `com.facebook.fair` or `com.microsoft.cognitiveservices`
+            
+             Together with `model_version` and GraphProto.name, this forms the unique identity of
+             the graph.
+             </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.ModelVersionFieldNumber">
+            <summary>Field number for the "model_version" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.ModelVersion">
+            <summary>
+            The version of the graph encoded. See Version enum below.
+            </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.DocString">
+            <summary>
+            A human-readable documentation for this model. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.GraphFieldNumber">
+            <summary>Field number for the "graph" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.Graph">
+            <summary>
+            The parameterized graph that is evaluated to execute the model.
+            </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.MetadataPropsFieldNumber">
+            <summary>Field number for the "metadata_props" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.MetadataProps">
+            <summary>
+            Named metadata values; keys should be distinct.
+            </summary>
+        </member>
+        <member name="F:Onnx.ModelProto.TrainingInfoFieldNumber">
+            <summary>Field number for the "training_info" field.</summary>
+        </member>
+        <member name="P:Onnx.ModelProto.TrainingInfo">
+             <summary>
+             Training-specific information. Sequentially executing all stored
+             `TrainingInfoProto.algorithm`s and assigning their outputs following
+             the corresponding `TrainingInfoProto.update_binding`s is one training
+             iteration. Similarly, to initialize the model
+             (as if training hasn't happened), the user should sequentially execute
+             all stored `TrainingInfoProto.initialization`s and assigns their outputs
+             using `TrainingInfoProto.initialization_binding`s.
+            
+             If this field is empty, the training behavior of the model is undefined.
+             </summary>
+        </member>
+        <member name="T:Onnx.StringStringEntryProto">
+            <summary>
+            StringStringEntryProto follows the pattern for cross-proto-version maps.
+            See https://developers.google.com/protocol-buffers/docs/proto3#maps
+            </summary>
+        </member>
+        <member name="F:Onnx.StringStringEntryProto.KeyFieldNumber">
+            <summary>Field number for the "key" field.</summary>
+        </member>
+        <member name="F:Onnx.StringStringEntryProto.ValueFieldNumber">
+            <summary>Field number for the "value" field.</summary>
+        </member>
+        <member name="F:Onnx.TensorAnnotation.TensorNameFieldNumber">
+            <summary>Field number for the "tensor_name" field.</summary>
+        </member>
+        <member name="F:Onnx.TensorAnnotation.QuantParameterTensorNamesFieldNumber">
+            <summary>Field number for the "quant_parameter_tensor_names" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorAnnotation.QuantParameterTensorNames">
+            <summary>
+            &lt;key, value> pairs to annotate tensor specified by &lt;tensor_name> above.
+            The keys used in the mapping below must be pre-defined in ONNX spec.
+            For example, for 8-bit linear quantization case, 'SCALE_TENSOR', 'ZERO_POINT_TENSOR' will be pre-defined as
+            quantization parameter keys.
+            </summary>
+        </member>
+        <member name="T:Onnx.GraphProto">
+             <summary>
+             Graphs
+            
+             A graph defines the computational logic of a model and is comprised of a parameterized 
+             list of nodes that form a directed acyclic graph based on their inputs and outputs.
+             This is the equivalent of the "network" or "graph" in many deep learning
+             frameworks.
+             </summary>
+        </member>
+        <member name="F:Onnx.GraphProto.NodeFieldNumber">
+            <summary>Field number for the "node" field.</summary>
+        </member>
+        <member name="P:Onnx.GraphProto.Node">
+            <summary>
+            The nodes in the graph, sorted topologically.
+            </summary>
+        </member>
+        <member name="F:Onnx.GraphProto.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:Onnx.GraphProto.Name">
+            <summary>
+            The name of the graph.
+            </summary>
+        </member>
+        <member name="F:Onnx.GraphProto.InitializerFieldNumber">
+            <summary>Field number for the "initializer" field.</summary>
+        </member>
+        <member name="P:Onnx.GraphProto.Initializer">
+            <summary>
+            A list of named tensor values, used to specify constant inputs of the graph.
+            Each TensorProto entry must have a distinct name (within the list) that
+            MAY also appear in the input list.
+            </summary>
+        </member>
+        <member name="F:Onnx.GraphProto.SparseInitializerFieldNumber">
+            <summary>Field number for the "sparse_initializer" field.</summary>
+        </member>
+        <member name="P:Onnx.GraphProto.SparseInitializer">
+            <summary>
+            Initializers (see above) stored in sparse format.
+            </summary>
+        </member>
+        <member name="F:Onnx.GraphProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.GraphProto.DocString">
+            <summary>
+            A human-readable documentation for this graph. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="F:Onnx.GraphProto.InputFieldNumber">
+            <summary>Field number for the "input" field.</summary>
+        </member>
+        <member name="P:Onnx.GraphProto.Input">
+            <summary>
+            The inputs and outputs of the graph.
+            </summary>
+        </member>
+        <member name="F:Onnx.GraphProto.OutputFieldNumber">
+            <summary>Field number for the "output" field.</summary>
+        </member>
+        <member name="F:Onnx.GraphProto.ValueInfoFieldNumber">
+            <summary>Field number for the "value_info" field.</summary>
+        </member>
+        <member name="P:Onnx.GraphProto.ValueInfo">
+            <summary>
+            Information for the values in the graph. The ValueInfoProto.name's
+            must be distinct. It is optional for a value to appear in value_info list.
+            </summary>
+        </member>
+        <member name="F:Onnx.GraphProto.QuantizationAnnotationFieldNumber">
+            <summary>Field number for the "quantization_annotation" field.</summary>
+        </member>
+        <member name="P:Onnx.GraphProto.QuantizationAnnotation">
+            <summary>
+            This field carries information to indicate the mapping among a tensor and its
+            quantization parameter tensors. For example:
+            For tensor 'a', it may have {'SCALE_TENSOR', 'a_scale'} and {'ZERO_POINT_TENSOR', 'a_zero_point'} annotated,
+            which means, tensor 'a_scale' and tensor 'a_zero_point' are scale and zero point of tensor 'a' in the model.
+            </summary>
+        </member>
+        <member name="T:Onnx.TensorProto">
+             <summary>
+             Tensors
+            
+             A serialized tensor value.
+             </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.DimsFieldNumber">
+            <summary>Field number for the "dims" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.Dims">
+            <summary>
+            The shape of the tensor.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.DataTypeFieldNumber">
+            <summary>Field number for the "data_type" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.DataType">
+            <summary>
+            The data type of the tensor.
+            This field MUST have a valid TensorProto.DataType value
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.SegmentFieldNumber">
+            <summary>Field number for the "segment" field.</summary>
+        </member>
+        <member name="F:Onnx.TensorProto.FloatDataFieldNumber">
+            <summary>Field number for the "float_data" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.FloatData">
+            <summary>
+            For float and complex64 values
+            Complex64 tensors are encoded as a single array of floats,
+            with the real components appearing in odd numbered positions,
+            and the corresponding imaginary component appearing in the
+            subsequent even numbered position. (e.g., [1.0 + 2.0i, 3.0 + 4.0i]
+            is encoded as [1.0, 2.0 ,3.0 ,4.0]
+            When this field is present, the data_type field MUST be FLOAT or COMPLEX64.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Int32DataFieldNumber">
+            <summary>Field number for the "int32_data" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.Int32Data">
+            <summary>
+            For int32, uint8, int8, uint16, int16, bool, and float16 values
+            float16 values must be bit-wise converted to an uint16_t prior
+            to writing to the buffer.
+            When this field is present, the data_type field MUST be
+            INT32, INT16, INT8, UINT16, UINT8, BOOL, or FLOAT16
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.StringDataFieldNumber">
+            <summary>Field number for the "string_data" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.StringData">
+            <summary>
+            For strings.
+            Each element of string_data is a UTF-8 encoded Unicode
+            string. No trailing null, no leading BOM. The protobuf "string"
+            scalar type is not used to match ML community conventions.
+            When this field is present, the data_type field MUST be STRING
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Int64DataFieldNumber">
+            <summary>Field number for the "int64_data" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.Int64Data">
+            <summary>
+            For int64.
+            When this field is present, the data_type field MUST be INT64
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.Name">
+            <summary>
+            Optionally, a name for the tensor.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.DocString">
+            <summary>
+            A human-readable documentation for this tensor. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.RawDataFieldNumber">
+            <summary>Field number for the "raw_data" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.RawData">
+             <summary>
+             Serializations can either use one of the fields above, or use this
+             raw bytes field. The only exception is the string case, where one is
+             required to store the content in the repeated bytes string_data field.
+            
+             When this raw_data field is used to store tensor value, elements MUST
+             be stored in as fixed-width, little-endian order.
+             Floating-point data types MUST be stored in IEEE 754 format.
+             Complex64 elements must be written as two consecutive FLOAT values, real component first.
+             Complex128 elements must be written as two consecutive DOUBLE values, real component first.
+             Boolean type MUST be written one byte per tensor element (00000001 for true, 00000000 for false).
+            
+             Note: the advantage of specific field rather than the raw_data field is
+             that in some cases (e.g. int data), protobuf does a better packing via
+             variable length storage, and may lead to smaller binary footprint.
+             When this field is present, the data_type field MUST NOT be STRING or UNDEFINED
+             </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.ExternalDataFieldNumber">
+            <summary>Field number for the "external_data" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.ExternalData">
+            <summary>
+            Data can be stored inside the protobuf file using type-specific fields or raw_data.
+            Alternatively, raw bytes data can be stored in an external file, using the external_data field.
+            external_data stores key-value pairs describing data location. Recognized keys are:
+            - "location" (required) - POSIX filesystem path relative to the directory where the ONNX
+                                      protobuf model was stored
+            - "offset" (optional) - position of byte at which stored data begins. Integer stored as string.
+                                    Offset values SHOULD be multiples 4096 (page size) to enable mmap support.
+            - "length" (optional) - number of bytes containing data. Integer stored as string.
+            - "checksum" (optional) - SHA1 digest of file specified in under 'location' key.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.DataLocationFieldNumber">
+            <summary>Field number for the "data_location" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.DataLocation">
+            <summary>
+            If value not set, data is stored in raw_data (if set) otherwise in type-specified field.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.DoubleDataFieldNumber">
+            <summary>Field number for the "double_data" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.DoubleData">
+            <summary>
+            For double
+            Complex128 tensors are encoded as a single array of doubles,
+            with the real components appearing in odd numbered positions,
+            and the corresponding imaginary component appearing in the
+            subsequent even numbered position. (e.g., [1.0 + 2.0i, 3.0 + 4.0i]
+            is encoded as [1.0, 2.0 ,3.0 ,4.0]
+            When this field is present, the data_type field MUST be DOUBLE or COMPLEX128
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Uint64DataFieldNumber">
+            <summary>Field number for the "uint64_data" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorProto.Uint64Data">
+            <summary>
+            For uint64 and uint32 values
+            When this field is present, the data_type field MUST be
+            UINT32 or UINT64
+            </summary>
+        </member>
+        <member name="T:Onnx.TensorProto.Types">
+            <summary>Container for nested types declared in the TensorProto message type.</summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Float">
+            <summary>
+            Basic types.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Uint8">
+            <summary>
+            uint8_t
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Int8">
+            <summary>
+            int8_t
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Uint16">
+            <summary>
+            uint16_t
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Int16">
+            <summary>
+            int16_t
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Int32">
+            <summary>
+            int32_t
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Int64">
+            <summary>
+            int64_t
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.String">
+            <summary>
+            string
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Bool">
+            <summary>
+            bool
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Float16">
+            <summary>
+            IEEE754 half-precision floating-point format (16 bits wide).
+            This format has 1 sign bit, 5 exponent bits, and 10 mantissa bits.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Complex64">
+            <summary>
+            complex with float32 real and imaginary components
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Complex128">
+            <summary>
+            complex with float64 real and imaginary components
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.DataType.Bfloat16">
+            <summary>
+            Non-IEEE floating-point format based on IEEE754 single-precision
+            floating-point number truncated to 16 bits.
+            This format has 1 sign bit, 8 exponent bits, and 7 mantissa bits.
+            </summary>
+        </member>
+        <member name="T:Onnx.TensorProto.Types.DataLocation">
+            <summary>
+            Location of the data for this tensor. MUST be one of:
+            - DEFAULT - data stored inside the protobuf message. Data is stored in raw_data (if set) otherwise in type-specified field.
+            - EXTERNAL - data stored in an external location as described by external_data field.
+            </summary>
+        </member>
+        <member name="T:Onnx.TensorProto.Types.Segment">
+            <summary>
+            For very large tensors, we may want to store them in chunks, in which
+            case the following fields will specify the segment that is stored in
+            the current TensorProto.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.Segment.BeginFieldNumber">
+            <summary>Field number for the "begin" field.</summary>
+        </member>
+        <member name="F:Onnx.TensorProto.Types.Segment.EndFieldNumber">
+            <summary>Field number for the "end" field.</summary>
+        </member>
+        <member name="T:Onnx.SparseTensorProto">
+            <summary>
+            A serialized sparse-tensor value
+            </summary>
+        </member>
+        <member name="F:Onnx.SparseTensorProto.ValuesFieldNumber">
+            <summary>Field number for the "values" field.</summary>
+        </member>
+        <member name="P:Onnx.SparseTensorProto.Values">
+            <summary>
+            The sequence of non-default values are encoded as a tensor of shape [NNZ].
+            The default-value is zero for numeric tensors, and empty-string for string tensors.
+            </summary>
+        </member>
+        <member name="F:Onnx.SparseTensorProto.IndicesFieldNumber">
+            <summary>Field number for the "indices" field.</summary>
+        </member>
+        <member name="P:Onnx.SparseTensorProto.Indices">
+            <summary>
+            The indices of the non-default values, which may be stored in one of two formats.
+            (a) Indices can be a tensor of shape [NNZ, rank] with the [i,j]-th value
+            corresponding to the j-th index of the i-th value (in the values tensor).
+            (b) Indices can be a tensor of shape [NNZ], in which case the i-th value
+            must be the linearized-index of the i-th value (in the values tensor).
+            The linearized-index can be converted into an index tuple (k_1,...,k_rank)
+            using the shape provided below.
+            The indices must appear in ascending order without duplication.
+            In the first format, the ordering is lexicographic-ordering:
+            e.g., index-value [1,4] must appear before [2,1]
+            </summary>
+        </member>
+        <member name="F:Onnx.SparseTensorProto.DimsFieldNumber">
+            <summary>Field number for the "dims" field.</summary>
+        </member>
+        <member name="P:Onnx.SparseTensorProto.Dims">
+            <summary>
+            The shape of the underlying dense-tensor: [dim_1, dim_2, ... dim_rank]
+            </summary>
+        </member>
+        <member name="T:Onnx.TensorShapeProto">
+            <summary>
+            Defines a tensor shape. A dimension can be either an integer value
+            or a symbolic variable. A symbolic variable represents an unknown
+            dimension.
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorShapeProto.DimFieldNumber">
+            <summary>Field number for the "dim" field.</summary>
+        </member>
+        <member name="T:Onnx.TensorShapeProto.Types">
+            <summary>Container for nested types declared in the TensorShapeProto message type.</summary>
+        </member>
+        <member name="F:Onnx.TensorShapeProto.Types.Dimension.DimValueFieldNumber">
+            <summary>Field number for the "dim_value" field.</summary>
+        </member>
+        <member name="F:Onnx.TensorShapeProto.Types.Dimension.DimParamFieldNumber">
+            <summary>Field number for the "dim_param" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorShapeProto.Types.Dimension.DimParam">
+            <summary>
+            namespace Shape
+            </summary>
+        </member>
+        <member name="F:Onnx.TensorShapeProto.Types.Dimension.DenotationFieldNumber">
+            <summary>Field number for the "denotation" field.</summary>
+        </member>
+        <member name="P:Onnx.TensorShapeProto.Types.Dimension.Denotation">
+            <summary>
+            Standard denotation can optionally be used to denote tensor
+            dimensions with standard semantic descriptions to ensure
+            that operations are applied to the correct axis of a tensor.
+            Refer to https://github.com/onnx/onnx/blob/master/docs/DimensionDenotation.md#denotation-definition
+            for pre-defined dimension denotations.
+            </summary>
+        </member>
+        <member name="T:Onnx.TensorShapeProto.Types.Dimension.ValueOneofCase">
+            <summary>Enum of possible cases for the "value" oneof.</summary>
+        </member>
+        <member name="T:Onnx.TypeProto">
+             <summary>
+             Types
+            
+             The standard ONNX data types.
+             </summary>
+        </member>
+        <member name="F:Onnx.TypeProto.TensorTypeFieldNumber">
+            <summary>Field number for the "tensor_type" field.</summary>
+        </member>
+        <member name="P:Onnx.TypeProto.TensorType">
+            <summary>
+            The type of a tensor.
+            </summary>
+        </member>
+        <member name="F:Onnx.TypeProto.SequenceTypeFieldNumber">
+            <summary>Field number for the "sequence_type" field.</summary>
+        </member>
+        <member name="P:Onnx.TypeProto.SequenceType">
+            <summary>
+            The type of a sequence.
+            </summary>
+        </member>
+        <member name="F:Onnx.TypeProto.MapTypeFieldNumber">
+            <summary>Field number for the "map_type" field.</summary>
+        </member>
+        <member name="P:Onnx.TypeProto.MapType">
+            <summary>
+            The type of a map.
+            </summary>
+        </member>
+        <member name="F:Onnx.TypeProto.DenotationFieldNumber">
+            <summary>Field number for the "denotation" field.</summary>
+        </member>
+        <member name="P:Onnx.TypeProto.Denotation">
+            <summary>
+            An optional denotation can be used to denote the whole 
+            type with a standard semantic description as to what is 
+            stored inside. Refer to https://github.com/onnx/onnx/blob/master/docs/TypeDenotation.md#type-denotation-definition
+            for pre-defined type denotations.
+            </summary>
+        </member>
+        <member name="T:Onnx.TypeProto.ValueOneofCase">
+            <summary>Enum of possible cases for the "value" oneof.</summary>
+        </member>
+        <member name="T:Onnx.TypeProto.Types">
+            <summary>Container for nested types declared in the TypeProto message type.</summary>
+        </member>
+        <member name="F:Onnx.TypeProto.Types.Tensor.ElemTypeFieldNumber">
+            <summary>Field number for the "elem_type" field.</summary>
+        </member>
+        <member name="P:Onnx.TypeProto.Types.Tensor.ElemType">
+            <summary>
+            This field MUST NOT have the value of UNDEFINED
+            This field MUST have a valid TensorProto.DataType value
+            This field MUST be present for this version of the IR.
+            </summary>
+        </member>
+        <member name="F:Onnx.TypeProto.Types.Tensor.ShapeFieldNumber">
+            <summary>Field number for the "shape" field.</summary>
+        </member>
+        <member name="T:Onnx.TypeProto.Types.Sequence">
+            <summary>
+            repeated T
+            </summary>
+        </member>
+        <member name="F:Onnx.TypeProto.Types.Sequence.ElemTypeFieldNumber">
+            <summary>Field number for the "elem_type" field.</summary>
+        </member>
+        <member name="P:Onnx.TypeProto.Types.Sequence.ElemType">
+            <summary>
+            The type and optional shape of each element of the sequence.
+            This field MUST be present for this version of the IR.
+            </summary>
+        </member>
+        <member name="T:Onnx.TypeProto.Types.Map">
+            <summary>
+            map&lt;K,V>
+            </summary>
+        </member>
+        <member name="F:Onnx.TypeProto.Types.Map.KeyTypeFieldNumber">
+            <summary>Field number for the "key_type" field.</summary>
+        </member>
+        <member name="P:Onnx.TypeProto.Types.Map.KeyType">
+            <summary>
+            This field MUST have a valid TensorProto.DataType value
+            This field MUST be present for this version of the IR.
+            This field MUST refer to an integral type ([U]INT{8|16|32|64}) or STRING
+            </summary>
+        </member>
+        <member name="F:Onnx.TypeProto.Types.Map.ValueTypeFieldNumber">
+            <summary>Field number for the "value_type" field.</summary>
+        </member>
+        <member name="P:Onnx.TypeProto.Types.Map.ValueType">
+            <summary>
+            This field MUST be present for this version of the IR.
+            </summary>
+        </member>
+        <member name="T:Onnx.OperatorSetIdProto">
+             <summary>
+             Operator Sets
+            
+             OperatorSets are uniquely identified by a (domain, opset_version) pair.
+             </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetIdProto.DomainFieldNumber">
+            <summary>Field number for the "domain" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetIdProto.Domain">
+            <summary>
+            The domain of the operator set being identified.
+            The empty string ("") or absence of this field implies the operator
+            set that is defined as part of the ONNX specification.
+            This field MUST be present in this version of the IR when referring to any other operator set.
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetIdProto.VersionFieldNumber">
+            <summary>Field number for the "version" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetIdProto.Version">
+            <summary>
+            The version of the operator set being identified.
+            This field MUST be present in this version of the IR.
+            </summary>
+        </member>
+        <member name="T:Onnx.OnnxOperatorsReflection">
+            <summary>Holder for reflection information generated from onnx-operators.proto3</summary>
+        </member>
+        <member name="P:Onnx.OnnxOperatorsReflection.Descriptor">
+            <summary>File descriptor for onnx-operators.proto3</summary>
+        </member>
+        <member name="T:Onnx.OperatorStatus">
+            <summary>
+            Operator/function status.
+            </summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:Onnx.FunctionProto.Name">
+            <summary>
+            The name of the function, similar usage of op_type in OperatorProto.
+            </summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.SinceVersionFieldNumber">
+            <summary>Field number for the "since_version" field.</summary>
+        </member>
+        <member name="P:Onnx.FunctionProto.SinceVersion">
+            <summary>
+            The first version of a function set which contains this function.
+            When there's any breaking change for this function, the function set
+            contains the function needs to bump its version, and since_version of
+            the updated function will be changed to the updated function set version.  
+            </summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.StatusFieldNumber">
+            <summary>Field number for the "status" field.</summary>
+        </member>
+        <member name="P:Onnx.FunctionProto.Status">
+            <summary>
+            This field indicates whether the syntax, semantics, or presence
+            of this function is in an experimental or stable stage. Once an
+            function is published as STABLE, its syntax and semantics MUST NOT
+            change in subsequent versions of the operator set.
+            When a function is published as EXPERIMENTAL, the syntax and semantics
+            of the function MAY change across operator set versions.
+            Functions "become" stable by deprecating the experimental version and
+            introducing a new stable function with the same name.
+            </summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.InputFieldNumber">
+            <summary>Field number for the "input" field.</summary>
+        </member>
+        <member name="P:Onnx.FunctionProto.Input">
+            <summary>
+            The inputs and outputs of the function.
+            </summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.OutputFieldNumber">
+            <summary>Field number for the "output" field.</summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.AttributeFieldNumber">
+            <summary>Field number for the "attribute" field.</summary>
+        </member>
+        <member name="P:Onnx.FunctionProto.Attribute">
+            <summary>
+            The attributes of the function.
+            </summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.NodeFieldNumber">
+            <summary>Field number for the "node" field.</summary>
+        </member>
+        <member name="P:Onnx.FunctionProto.Node">
+            <summary>
+            The nodes in the function.
+            </summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.FunctionProto.DocString">
+            <summary>
+            A human-readable documentation for this function. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="F:Onnx.FunctionProto.OpsetImportFieldNumber">
+            <summary>Field number for the "opset_import" field.</summary>
+        </member>
+        <member name="P:Onnx.FunctionProto.OpsetImport">
+             <summary>
+             The OperatorSets this function body (graph) relies on.
+             A FunctionProto body (graph) may implicitly rely on the OperatorSet that
+             this function belongs to. It can also explicitly rely on more OperatorSets
+             with this field specified.
+            
+             All nodes in the function body (graph) will bind against the operator
+             with the same-domain/same-op_type operator with the HIGHEST version
+             in the referenced operator sets. This means at most one version can be relied
+             for one domain.
+             </summary>
+        </member>
+        <member name="T:Onnx.OperatorProto">
+             <summary>
+             An OperatorProto represents the immutable specification of the signature
+             and semantics of an operator.
+            
+             Operators are declared as part of an OperatorSet, which also defines the
+             domain name for the set.
+            
+             Operators are uniquely identified by a three part identifier
+               (domain, op_type, since_version)
+             where
+               *domain* is the domain of an operator set that
+                  contains this operator specification.
+            
+               *op_type* is the name of the operator as referenced by a
+                  NodeProto.op_type
+            
+               *since_version* is the version of the operator set that
+                  this operator was initially declared in.
+             </summary>
+        </member>
+        <member name="F:Onnx.OperatorProto.OpTypeFieldNumber">
+            <summary>Field number for the "op_type" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorProto.OpType">
+            <summary>
+            The name of the operator within a domain.
+            This field MUST be present in this version of the IR.
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorProto.SinceVersionFieldNumber">
+            <summary>Field number for the "since_version" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorProto.SinceVersion">
+            <summary>
+            The version of the operator set that first introduced this
+            operator. This value MUST be the same value as the
+            opset_version of the operator set that first published this operator.
+            Subsequent versions of the operator set MUST NOT alter the signature
+            or semantics of the operator once published as STABLE.
+            This field MUST be present in this version of the IR.
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorProto.StatusFieldNumber">
+            <summary>Field number for the "status" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorProto.Status">
+            <summary>
+            This field indicates whether the syntax, semantics, or presence
+            of this operator is in an experimental or stable stage. Once an
+            operator is published as STABLE, it's syntax and semantics MUST NOT
+            change in subsequent versions of the operator set.
+            When an operator is published as EXPERIMENTAL, the syntax and semantics
+            of the operator MAY change across operator set versions.
+            Operators "become" stable by deprecating the experimental version and
+            introducing a new stable operator with the same op_type.
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorProto.DocString">
+            <summary>
+            A human-readable documentation for this operator. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="T:Onnx.OperatorSetProto">
+             <summary>
+             An OperatorSetProto represents an immutable set of immutable operator
+             specifications.
+            
+             The domain of the set (OperatorSetProto.domain) is a reverse-DNS name
+             that disambiguates operator sets defined by independent entities.
+            
+             The version of the set (opset_version) is a monotonically increasing
+             integer that indicates changes to the membership of the operator set.
+            
+             Operator sets are uniquely identified by a two part identifier (domain, opset_version)
+            
+             Like ModelProto, OperatorSetProto is intended as a top-level file/wire format,
+             and thus has the standard format headers in addition to the operator set information.
+             </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.MagicFieldNumber">
+            <summary>Field number for the "magic" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.Magic">
+            <summary>
+            All OperatorSetProtos start with a distingushed byte sequence to disambiguate
+            protobuf files containing OperatorSets from other content.
+            This field MUST be "ONNXOPSET"
+            This field MUST be present in this version of the IR
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.IrVersionFieldNumber">
+            <summary>Field number for the "ir_version" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.IrVersion">
+            <summary>
+            All OperatorSetProtos indicate the version of the IR syntax and semantics
+            they adhere to. It is always IR_VERSION.
+            This field MUST be present in this version of the IR
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.IrVersionPrereleaseFieldNumber">
+            <summary>Field number for the "ir_version_prerelease" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.IrVersionPrerelease">
+            <summary>
+            The prerelease component of the SemVer of the IR.
+            This field MAY be absent in this version of the IR
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.IrBuildMetadataFieldNumber">
+            <summary>Field number for the "ir_build_metadata" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.IrBuildMetadata">
+            <summary>
+            The build metadata component of the SemVer of the IR.
+            This field MAY be absent in this version of the IR
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.DomainFieldNumber">
+            <summary>Field number for the "domain" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.Domain">
+            <summary>
+            Domain name of the operator set, in reverse DNS form (e.g., com.acme.dnnops).
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.OpsetVersionFieldNumber">
+            <summary>Field number for the "opset_version" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.OpsetVersion">
+            <summary>
+            The version of the set of operators. This is a simple int value
+            that is monotonically increasing as new versions of operator set
+            are published. All operators in this set MUST have version
+            numbers no greater than opset_version.
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.DocStringFieldNumber">
+            <summary>Field number for the "doc_string" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.DocString">
+            <summary>
+            A human-readable documentation for this set of operators. Markdown is allowed.
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.OperatorFieldNumber">
+            <summary>Field number for the "operator" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.Operator">
+            <summary>
+            The operators specified by this operator set.
+            The (name, version) MUST be unique across all OperatorProtos in operator
+            </summary>
+        </member>
+        <member name="F:Onnx.OperatorSetProto.FunctionsFieldNumber">
+            <summary>Field number for the "functions" field.</summary>
+        </member>
+        <member name="P:Onnx.OperatorSetProto.Functions">
+            <summary>
+            The functions specified by this operator set.
+            The (name, version) MUST be unique across all OperatorProtos/FunctionProtos in operator/functions
+            </summary>
+        </member>
+    </members>
+</doc>

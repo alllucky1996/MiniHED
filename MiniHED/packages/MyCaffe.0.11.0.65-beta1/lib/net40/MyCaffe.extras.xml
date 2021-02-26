@@ -1,0 +1,444 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.extras</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.extras.DeepDraw`1">
+            <summary>
+            The DeepDraw class implements both deep drawing and deep dream as originally
+            introduced by Google.
+            </summary>
+            <remarks>
+            @see [Deep Dreams (with Caffe)](https://github.com/google/deepdream/blob/master/dream.ipynb) by the Google Deep Dream Team, 2015.
+            @see [Diving Deeper into Deep Dreams](http://www.kpkaiser.com/machine-learning/diving-deeper-into-deep-dreams/) by Kirk Kaiser, 2015.
+            @see [auduno/deepdraw](https://github.com/auduno/deepdraw/blob/master/deepdraw.ipynb) on GitHub.
+            @see [kylemcdonald/deepdream](https://github.com/kylemcdonald/deepdream/blob/master/dream.ipynb) on GitHub
+            </remarks>
+            <typeparam name="T">Specifies the base type <i>float</i> or <i>double</i>.  Using <i>float</i> is recommended to conserve GPU memory.</typeparam>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.#ctor(MyCaffe.basecode.CancelEvent,MyCaffe.common.Net{`0},MyCaffe.data.DataTransformer{`0},System.String)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="evtCancel">Specifies the cancel event used to cancel the drawing operation.</param>
+            <param name="net">Specifies the Net to use for the drawing operation.</param>
+            <param name="transformer">Specifies the DataTransformer to use when preprocessing input images.</param>
+            <param name="strSrcBlobName">Specifies the the name of the Blob containing the data source.</param>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.Dispose">
+            <summary>
+            Releases all resources used by DeepDraw.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.DeepDraw`1.Count">
+            <summary>
+            Returns the numberof Octaves installed.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.Add(System.String,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Boolean,System.Double)">
+            <summary>
+            Adds a new Octave to run the deep drawing over.
+            </summary>
+            <param name="strLayer">Specifies the name of the target 'end' layer in the network.</param>
+            <param name="nIterations">Specifies the number of iterations to run over the Octave.</param>
+            <param name="dfStartSigma">Specifies the starting sigma used when performing the gaussian bluring, on each iteration this value moves toward the end sigma.</param>
+            <param name="dfEndSigma">Specifies the ending sigma to use whenp performing the gaussian bluring.</param>
+            <param name="dfStartStep">Specifis the starting step, this value moves towards the end step on each iteration.</param>
+            <param name="dfEndStep">Specifies the ending step.</param>
+            <param name="bSaveFile">Specifies whether or not to save the final image for the octave to disk.</param>
+            <param name="dfPctDetailsToApply">Specifies the percentage of the details from the previous octave run to apply to the source for this Octave - this value must be 1.0 when only using one Octave.</param>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.Add(MyCaffe.extras.Octaves)">
+            <summary>
+            Add a new Octaves to the collection of Octaves to run.
+            </summary>
+            <param name="octaves">Specifies the Octaves to add.</param>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.GetEnumerator">
+            <summary>
+            Returns the Octave enumerator.
+            </summary>
+            <returns>The Octave enumerator is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns the Octave enumerator.
+            </summary>
+            <returns>The Octave enumerator is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.CreateRandomImage(System.Drawing.Color,System.Int32,System.Int32,System.Double)">
+            <summary>
+            Creates an image with random noise.
+            </summary>
+            <param name="clrBack">Specifies the base back color.</param>
+            <param name="nW">Optionally, specifies the width.  When not specified, the width of the source Blob is used instead (recommended).</param>
+            <param name="nH">Optionally, specifies the height.  When not specified, the height of the source Blob is used instead (recommended).</param>
+            <param name="dfScale">Optionally, specifies the spread of pixels randomized around the base color.  For example the default of 16 randomly picks a color value +8 and -8 from the base color.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.CreateRandomImageEx(System.Drawing.Color,System.Int32,System.Int32,System.Double)">
+            <summary>
+            Creates an image with random noise.
+            </summary>
+            <param name="clrBack">Specifies the base back color.</param>
+            <param name="nW">Specifies the width.</param>
+            <param name="nH">Specifies the height.</param>
+            <param name="dfScale">Optionally, specifies the spread of pixels randomized around the base color.  For example the default of 16 randomly picks a color value +8 and -8 from the base color.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.Render(System.Drawing.Bitmap,System.Int32,System.Double,System.String,System.Boolean,System.Single[])">
+            <summary>
+            Renders the deep draw image(s) depending on the Octave's installed.
+            </summary>
+            <param name="bmpInput">Specifies the input image.</param>
+            <param name="nFocusLabel">Specifies a label to focus on (use this when running on classifying layers).</param>
+            <param name="dfDetailPercentageToOutput">Optionally, specifies the amount of detail to apply to the original image when producing the final image (Default = 0.25 for 25%).</param>
+            <param name="strOutputDir">Optionally, specifies the output directory wheren images are to be output.  When <i>null</i>, no images are output, but are instead set in each Octave.</param>
+            <param name="bVisualizeEachStep">Optionally, specifies to create an image at each step of the process which can be useful when making a video of the evolution (default = <i>false</i>).</param>
+            <param name="rgDirectInputs">Optionally, specifies the direct inputs used to set each output.  When not <i>null</i> the direct inputs are used instead of the <i>nFocusLabel</i> whereby the 
+            network outputs are set to the direct input values and the <i>nFocusLabel</i> is used to index the image and should therefore be unique for each set of direct inputs.  
+            By default, this value is set to <i>null</i>.
+            </param>
+            <returns>Upon completing the render, this method returns <i>true</i>, otherwise if cancelled it returns <i>false</i>.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.AdjustContrast(System.Drawing.Image,System.Single,System.Single,System.Single)">
+            <summary>
+            The AdjustContrast function adjusts the brightness, contrast and gamma of the image and returns the newly adjusted image.
+            </summary>
+            <param name="bmp">Specifies the image to adjust.</param>
+            <param name="fBrightness">Specifies the brightness to apply.</param>
+            <param name="fContrast">Specifies the contrast to apply.</param>
+            <param name="fGamma">Specifies the gamma to apply.</param>
+            <returns>The updated image is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.CreateConfigurationString(System.Int32,System.Int32,System.Double,MyCaffe.extras.OctavesCollection,System.String,System.Double)">
+            <summary>
+            The CreateConfigurationString function packs all deep draw settings into a configuration string.
+            </summary>
+            <param name="nWd">Specifies the input width.</param>
+            <param name="nHt">Specifies the input height.</param>
+            <param name="dfOutputDetailPct">Specifies the percentage of detail to apply to the final output.</param>
+            <param name="colOctaves">Specifies the collection of Octaves to run.</param>
+            <param name="strSrcBlobName">Specifies the name of the source blob.</param>
+            <param name="dfRandomImageScale">Specifies the random image scale to use, a number in the range [0,50] used to create varying degrees of gray in the random input image.  
+            A value of 0 removes the variation and uses a consistent image.</param>
+            <returns>The configuration string is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.DeepDraw`1.ParseConfigurationString(System.String,System.Int32@,System.Int32@,System.Double@,System.String@,System.Double@)">
+            <summary>
+            The ParseConfigurationString method parses a deep draw configuration string into the actual settings.
+            </summary>
+            <param name="strConfig">Specifies the configuration string to parse.</param>
+            <param name="nWd">Returns the input width.</param>
+            <param name="nHt">Returns the input height.</param>
+            <param name="dfOutputDetailPct">Returns the percentage of detail to apply to the final image.</param>
+            <param name="strSrcBlobName">Returns the source blob name.</param>
+            <param name="dfRandomImageScale">Returns the random image scale to use, a number in the range [0,50] used to create varying degrees of gray in the random input image.  
+            A value of 0 removes the variation and uses a consistent image.  The default value is 16.</param>
+            <returns>Returns the collection of Octaves to run.</returns>
+        </member>
+        <member name="T:MyCaffe.extras.Octaves">
+            <summary>
+            The Octave class defines the setting sused when images are generated.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.extras.Octaves.#ctor(System.String,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Boolean,System.Double)">
+            <summary>
+            Specifies the constructor.
+            </summary>
+            <param name="strLayerName">Specifies the target 'end' layer in the network.</param>
+            <param name="nIterN">Specifies the number of iterations to run.</param>
+            <param name="dfStartSigma">Specifies the starting sigma to use during gaussian blurring.</param>
+            <param name="dfEndSigma">Specifies the ending sigma to use during gaussian blurring.</param>
+            <param name="dfStartStepSize">Specifies the starting step size.</param>
+            <param name="dfEndStepSize">Specifies the ending step size.</param>
+            <param name="bSaveFile">Specifies whether or not to save the ending image for the Octave to disk.</param>
+            <param name="dfPctDetailsToApply">Specifies the percentage of the previous octave detail to apply to the source for this octave run.</param>
+        </member>
+        <member name="M:MyCaffe.extras.Octaves.Dispose">
+            <summary>
+            Releases all resources used.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.LayerName">
+            <summary>
+            Returns the 'end' target network layer.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.IterationN">
+            <summary>
+            Returns the number of iterations to run.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.StartSigma">
+            <summary>
+            Returns the starting sigma used during gaussian blurring.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.EndSigma">
+            <summary>
+            Returns the ending sigma used during gaussian blurring.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.StartStepSize">
+            <summary>
+            Returns the starting step.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.EndStepSize">
+            <summary>
+            Returns the ending step.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.UniqueName">
+            <summary>
+            Returns a unique name of the Octave.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.Images">
+            <summary>
+            Returns the images generated for the Octave, ordered by lable, where -1 = all.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.Save">
+            <summary>
+            Returns whether or not to save the Octave final image to disk.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.Octaves.PercentageOfPreviousOctaveDetailsToApply">
+            <summary>
+            Get/set the percentage of detail from the previous Octave to apply to the source for this Octave.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.extras.Octaves.ToProto(System.String)">
+            <summary>
+            The ToProto function converts the Octaves settings into a RawProto.
+            </summary>
+            <param name="strName">Specifies the name of the RawProto.</param>
+            <returns>The RawProto is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.Octaves.FromProto(MyCaffe.basecode.RawProto)">
+            <summary>
+            The FromProto function parses a RawProto into a new Octaves.
+            </summary>
+            <param name="rp">Specifies the RawProto to parse.</param>
+            <returns>The new Octaves is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.extras.OctavesCollection">
+            <summary>
+            The OctavesCollection manages a list of Octaves.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.extras.OctavesCollection.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.OctavesCollection.Count">
+            <summary>
+            The number of Octaves in the collection.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.OctavesCollection.Item(System.Int32)">
+            <summary>
+            Returns the Octaves at an index within the collection.
+            </summary>
+            <param name="nIdx"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyCaffe.extras.OctavesCollection.Add(MyCaffe.extras.Octaves)">
+            <summary>
+            Adds a new Octaves to the collection.
+            </summary>
+            <param name="o"></param>
+        </member>
+        <member name="M:MyCaffe.extras.OctavesCollection.Remove(MyCaffe.extras.Octaves)">
+            <summary>
+            Removes an Octaves from the collection.
+            </summary>
+            <param name="o">Specifies the Octaves to remove.</param>
+            <returns>If the Octaves is found and removed, <i>true</i> is returned, otherwise <i>false</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.OctavesCollection.RemoveAt(System.Int32)">
+            <summary>
+            Removes an Octaves at a given index in the collection.
+            </summary>
+            <param name="nIdx">Specifies the index.</param>
+        </member>
+        <member name="M:MyCaffe.extras.OctavesCollection.Clear">
+            <summary>
+            Removes all Octaves from the collection.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.extras.OctavesCollection.GetEnumerator">
+            <summary>
+            Returns the enumerator for the collection.
+            </summary>
+            <returns>The Octaves enumerator is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.OctavesCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns the enumerator for the collection.
+            </summary>
+            <returns>The Octaves enumerator is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.extras.NeuralStyleTransfer`1">
+            <summary>
+            The NeuralStyleTransfer object uses the GramLayer, TVLossLayer and LBFGSSolver to perform the neural style transfer algorithm.
+            </summary>
+            <remarks>
+            @see [minFunc](https://www.cs.ubc.ca/~schmidtm/Software/minFunc.html) by Marc Schmidt, 2005
+            @see [ftokarev/caffe-neural-style Github](https://github.com/ftokarev/caffe-neural-style) by ftokarev, 2017. 
+            @see [fzliu/style-transfer Github](https://github.com/fzliu/style-transfer/blob/master/style.py) by Frank Liu and Dylan Paiton, 2015.
+            @see [A Neural Algorithm of Artistic Style](https://arxiv.org/abs/1508.06576) by Leon A. Gatys, Alexander S. Ecker, and Matthias Bethge, 2015 
+            @see [Neural Style Transfer: Creating Art with Deep Learning using tf.keras and eager execution](https://medium.com/tensorflow/neural-style-transfer-creating-art-with-deep-learning-using-tf-keras-and-eager-execution-7d541ac31398) by Raymond Yuan, Medium, 2018
+            @see [Neural Artistic Style Transfer: A Comprehensive Look](https://medium.com/artists-and-machine-intelligence/neural-artistic-style-transfer-a-comprehensive-look-f54d8649c199) by Shubhang Desai, Medium, 2017
+            </remarks>
+        </member>
+        <member name="E:MyCaffe.extras.NeuralStyleTransfer`1.OnIntermediateOutput">
+            <summary>
+            Specifies the event fired after producing intermediate output (e.g. when m_nIntermediateOutput > 0)
+            </summary>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleTransfer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.basecode.CancelEvent,System.String,System.String,System.Byte[],System.Boolean,MyCaffe.param.SolverParameter.SolverType,System.Double,System.Int32,System.Double,MyCaffe.common.Net{`0})">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="cuda">Specifies the instance of CudaDnn to use.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="evtCancel">Specifies the cancel event used to abort processing.</param>
+            <param name="strModelType">Specifies the model type: 'vgg19', 'vgg16'</param>
+            <param name="strModel">Specifies the network model to use.</param>
+            <param name="rgWeights">Optionally, specifies the weights to use (or <i>null</i> to ignore).</param>
+            <param name="bCaffeModel">Specifies whether or not the weights are in the caffe (<i>true</i>) or mycaffe (<i>false</i>) format.</param>
+            <param name="solverType">Optionally, specifies the solver type to use (default = LBFGS).</param>
+            <param name="dfLearningRate">Optionally, specifies the solver learning rate (default = 1.0).</param>
+            <param name="nLBFGSCorrections">Optionally, specifies the number of LBFGS corrections to use (default = 100, only applies when using LBFGS solver).</param>
+            <param name="dfDataScale">Optionally, specifies the data scaling factor (default = 1.0).</param>
+            <param name="netShare">Optionally, specifies a net to share.</param>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleTransfer`1.#ctor(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.basecode.CancelEvent,System.Collections.Generic.Dictionary{System.String,System.Tuple{System.Double,System.Double}},System.String,System.Byte[],System.Boolean,MyCaffe.param.SolverParameter.SolverType,System.Double,System.Int32,System.Int32,System.Double,MyCaffe.common.Net{`0})">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="cuda">Specifies the instance of CudaDnn to use.</param>
+            <param name="log">Specifies the output log.</param>
+            <param name="evtCancel">Specifies the cancel event used to abort processing.</param>
+            <param name="rgLayers">Specifies the layers along with their style and content weights.</param>
+            <param name="strModelDesc">Specifies the network model descriptor to use.</param>
+            <param name="rgWeights">Optionally, specifies the weights to use (or <i>null</i> to ignore).</param>
+            <param name="bCaffeModel">Specifies whether or not the weights are in the caffe (<i>true</i>) or mycaffe (<i>false</i>) format.</param>
+            <param name="solverType">Optionally, specifies the solver type to use (default = LBFGS).</param>
+            <param name="dfLearningRate">Optionally, specifies the solver learning rate (default = 1.0).</param>
+            <param name="nMaxImageSize">Optionally, specifies the default maximum image size (default = 840).</param>
+            <param name="nLBFGSCorrections">Optionally, specifies the LBFGS Corrections (only used when using the LBFGS solver, default = 100).</param>
+            <param name="dfDataScale">Optionally, specifies the data scaling factor (default = 1.0).</param>
+            <param name="netShare">Optionally, specifies a net to share.</param>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleTransfer`1.Dispose">
+            <summary>
+            Release all resources used.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleTransfer`1.SetupHalfSize(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Setup which layers are allowed to use half-sized memory when their convolution counterparts use it.
+            </summary>
+            <param name="bAllowHs">Allow half-size memory.</param>
+            <param name="bAllowOnGram">Allow half-size on the gram layers.</param>
+            <param name="bAllowOnEvent">Allow half-size on the event layers.</param>
+            <param name="bAllowOnLoss">Allow half-size on the loss layers.</param>
+            <param name="bAllowOnScalar">Allow half-size on the scalar layers.</param>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleTransfer`1.Process(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Int32,System.Int32,System.Double,System.Int32,System.Boolean)">
+            <summary>
+            Process the content image by applying the style to it that was learned from the style image.
+            </summary>
+            <param name="bmpStyle">Specifies the image used to train the what style to apply to the content.</param>
+            <param name="bmpContent">Specifies the content image to which the style is to be applied.</param>
+            <param name="nIterations">Specifies the number of training iterations.</param>
+            <param name="nIntermediateOutput">Optionally, specifies how often to output an intermediate image.</param>
+            <param name="dfTvLoss">Optionally, specifies the TV-Loss weight for smoothing (default = 0, which disables this loss).</param>
+            <param name="nMaxSize">Optionally, specifies a maximum image size override (default = -1, which uses the default).</param>
+            <param name="bEnablePartialSolution">Optionally, specifies to run the process only up through the next intermediate image.  Subsequent calls to ProcessNext moves to the next intermediate image until completed.</param>
+            <returns>Upon completion the resulting final image is returned, otherwise when using bEnablePartionSolution = <i>true</i>, null is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleTransfer`1.ProcessNext(System.Drawing.Bitmap@,System.Int32@)">
+            <summary>
+            Process the next partial part of the solution.  This function is only valid after calling Process with bEnablePartialSolution = <i>true</i>.
+            </summary>
+            <param name="bmpIntermediate">Returns the intermediate image, if one was created.</param>
+            <param name="nIntermediateIdx">Returns the intermediate index for the image.</param>
+            <returns>Upon completion, the final Bitmap is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleTransfer`1.CreateConfigurationString(System.String,System.Double,System.Int32,System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Tuple{System.Double,System.Double}},System.Collections.Generic.List{System.Int32},System.Int32,System.Double,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            The CreateConfigurationString function packs all deep draw settings into a configuration string.
+            </summary>
+            <param name="strSolver">Specifies the type of solver to use.</param>
+            <param name="dfLearningRate">Specifies the learning rate to use with the solver.</param>
+            <param name="nMaxImageSize">Specifies the maximum image size to use.</param>
+            <param name="nIterations">Specifies the number of iterations to run.</param>
+            <param name="nIntermediateIterations">Specifies how often to output intermediate images if any (a value of 0 disables intermediate output).</param>
+            <param name="rgWts">Specifies the layers to use and their weights for style and content.</param>
+            <param name="rgGpuID">Specifies the GPUIDs on which to run the Neural Style.</param>
+            <param name="nLBFGSCorrections">Specifies the LBFGS corrections to use, only applies when using the LBFGS Solver.</param>
+            <param name="dfDataScale">Specifies the data scale (default = 1.0).</param>
+            <param name="bAllowHs">Specivies to allow half sized memory.</param>
+            <param name="bAllowHsGram">Specifies to allow half sized memory on gram layers.</param>
+            <param name="bAllowHsEvent">Specifies to allow half sized memory on event layers.</param>
+            <param name="bAllowHsScalar">Specifies to allow half sized memory on scalar layers.</param>
+            <param name="bAllowHsLoss">Specifies to allow half sized memory on loss layers.</param>
+            <returns>The configuration string is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleTransfer`1.ParseConfigurationString(System.String,System.String@,System.Double@,System.Int32@,System.Int32@,System.Int32@,System.Collections.Generic.List{System.Int32}@,System.Int32@,System.Double@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@)">
+            <summary>
+            The ParseConfigurationString method parses a deep draw configuration string into the actual settings.
+            </summary>
+            <param name="strConfig">Specifies the configuration string to parse.</param>
+            <param name="strSolver">Returns the solver to use.</param>
+            <param name="dfLearningRate">Returns the learning rate to use with the solver.</param>
+            <param name="nMaxImageSize">Returns the maximum image size.</param>
+            <param name="nIterations">Returns the number of iterations to run.</param>
+            <param name="nIntermediateIterations">Returns how often to output intermediate images if any (a value of 0 disables intermediate output).</param>
+            <param name="rgGpuID">Returns the list of GPUIDs on which to run the Neural Style.</param>
+            <param name="nLBFGSCorrections">Returns the LBFGS corrections to use, only applies when using the LBFGS Solver.</param>
+            <param name="dfDataScale">Returns the data scale to use, default = 1.0.</param>
+            <param name="bAllowHs">Returns whether or not half size memory is allowed.</param>
+            <param name="bAllowHsGram">Returns whether or not to allow half size memory in the gram layers.</param>
+            <param name="bAllowHsEvent">Returns whether or not to allow half size memory in the event layers.</param>
+            <param name="bAllowHsScalar">Returns whether or not to allow half size memory in the scalar layers.</param>
+            <param name="bAllowHsLoss">Returns whether or not to allow half size memory in the loss layers.</param>
+            <returns>Returns a list of layers along with their style and content weights.</returns>
+        </member>
+        <member name="T:MyCaffe.extras.NeuralStyleIntermediateOutputArgs">
+            <summary>
+            The NeuralStyleIntermediateOutputArgs contains the arguments sent to the OnIntermediateOutput event.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.extras.NeuralStyleIntermediateOutputArgs.#ctor(System.Int32,System.Drawing.Bitmap,System.Double)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="nIteration">Specifies the current iteration.</param>
+            <param name="bmp">Specifies the intermediate image.</param>
+            <param name="dfPct">Specifies the total processing progress.</param>
+        </member>
+        <member name="P:MyCaffe.extras.NeuralStyleIntermediateOutputArgs.Iteration">
+            <summary>
+            Returns the current interation.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.NeuralStyleIntermediateOutputArgs.Image">
+            <summary>
+            Returns the current intermediate image.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.extras.NeuralStyleIntermediateOutputArgs.Percent">
+            <summary>
+            Returns the total processing progress.
+            </summary>
+        </member>
+    </members>
+</doc>

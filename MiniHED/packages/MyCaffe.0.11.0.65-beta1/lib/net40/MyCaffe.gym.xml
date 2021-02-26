@@ -1,0 +1,1330 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.gym</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.gym.FormActionImage">
+            <summary>
+            The FormActionImage displays the action image (if one exists)
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.FormActionImage.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.FormActionImage.SetImage(System.Drawing.Image)">
+            <summary>
+            Set the image to display.
+            </summary>
+            <param name="bmp"></param>
+        </member>
+        <member name="F:MyCaffe.gym.FormActionImage.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.FormActionImage.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MyCaffe.gym.FormActionImage.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.FormGym">
+            <summary>
+            The FormGym displays the gym visualization.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.FormGym.#ctor(System.String,MyCaffe.gym.MyCaffeGymControl)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strName">Specifies the name of the Gym.</param>
+            <param name="ctrl">Specifies the MyCaffeGymControl instance to use.</param>
+        </member>
+        <member name="P:MyCaffe.gym.FormGym.GymName">
+            <summary>
+            Returns the Gym name.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.FormGym.Render(System.Drawing.Image,System.Drawing.Image)">
+            <summary>
+            Renders the bitmap and action image (if exists).
+            </summary>
+            <param name="bmp">Specifies the gym visualization.</param>
+            <param name="bmpAction">Optionally, specifies the action image.</param>
+        </member>
+        <member name="M:MyCaffe.gym.FormGym.Render(System.Double[],System.Drawing.Image,System.Drawing.Image)">
+            <summary>
+            Renders the bitmap and action image (if exists).
+            </summary>
+            <param name="rgData">Specifies the gym data used to render the visualization.</param>
+            <param name="bmp">Specifies the gym visualization.</param>
+            <param name="bmpAction">Optionally, specifies the action image.</param>
+        </member>
+        <member name="F:MyCaffe.gym.FormGym.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.FormGym.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MyCaffe.gym.FormGym.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.FormGyms">
+            <summary>
+            The FormGyms dialog displays the available gyms.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.FormGyms.#ctor(MyCaffe.gym.GymCollection)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="col">Specifies the GymCollection of gyms to display.</param>
+        </member>
+        <member name="P:MyCaffe.gym.FormGyms.SelectedGym">
+            <summary>
+            Returns the selected Gym.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.FormGyms.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.FormGyms.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MyCaffe.gym.FormGyms.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.GeomObj">
+            <summary>
+            The GoomObj is the base class for all other gometric objects used to draw Gym objects.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GeomObj.m_location">
+            <summary>
+            Specifies the location of the object.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GeomObj.m_rgPoints">
+            <summary>
+            Specifies the points of the object.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GeomObj.m_clrFill">
+            <summary>
+            Specifies the fill color of the object.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GeomObj.m_clrBorder">
+            <summary>
+            Specifies the border color of the object.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GeomObj.m_fRotation">
+            <summary>
+            Specifies the rotation of the object.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.#ctor(System.Single,System.Single,System.Single,System.Single,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="fL">Specifies the left position.</param>
+            <param name="fR">Specifies the right position.</param>
+            <param name="fT">Specifies the top position.</param>
+            <param name="fB">Specifies the bottom position.</param>
+            <param name="clrFill">Specifies the fill color.</param>
+            <param name="clrBorder">Specifies the border color.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.prerender(System.Drawing.Graphics)">
+            <summary>
+            Called just before rendering the object.
+            </summary>
+            <param name="g">Specifies the Graphics used to render.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.postrender(System.Drawing.Graphics)">
+            <summary>
+            Called just after rendering the object.
+            </summary>
+            <param name="g">Specifies the Graphics used to render.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.Width(System.Drawing.PointF[])">
+            <summary>
+            Returns the width of the points.
+            </summary>
+            <param name="rg">Optionally, specifies the override points.</param>
+            <returns>The width is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.Height(System.Drawing.PointF[])">
+            <summary>
+            Returns the height of the points.
+            </summary>
+            <param name="rg">Optionally, specifies the override points.</param>
+            <returns>The height is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.LeftBottom(System.Drawing.PointF[])">
+            <summary>
+            Returns the left bottom.
+            </summary>
+            <param name="rg">Optionally, specifies the override points.</param>
+            <returns>The left-bottom is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.LeftTop(System.Drawing.PointF[])">
+            <summary>
+            Returns the left top.
+            </summary>
+            <param name="rg">Optionally, specifies the override points.</param>
+            <returns>The left-top is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.RightTop(System.Drawing.PointF[])">
+            <summary>
+            Returns the right top.
+            </summary>
+            <param name="rg">Optionally, specifies the override points.</param>
+            <returns>The right-top is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.RightBottom(System.Drawing.PointF[])">
+            <summary>
+            Returns the right bottom.
+            </summary>
+            <param name="rg">Optionally, specifies the override points.</param>
+            <returns>The right-bottom is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.GeomObj.Location">
+            <summary>
+            Returns the location of the object.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.GeomObj.Rotation">
+            <summary>
+            Returns the rotation of the object.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.SetLocation(System.Single,System.Single)">
+            <summary>
+            Sets the object location.
+            </summary>
+            <param name="fX">Specifies the location x coordinate.</param>
+            <param name="fY">Specifies the location y coordinate.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.SetRotation(System.Single)">
+            <summary>
+            Sets the rotation of the object.
+            </summary>
+            <param name="fR">Specifies the rotation.</param>
+        </member>
+        <member name="P:MyCaffe.gym.GeomObj.Polygon">
+            <summary>
+            Returns the bounds as a Polygon.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.GeomObj.FillColor">
+            <summary>
+            Returns the fill color.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.GeomObj.BorderColor">
+            <summary>
+            Returns the border color.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomObj.Render(System.Drawing.Graphics)">
+            <summary>
+            Override used to render the object.
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="T:MyCaffe.gym.GeomLine">
+            <summary>
+            The GeomLine object is used to render a line.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomLine.#ctor(System.Single,System.Single,System.Single,System.Single,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="fL">Specifies the left position.</param>
+            <param name="fR">Specifies the right position.</param>
+            <param name="fT">Specifies the top position.</param>
+            <param name="fB">Specifies the bottom position.</param>
+            <param name="clrFill">Specifies the fill color.</param>
+            <param name="clrBorder">Specifies the border color.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomLine.Render(System.Drawing.Graphics)">
+            <summary>
+            Renders the line on the Graphics specified.
+            </summary>
+            <param name="g">Specifies the Graphics used to draw.</param>
+        </member>
+        <member name="T:MyCaffe.gym.GeomEllipse">
+            <summary>
+            The GeomEllipse object is used to render an ellipse.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomEllipse.#ctor(System.Single,System.Single,System.Single,System.Single,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="fL">Specifies the left position.</param>
+            <param name="fR">Specifies the right position.</param>
+            <param name="fT">Specifies the top position.</param>
+            <param name="fB">Specifies the bottom position.</param>
+            <param name="clrFill">Specifies the fill color.</param>
+            <param name="clrBorder">Specifies the border color.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomEllipse.Render(System.Drawing.Graphics)">
+            <summary>
+            Renders the ellipse on the Graphics specified.
+            </summary>
+            <param name="g">Specifies the Graphics used to draw.</param>
+        </member>
+        <member name="T:MyCaffe.gym.GeomRectangle">
+            <summary>
+            The GeomEllipse object is used to render an rectangle.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomRectangle.#ctor(System.Single,System.Single,System.Single,System.Single,System.Drawing.Color,System.Drawing.Color,MyCaffe.basecode.ColorMapper)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="fL">Specifies the left position.</param>
+            <param name="fR">Specifies the right position.</param>
+            <param name="fT">Specifies the top position.</param>
+            <param name="fB">Specifies the bottom position.</param>
+            <param name="clrFill">Specifies the fill color.</param>
+            <param name="clrBorder">Specifies the border color.</param>
+            <param name="clrMap">Optionally, specifies a color-map used to color the rectangle based on the x position of the object.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomRectangle.Render(System.Drawing.Graphics)">
+            <summary>
+            Renders the rectangle on the Graphics specified.
+            </summary>
+            <param name="g">Specifies the Graphics used to draw.</param>
+        </member>
+        <member name="T:MyCaffe.gym.GeomPolygon">
+            <summary>
+            The GeomEllipse object is used to render an polygon.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomPolygon.#ctor(System.Single,System.Single,System.Single,System.Single,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="fL">Specifies the left position.</param>
+            <param name="fR">Specifies the right position.</param>
+            <param name="fT">Specifies the top position.</param>
+            <param name="fB">Specifies the bottom position.</param>
+            <param name="clrFill">Specifies the fill color.</param>
+            <param name="clrBorder">Specifies the border color.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomPolygon.Render(System.Drawing.Graphics)">
+            <summary>
+            Renders the rectangle on the Graphics specified.
+            </summary>
+            <param name="g">Specifies the Graphics used to draw.</param>
+        </member>
+        <member name="T:MyCaffe.gym.GeomView">
+            <summary>
+            The GeomView manages and renders a collection of Geometric objects.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomView.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GeomView.AddObject(MyCaffe.gym.GeomObj)">
+            <summary>
+            Add a new geometric object to the view.
+            </summary>
+            <param name="obj">Specifies the object to add.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomView.RenderText(System.Drawing.Graphics,System.String,System.Single,System.Single)">
+            <summary>
+            Render text at a location.
+            </summary>
+            <param name="g">Specifies the Graphics used to draw.</param>
+            <param name="str">Specifies the text to draw.</param>
+            <param name="fX">Specifies the left most x-coordinate where the text is drawn.</param>
+            <param name="fY">Specifies the top most y-coordinate where the text is drawn.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomView.RenderSteps(System.Drawing.Graphics,System.Int32,System.Int32)">
+            <summary>
+            Renders the Gym step information.
+            </summary>
+            <param name="g">Specifies the Graphics used to draw.</param>
+            <param name="nSteps">Specifies the current steps.</param>
+            <param name="nMax">Specifies the maximum number of steps.</param>
+        </member>
+        <member name="M:MyCaffe.gym.GeomView.Render(System.Drawing.Graphics)">
+            <summary>
+            Renders the view.
+            </summary>
+            <param name="g">Specifies the Graphics used to draw.</param>
+        </member>
+        <member name="T:MyCaffe.gym.GymCollection">
+            <summary>
+            The GymCollection contains the available Gyms.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GymCollection.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.GymCollection.Load">
+            <summary>
+            Loads the default and dynamic gyms.
+            </summary>
+            <remarks>
+            Each dynamic Gym must implement a DLL with the IXMyCaffeGym interface implemented.  When loading dynamic
+            Gym's, this class looks for these DLL's in the \code ./CustomGyms \endcode directory relative to the
+            location of the MyCaffe.gym assembly.</remarks>
+            <returns>A list of errors occuring while loading Gyms is returned if any occur.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.GymCollection.Find(System.String)">
+            <summary>
+            Search for a given Gym by its name.
+            </summary>
+            <param name="strName">Specifies the name of the Gym to look for.</param>
+            <returns>If found the Gym IXMyCaffeGym interface is returned, otherwise <i>null</i> is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.GymCollection.GetEnumerator">
+            <summary>
+            Returns the collections enumerator.
+            </summary>
+            <returns>The enumerator is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.GymCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns the collections enumerator.
+            </summary>
+            <returns>The enumerator is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.gym.DataGeneralGym">
+            <summary>
+            The DataGeneral Gym provides access to the MyCaffe Streaming Database with GENERAL query types.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.Dispose">
+            <summary>
+            Release all resources used.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.Initialize(MyCaffe.basecode.Log,MyCaffe.basecode.PropertySet)">
+            <summary>
+            Initialize the gym with the specified properties.
+            </summary>
+            <param name="log">Specifies the output log to use.</param>
+            <param name="properties">Specifies the properties containing Gym specific initialization parameters.</param>
+            <remarks>
+            The DataGym uses the following initialization properties.
+            
+            'DbSettings' - returns the database settings based on the QUERY_TYPE used.
+            'DbSchema' - returns the database schema.
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.Clone(MyCaffe.basecode.PropertySet)">
+            <summary>
+            Create a new copy of the gym.
+            </summary>
+            <param name="properties">Optionally, specifies the properties to initialize the new copy with.</param>
+            <returns>The new Gym copy is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.DataGeneralGym.RequiresDisplayImage">
+            <summary>
+            Returns <i>true</i> indicating that this Gym requires a display image.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.DataGeneralGym.SelectedDataType">
+            <summary>
+            Returns the selected data type.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.DataGeneralGym.SupportedDataType">
+            <summary>
+            Returns the data types supported by this gym.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.DataGeneralGym.Name">
+            <summary>
+            Returns the gym's name.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.DataGeneralGym.UiDelay">
+            <summary>
+            Returns the delay to use (if any) when the user-display is visible.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.GetActionSpace">
+            <summary>
+            Returns the action space as a dictionary of name,actionid pairs.
+            </summary>
+            <returns>The action space is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.Close">
+            <summary>
+            Shutdown and close the gym.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.Render(System.Boolean,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Render the gym's current state on a bitmap and SimpleDatum.
+            </summary>
+            <param name="bShowUi">When <i>true</i> the Bitmap is drawn.</param>
+            <param name="nWidth">Specifies the width used to size the Bitmap.</param>
+            <param name="nHeight">Specifies the height used to size the Bitmap.</param>
+            <param name="bGetAction">When <i>true</i> the action data is returned as a SimpleDatum.</param>
+            <returns>A tuple optionally containing a Bitmap and/or Simpledatum is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.Render(System.Boolean,System.Int32,System.Int32,System.Double[],System.Boolean)">
+            <summary>
+            Render the gyms specified data.
+            </summary>
+            <param name="bShowUi">When <i>true</i> the Bitmap is drawn.</param>
+            <param name="nWidth">Specifies the width used to size the Bitmap.</param>
+            <param name="nHeight">Specifies the height used to size the Bitmap.</param>
+            <param name="rgData">Specifies the gym data to render.</param>
+            <param name="bGetAction">When <i>true</i> the action data is returned as a SimpleDatum.</param>
+            <returns>A tuple optionally containing a Bitmap and/or Simpledatum is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.Reset(System.Boolean)">
+            <summary>
+            Reset the state of the gym.
+            </summary>
+            <param name="bGetLabel">Not used.</param>
+            <returns>A tuple containing state data, the reward, and the done state is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.Step(System.Int32,System.Boolean)">
+            <summary>
+            Step the gym one step in the data.
+            </summary>
+            <param name="nAction">Specifies the action to run on the gym.</param>
+            <param name="bGetLabel">Not used.</param>
+            <returns>A tuple containing state data, the reward, and the done state is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.GetDataset(MyCaffe.basecode.DATA_TYPE,MyCaffe.basecode.Log)">
+            <summary>
+            Returns the dataset descriptor of the dynamic dataset produced by the Gym.
+            </summary>
+            <param name="dt">Specifies the data-type to use.</param>
+            <param name="log">Optionally, specifies the output log to use (default = <i>null</i>).</param>
+            <returns>The dataset descriptor is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.DataGeneralGym.ConvertOutput(MyCaffe.basecode.Stage,System.Int32,System.Single[],System.String@)">
+            <summary>
+            Converts the output values into the native type used by the Gym during queries.
+            </summary>
+            <param name="stage">Specifies the stage under which the conversion is run.</param>
+            <param name="nN">Specifies the number of outputs.</param>
+            <param name="rg">Specifies the raw output data.</param>
+            <param name="type">Returns the output type.</param>
+            <returns>The converted output data is returned in a byte stream.</returns>
+            <remarks>Note: Currently, only data gym's implement this function.</remarks>
+        </member>
+        <member name="P:MyCaffe.gym.DataGeneralGym.ActivePhase">
+            <summary>
+            Get/set the active phase under which the reset and next run.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.AtariGym">
+            <summary>
+            The Atari Gym provides acess to the Atari-2600 Emulator from Stella (https://github.com/stella-emu/stella)
+            via a slightly modified version of the Arcade-Learning-Envrionment (ALE) from mgbellemare 
+            (https://github.com/mgbellemare/Arcade-Learning-Environment).
+            </summary>
+            <remarks>
+            This gym is a rewrite of the original atari gym provided by OpenAi under the MIT license and located
+            on GitHub at: https://github.com/openai/gym/blob/master/gym/envs/atari/atari_env.py
+            License: https://github.com/openai/gym/blob/master/LICENSE.md
+            
+            The original Atari-2600 Emulator from Stella (https://github.com/stella-emu/stella) is 
+            distributed under the GPL license (https://github.com/stella-emu/stella/blob/master/License.txt)
+            
+            The original Arcade-Learning-Envrionment (ALE) from mgbellemare 
+            (https://github.com/mgbellemare/Arcade-Learning-Environment) also distributed under the GPL license
+            (https://github.com/mgbellemare/Arcade-Learning-Environment/blob/master/License.txt).
+            
+            The Arcade-Learning-Environment (ALE) uses the Simple DrectMedia Layer (SDL) which is a cross-platform
+            library designed to make it easy to write multi-media software, such as games and emulators.
+            The SDL source code is available from: http://www.libsdl.org/ and the library is distrubted under 
+            the terms of the GNU LGPL license: http://www.gnu.org/copyleft/lesser.html
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.Dispose">
+            <summary>
+            Release all resources used.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.Initialize(MyCaffe.basecode.Log,MyCaffe.basecode.PropertySet)">
+            <summary>
+            Initialize the gym with the specified properties.
+            </summary>
+            <param name="log">Specifies the output log to use.</param>
+            <param name="properties">Specifies the properties containing Gym specific initialization parameters.</param>
+            <remarks>
+            The AtariGym uses the following initialization properties.
+              GameRom='path to .rom file'
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.Clone(MyCaffe.basecode.PropertySet)">
+            <summary>
+            Create a new copy of the gym.
+            </summary>
+            <param name="properties">Optionally, specifies the properties to initialize the new copy with.</param>
+            <returns>The new Gym copy is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.AtariGym.RequiresDisplayImage">
+            <summary>
+            Returns <i>true</i> indicating that this Gym requires a display image.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.AtariGym.SelectedDataType">
+            <summary>
+            Returns the selected data type.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.AtariGym.SupportedDataType">
+            <summary>
+            Returns the data types supported by this gym.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.AtariGym.Name">
+            <summary>
+            Returns the gym's name.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.AtariGym.UiDelay">
+            <summary>
+            Returns the delay to use (if any) when the user-display is visible.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.GetActionSpace">
+            <summary>
+            Returns the action space as a dictionary of name,actionid pairs.
+            </summary>
+            <returns>The action space is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.Close">
+            <summary>
+            Shutdown and close the gym.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.Render(System.Boolean,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Render the gym's current state on a bitmap and SimpleDatum.
+            </summary>
+            <param name="bShowUi">When <i>true</i> the Bitmap is drawn.</param>
+            <param name="nWidth">Specifies the width used to size the Bitmap.</param>
+            <param name="nHeight">Specifies the height used to size the Bitmap.</param>
+            <param name="bGetAction">When <i>true</i> the action data is returned as a SimpleDatum.</param>
+            <returns>A tuple optionally containing a Bitmap and/or Simpledatum is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.Render(System.Boolean,System.Int32,System.Int32,System.Double[],System.Boolean)">
+            <summary>
+            Render the gyms specified data.
+            </summary>
+            <param name="bShowUi">When <i>true</i> the Bitmap is drawn.</param>
+            <param name="nWidth">Specifies the width used to size the Bitmap.</param>
+            <param name="nHeight">Specifies the height used to size the Bitmap.</param>
+            <param name="rgData">Specifies the gym data to render.</param>
+            <param name="bGetAction">When <i>true</i> the action data is returned as a SimpleDatum.</param>
+            <returns>A tuple optionally containing a Bitmap and/or Simpledatum is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.Reset(System.Boolean)">
+            <summary>
+            Reset the state of the gym.
+            </summary>
+            <param name="bGetLabel">Not used.</param>
+            <returns>A tuple containing state data, the reward, and the done state is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.Step(System.Int32,System.Boolean)">
+            <summary>
+            Step the gym one step in its simulation.
+            </summary>
+            <param name="nAction">Specifies the action to run on the gym.</param>
+            <param name="bGetLabel">Not used.</param>
+            <returns>A tuple containing state data, the reward, and the done state is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.AtariGym.GetDataset(MyCaffe.basecode.DATA_TYPE,MyCaffe.basecode.Log)">
+            <summary>
+            Returns the dataset descriptor of the dynamic dataset produced by the Gym.
+            </summary>
+            <param name="dt">Specifies the data-type to use.</param>
+            <param name="log">Optionally, specifies the output log to use (default = <i>null</i>).</param>
+            <returns>The dataset descriptor is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.gym.CartPoleGym">
+            <summary>
+            The CartPole Gym provides a simulation of a cart with a balancing pole standing on top of it.
+            </summary>
+            <remarks>
+            This gym is a rewrite of the original gym provided by OpenAi under the MIT license and located
+            on GitHub at: https://github.com/openai/gym/blob/master/gym/envs/classic_control/cartpole.py
+            License: https://github.com/openai/gym/blob/master/LICENSE.md
+            
+            OpenAi notes that their implementation is a 'classic cart-pole system implemented by Rich Sutton et al.'
+            copied from http://incompleteideas.net/sutton/book/code/pole.c with permalink: https://perma.cc/C9ZM-652R
+            </remarks>
+        </member>
+        <member name="T:MyCaffe.gym.CartPoleGym.ACTION">
+            <summary>
+            Defines the actions to perform.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.CartPoleGym.ACTION.MOVELEFT">
+            <summary>
+            Move the cart left.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.CartPoleGym.ACTION.MOVERIGHT">
+            <summary>
+            Move the cart right.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.Initialize(MyCaffe.basecode.Log,MyCaffe.basecode.PropertySet)">
+            <summary>
+            Initialize the gym with the specified properties.
+            </summary>
+            <param name="log">Specifies the output log to use.</param>
+            <param name="properties">Specifies the properties containing Gym specific initialization parameters.</param>
+            <remarks>
+            The AtariGym uses the following initialization properties.
+              Init1=value - specifies the default force to use.
+              Init2=value - specifies whether to use an additive force (1) or not (0).
+            </remarks>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.Clone(MyCaffe.basecode.PropertySet)">
+            <summary>
+            Create a new copy of the gym.
+            </summary>
+            <param name="properties">Optionally, specifies the properties to initialize the new copy with.</param>
+            <returns>The new Gym copy is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.CartPoleGym.RequiresDisplayImage">
+            <summary>
+            Returns <i>false</i> indicating that this Gym does not require a display image.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.CartPoleGym.SelectedDataType">
+            <summary>
+            Returns the selected data type.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.CartPoleGym.SupportedDataType">
+            <summary>
+            Returns the data types supported by this gym.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.CartPoleGym.Name">
+            <summary>
+            Returns the gym's name.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.CartPoleGym.UiDelay">
+            <summary>
+            Returns the delay to use (if any) when the user-display is visible.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.GetActionSpace">
+            <summary>
+            Returns the action space as a dictionary of name,actionid pairs.
+            </summary>
+            <returns>The action space is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.Close">
+            <summary>
+            Shutdown and close the gym.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.Render(System.Boolean,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Render the gym's current state on a bitmap and SimpleDatum.
+            </summary>
+            <param name="bShowUi">When <i>true</i> the Bitmap is drawn.</param>
+            <param name="nWidth">Specifies the width used to size the Bitmap.</param>
+            <param name="nHeight">Specifies the height used to size the Bitmap.</param>
+            <param name="bGetAction">When <i>true</i> the action data is returned as a SimpleDatum.</param>
+            <returns>A tuple optionally containing a Bitmap and/or Simpledatum is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.Render(System.Boolean,System.Int32,System.Int32,System.Double[],System.Boolean)">
+            <summary>
+            Render the gyms specified data.
+            </summary>
+            <param name="bShowUi">When <i>true</i> the Bitmap is drawn.</param>
+            <param name="nWidth">Specifies the width used to size the Bitmap.</param>
+            <param name="nHeight">Specifies the height used to size the Bitmap.</param>
+            <param name="rgData">Specifies the gym data to render.</param>
+            <param name="bGetAction">When <i>true</i> the action data is returned as a SimpleDatum.</param>
+            <returns>A tuple optionally containing a Bitmap and/or Simpledatum is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.Reset(System.Boolean)">
+            <summary>
+            Reset the state of the gym.
+            </summary>
+            <param name="bGetLabel">Not used.</param>
+            <returns>A tuple containing state data, the reward, and the done state is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.Step(System.Int32,System.Boolean)">
+            <summary>
+            Step the gym one step in its simulation.
+            </summary>
+            <param name="nAction">Specifies the action to run on the gym.</param>
+            <param name="bGetLabel">Not used.</param>
+            <returns>A tuple containing state data, the reward, and the done state is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.CartPoleGym.GetDataset(MyCaffe.basecode.DATA_TYPE,MyCaffe.basecode.Log)">
+            <summary>
+            Returns the dataset descriptor of the dynamic dataset produced by the Gym.
+            </summary>
+            <param name="dt">Specifies the data-type to use.</param>
+            <param name="log">Optionally, specifies the output log to use (default = <i>null</i>).</param>
+            <returns>The dataset descriptor is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.gym.IXMyCaffeGymUiService">
+            <summary>
+            The IXMYCaffeGymUiService interface provides access to the MyCaffeGymUiService used
+            to display the visualizations of each Gym as they run.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGymUiService.OpenUi(System.String,System.Int32)">
+            <summary>
+            Open the user interface of a Gym.
+            </summary>
+            <param name="strName">Specifies the Gym name who's user-interface is to be displayed.</param>
+            <param name="nId">Specifies the Gym id (used when multiple Gym's of the same name are used).</param>
+            <returns>The ID of the Gym opened is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGymUiService.CloseUi(System.Int32)">
+            <summary>
+            Close the user interface of a Gym.
+            </summary>
+            <param name="nId">Specifies the Gym id (used when multiple Gym's of the same name are used).</param>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGymUiService.Render(System.Int32,MyCaffe.gym.Observation)">
+            <summary>
+            Render an observation on the Gym user-interface.
+            </summary>
+            <param name="nId">Specifies the Gym ID.</param>
+            <param name="obs">Specifies the Observation to visualize.</param>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGymUiService.IsOpen(System.Int32)">
+            <summary>
+            Returns <i>true</i> when the visualization is open, <i>false</i> otherwise.
+            </summary>
+            <param name="nId">Specifies the Gym ID.</param>
+            <returns>Returns <i>true</i> when the visualization is open, <i>false</i> otherwise.</returns>
+        </member>
+        <member name="T:MyCaffe.gym.IXMyCaffeGymUiCallback">
+            <summary>
+            The IXMyCaffeGymUiCallback is used to interact with the user of the IXMyCaffeGymUiService interface.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGymUiCallback.Closing">
+            <summary>
+            The Closing method is called when closing the Gym user interface.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.Observation">
+            <summary>
+            The Observation contains data describing the Gym as it runs.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.Observation.#ctor(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Boolean,System.Double[],System.Double,System.Boolean)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="imgDisp">Specifies the display image.</param>
+            <param name="img">Optionally, specifies the action image.</param>
+            <param name="bRequireDisplayImg">Specifies whether a display image is required.</param>
+            <param name="rgState">Specifies state data of the Gym.</param>
+            <param name="dfReward">Specifies the reward.</param>
+            <param name="bDone">Specifies the done state of the Gym.</param>
+        </member>
+        <member name="M:MyCaffe.gym.Observation.Clone">
+            <summary>
+            Returns a copy of the Observation.
+            </summary>
+            <returns>The Observation copy is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.Observation.State">
+            <summary>
+            Get/set the state data.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.Observation.Image">
+            <summary>
+            Get/set the action image, if it exists.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.Observation.ImageDisplay">
+            <summary>
+            Get/set the image to display.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.Observation.RequireDisplayImage">
+            <summary>
+            Get/set whether or not the image for display (ImageDisplay) is required.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.Observation.Reward">
+            <summary>
+            Get/set the reward.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.Observation.Done">
+            <summary>
+            Get/set the done state.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.GYM_DS_ID">
+            <summary>
+            Defines the Standard GYM Dataset ID's.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_DS_ID.CARTPOLE">
+            <summary>
+            Specifies the Standard CARTPOLE GYM Dataset ID.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_DS_ID.ATARI">
+            <summary>
+            Specifies the Standard ATARI GYM Dataset ID.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_DS_ID.DATAGENERAL">
+            <summary>
+            Specifies the Standard DATAGENERAL GYM Dataset ID.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.GYM_SRC_TRAIN_ID">
+            <summary>
+            Defines the Standard GYM Training Data Source ID's.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_SRC_TRAIN_ID.CARTPOLE">
+            <summary>
+            Specifies the Standard CARTPOLE GYM Training Dataset ID.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_SRC_TRAIN_ID.ATARI">
+            <summary>
+            Specifies the Standard ATARI GYM Training Dataset ID.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_SRC_TRAIN_ID.DATAGENERAL">
+            <summary>
+            Specifies the Standard DATAGENERAL GYM Training Dataset ID.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.GYM_SRC_TEST_ID">
+            <summary>
+            Defines the Standard GYM Testing Data Source ID's.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_SRC_TEST_ID.CARTPOLE">
+            <summary>
+            Specifies the Standard CARTPOLE GYM Testing Dataset ID.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_SRC_TEST_ID.ATARI">
+            <summary>
+            Specifies the Standard ATARI GYM Testing Dataset ID.
+            </summary>
+        </member>
+        <member name="F:MyCaffe.gym.GYM_SRC_TEST_ID.DATAGENERAL">
+            <summary>
+            Specifies the Standard DATAGENERAL GYM Testing Dataset ID.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.IXMyCaffeGym">
+            <summary>
+            The IXMyCaffeGym interface is used to interact with each Gym.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.Initialize(MyCaffe.basecode.Log,MyCaffe.basecode.PropertySet)">
+            <summary>
+            Initialize the gym using the properties in the PropertySet.
+            </summary>
+            <param name="log">Specifies the output Log for the gym to use.</param>
+            <param name="properties">Specifies the properties used to initialize the gym.</param>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.Close">
+            <summary>
+            Close a previously initialized gym.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.Clone(MyCaffe.basecode.PropertySet)">
+            <summary>
+            Copy a gym creating a new one.
+            </summary>
+            <param name="properties">Optionally, specifies the properties used to initialize the gym (default = <i>null</i> which skips calling Initialize).</param>
+            <returns>The new gym copy is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGym.Name">
+            <summary>
+            Returns the name of the gym.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.Reset(System.Boolean)">
+            <summary>
+            Resets the state of they gym.
+            </summary>
+            <param name="bGetLabel">Optionally, specifies to query the label (default = false).</param>
+            <returns>A tuple containing state information and gym data, the reward and whether or not the gym is done is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.Step(System.Int32,System.Boolean)">
+            <summary>
+            Run an action on the gym.
+            </summary>
+            <param name="nAction">Specifies the action to run, which is an index into the action space.</param>
+            <param name="bGetLabel">Optionally, specifies to query the label (default = false).</param>
+            <returns>A tuple containing state information and gym data, the reward and whether or not the gym is done is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.Render(System.Boolean,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Render the gym on a bitmap.
+            </summary>
+            <param name="bShowUi">Specifies whether or not the gym rendering is intended for the user interface.</param>
+            <param name="nWidth">Specifies the width of the user interface.</param>
+            <param name="nHeight">Specifies the height of the user interface.</param>
+            <param name="bGetAction">Specifies to get the action data.</param>
+            <returns>A tuple containing image showing the gym and the action data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.Render(System.Boolean,System.Int32,System.Int32,System.Double[],System.Boolean)">
+            <summary>
+            Render the gym on a bitmap.
+            </summary>
+            <param name="bShowUi">Specifies whether or not the gym rendering is intended for the user interface.</param>
+            <param name="nWidth">Specifies the width of the user interface.</param>
+            <param name="nHeight">Specifies the height of the user interface.</param>
+            <param name="rgData">Specifies the state information of the gym.</param>
+            <param name="bGetAction">Specifies to collect the action data.</param>
+            <returns>A tuple containing image showing the gym and the action data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.GetActionSpace">
+            <summary>
+            Returns a dictionary containing the action space where each entry contains the action name and action value.
+            </summary>
+            <returns>The action space dictionary is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGym.GetDataset(MyCaffe.basecode.DATA_TYPE,MyCaffe.basecode.Log)">
+            <summary>
+            Returns the dataset of the gym.
+            </summary>
+            <param name="dt">Specifies the datatype to use.</param>
+            <param name="log">Optionally, specifies a Log override to use (default = <i>null</i>).</param>
+            <returns>The dataset descriptor is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGym.UiDelay">
+            <summary>
+            Returns the user-interface delay to use (if any).
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGym.SelectedDataType">
+            <summary>
+            Returns the selected data-type.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGym.SupportedDataType">
+            <summary>
+            Returns an array of data types supported by the gym.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGym.RequiresDisplayImage">
+            <summary>
+            Returns whether or not the gym requires the display image.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.IXMyCaffeGymData">
+            <summary>
+            The IXMyCaffeGym interface is used to interact with each Gym.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGymData.ConvertOutput(MyCaffe.basecode.Stage,System.Int32,System.Single[],System.String@)">
+            <summary>
+            Converts the output values into the native type used by the Gym during queries.
+            </summary>
+            <param name="stage">Specifies the stage under which the conversion is run.</param>
+            <param name="nN">Specifies the number of outputs.</param>
+            <param name="rg">Specifies the raw output data.</param>
+            <param name="type">Returns the output type.</param>
+            <returns>The converted output data is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGymData.ActivePhase">
+            <summary>
+            Specifies the active phase under which to get the data reset and next.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.IXMyCaffeGymRange">
+            <summary>
+            The IXMyCaffeGymRange interface is used to query the data range for the vocabulary.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.IXMyCaffeGymRange.GetDataRange">
+            <summary>
+            Returns the data range of the gym which is used to build the vocabulary.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGymRange.UseFixedVocabulary">
+            <summary>
+            Returns true to use the fixed bucket collection based on the GetDataRange values, otherwise the bucket collection is created from the data.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGymRange.VocabularySize">
+            <summary>
+            Returns the vocabulary size to use (e.g. the number of buckets).
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.IXMyCaffeGymRange.UsePreLoadData">
+            <summary>
+            Specifies whether or not to use the pre-load data.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.State">
+            <summary>
+            The State class defines an abstract base class for the state information and gym data.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.State.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.State.Clone">
+            <summary>
+            Copies the state to another new state.
+            </summary>
+            <returns>The new state information and gym data is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.State.GetData(System.Boolean,System.Int32@)">
+            <summary>
+            Get the data.
+            </summary>
+            <param name="bNormalize">Specifies to normalize the data.</param>
+            <param name="nDataLen">Returns the non-render data length (the actual data used in training)</param>
+            <returns>A tuple with the SimpleDatum containing the data and the non rendering data length is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.State.HasClip">
+            <summary>
+            Returns 'true' if this State supports clip data.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.State.GetClip">
+            <summary>
+            Get the clip data (used with recurrent models such as LSTM).
+            </summary>
+            <returns>The clip data corresponding to the GetData is returned.</returns>
+        </member>
+        <member name="P:MyCaffe.gym.State.HasLabel">
+            <summary>
+            Returns 'true' if this state supports label data.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.State.GetLabel">
+            <summary>
+            Get the label data (used with recurrent models such as LSTM with dynamic data).
+            </summary>
+            <returns>The label data is returned.</returns>
+        </member>
+        <member name="T:MyCaffe.gym.MyCaffeGymControl">
+            <summary>
+            The MyCaffeGymControl displays the actual Gym visualizations.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymControl.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.MyCaffeGymControl.LoadErrors">
+            <summary>
+            Returns any load errors that may have occured while loading the gyms.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.MyCaffeGymControl.GymName">
+            <summary>
+            Returns the GymName.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymControl.Render(System.String,System.Drawing.Image)">
+            <summary>
+            Renders the Gym visualization.
+            </summary>
+            <param name="strName">Specifies the Gym Name.</param>
+            <param name="bmp">Specifies the Gym image to visualize.</param>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymControl.Render(System.Boolean,System.String,System.Double[],System.Drawing.Image)">
+            <summary>
+            Renders the Gym visualizations.
+            </summary>
+            <param name="bShowUi">Specifies whether or not to render for the user interface.</param>
+            <param name="strName">Specifies the Gym name.</param>
+            <param name="rgData">Specifies the Gym data.</param>
+            <param name="bmp">Specifies the Gym image to use.</param>
+        </member>
+        <member name="F:MyCaffe.gym.MyCaffeGymControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.gym.MyCaffeGymUiProxy">
+            <summary>
+            The MyCaffeGymUiProxy is used to interact with the MyCaffeGymUiService.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiProxy.#ctor(System.ServiceModel.InstanceContext,System.ServiceModel.NetNamedPipeBinding)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="ctx">Specifies the context.</param>
+            <param name="binding">Optionally, specifies the binding.  Specifying a binding can be useful when you need to set larger buffer sizes.</param>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiProxy.OpenUi(System.String,System.Int32)">
+            <summary>
+            Open the Gym user interface.
+            </summary>
+            <param name="strName">Specifies the Gym name.</param>
+            <param name="nId">Specifies the ID of the Gym.</param>
+            <returns>The ID of the Gym opened is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiProxy.CloseUi(System.Int32)">
+            <summary>
+            Closes the Gym user interface.
+            </summary>
+            <param name="nId">Specifies the ID of the Gym.</param>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiProxy.Render(System.Int32,MyCaffe.gym.Observation)">
+            <summary>
+            Render the observation of the Gym.
+            </summary>
+            <param name="nId">Specifies the ID of the Gym.</param>
+            <param name="obs">Specifies the Observation to render.</param>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiProxy.IsOpen(System.Int32)">
+            <summary>
+            Returns whether or not the Gym user interface is visible or not.
+            </summary>
+            <param name="nId">Specifies the ID of the Gym.</param>
+            <returns>Returns <i>true</i> if the Gym is visible, <i>false</i> otherwise.</returns>
+        </member>
+        <member name="T:MyCaffe.gym.MyCaffeGymUiService">
+            <summary>
+            The MyCaffeGymUiService provides the service used to show the Gym visualizations.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiService.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiService.CloseUi(System.Int32)">
+            <summary>
+            Close the user interface of a Gym.
+            </summary>
+            <param name="nId">Specifies the Gym id (used when multiple Gym's of the same name are used).</param>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiService.OpenUi(System.String,System.Int32)">
+            <summary>
+            Open the Gym user interface.
+            </summary>
+            <param name="strName">Specifies the Gym name.</param>
+            <param name="nId">Specifies the ID of the Gym.</param>
+            <returns>The ID of the Gym opened is returned.</returns>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiService.Render(System.Int32,MyCaffe.gym.Observation)">
+            <summary>
+            Render an observation on the Gym user-interface.
+            </summary>
+            <param name="nId">Specifies the Gym ID.</param>
+            <param name="obs">Specifies the Observation to visualize.</param>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiService.IsOpen(System.Int32)">
+            <summary>
+            Returns <i>true</i> when the visualization is open, <i>false</i> otherwise.
+            </summary>
+            <param name="nId">Specifies the Gym ID.</param>
+            <returns>Returns <i>true</i> when the visualization is open, <i>false</i> otherwise.</returns>
+        </member>
+        <member name="T:MyCaffe.gym.MyCaffeGymUiServiceHost">
+            <summary>
+            The MyCaffeGymUiServiceHost provides the hosting service that listens for users of the user interface service.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.gym.MyCaffeGymUiServiceHost.#ctor(System.Int32)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="nMaxBuffer">Optionally, specifies the maximum buffer to use for out-going messages (in-going must be set on the client-side binding), default = 2147483647.
+            </param>
+        </member>
+        <member name="T:MyCaffe.gym.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.gym.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

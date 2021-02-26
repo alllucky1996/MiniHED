@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyCaffe.converter.onnx</name>
+    </assembly>
+    <members>
+        <member name="T:MyCaffe.converter.onnx.MyCaffeConversionControl`1">
+            <summary>
+            The MyCaffeConversionControl handles converting between MyCaffe and ONNX formats.  The OnnxControl is used to read and write ONNX files.
+            </summary>
+            <typeparam name="T">Specifies the base type used by MyCaffe which is either <i>float</i> or <i>double</i>.</typeparam>
+            <summary>
+            The MyCaffeConversionControl handles converting between MyCaffe and ONNX formats.  The OnnxControl is used to read and write ONNX files.
+            </summary>
+            <typeparam name="T">Specifies the base type used by MyCaffe which is either <i>float</i> or <i>double</i>.</typeparam>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.#ctor">
+            <summary>
+            The constructor.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="container">A container holding the component.</param>
+        </member>
+        <member name="P:MyCaffe.converter.onnx.MyCaffeConversionControl`1.ReportString">
+            <summary>
+            Returns the report from the conversion.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.ConvertMyCaffeToOnnxFile(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.converter.onnx.MyCaffeModelData,System.String,System.Boolean,OnnxControl.OnnxDefinitions.DataType)">
+            <summary>
+            Convert a MyCaffe model description, weights and optionally mean image from the MyCaffe model format to the ONNX format and save the result as 
+            a .onnx model file.
+            </summary>
+            <param name="cuda">Specifies the connection to cuda uses to interact with the GPU.</param>
+            <param name="log">Specifies the output log used to show progress.</param>
+            <param name="data">Specifies the MyCaffe model data including the model description, the weights and optionally, the image mean.</param>
+            <param name="strOutputFile">Specifies the .onnx output file.</param>
+            <param name="bUseRawData">Optionally, specifies whether or not to store tensor data as RawData or as the native FloatData or DoubleData (default = true).</param>
+            <param name="dstDataType">Optionally, specifies the output data type, which currently can be either FLOAT or DOUBLE (default = FLOAT).</param>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.ConvertMyCaffeToOnnx(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,MyCaffe.converter.onnx.MyCaffeModelData,System.Boolean,OnnxControl.OnnxDefinitions.DataType)">
+            <summary>
+            Convert a MyCaffe model description, weights and optionally mean image from the MyCaffe model format to the ONNX format and return the 
+            ONNX ModelProto object containing the model in the ONNX format.
+            </summary>
+            <param name="cuda">Specifies the connection to cuda uses to interact with the GPU.</param>
+            <param name="log">Specifies the output log used to show progress.</param>
+            <param name="data">Specifies the MyCaffe model data including the model description, the weights and optionally, the image mean.</param>
+            <param name="bUseRawData">Optionally, specifies whether or not to store tensor data as RawData or as the native FloatData or DoubleData (default = true).</param>
+            <param name="dstDataType">Optionally, specifies the output data type, which currently can be either FLOAT or DOUBLE (default = FLOAT).</param>
+            <returns>The model is returned in the ONNX format as a ModelProto (defined within the OnnxControl)</returns>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.ConvertMyCaffeToOnnx(MyCaffe.MyCaffeControl{`0},System.Boolean,OnnxControl.OnnxDefinitions.DataType,MyCaffe.basecode.Phase)">
+            <summary>
+            Convert a model currently loaded into the MyCaffeControl to an ONNX ModelProto.
+            </summary>
+            <param name="ctrl">Specifies the MyCaffeControl object.</param>
+            <param name="bUseRawData">Optionally, specifies whether or not to store tensor data as RawData or as the native FloatData or DoubleData (default = true).</param>
+            <param name="dstDataType">Optionally, specifies the output data type, which currently can be either FLOAT or DOUBLE (default = FLOAT).</param>
+            <param name="phase">Optionally, specifies the phase (which netork) to convert (default = RUN).</param>
+            <returns>The ONNX model proto is returns that matches the network converted.</returns>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.ConvertMyCaffeToOnnxFile(MyCaffe.MyCaffeControl{`0},System.String,System.Boolean,OnnxControl.OnnxDefinitions.DataType,MyCaffe.basecode.Phase)">
+            <summary>
+            Convert a model currently loaded into the MyCaffeControl to an ONNX .onnx model file.
+            </summary>
+            <param name="ctrl">Specifies the MyCaffeControl object.</param>
+            <param name="strOnnxFile">Specifies the output .onnx file.</param>
+            <param name="bUseRawData">Optionally, specifies whether or not to store tensor data as RawData or as the native FloatData or DoubleData (default = true).</param>
+            <param name="dstDataType">Optionally, specifies the output data type, which currently can be either FLOAT or DOUBLE (default = FLOAT).</param>
+            <param name="phase">Optionally, specifies the phase (which netork) to convert (default = RUN).</param>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.ConvertOnnxToMyCaffeFromFile(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,System.String,System.Boolean,MyCaffe.basecode.descriptors.DatasetDescriptor)">
+            <summary>
+            Convert an ONNX .onnx model file to the MyCaffe model description, weights and optionally mean image.
+            </summary>
+            <param name="cuda">Specifies the connection to cuda uses to interact with the GPU.</param>
+            <param name="log">Specifies the output log used to show progress.</param>
+            <param name="strOnnxFile">Specifies the ONNX .onnx file.</param>
+            <param name="bFixlupNeuronNodes">Optionally, specifies to fixup the neuron nodes (e.g. Relu, Prelu, Elu, Sigmoid, Tahn, etc.) by connecting them to inline nodes by connnecting them back to their parent which is common in Caffe type models (default = true).</param>
+            <param name="dsTraining">Optionally, specifies a training dataset which when supplied converts the model to a training model where inputs 
+            are replaced with data layers, and outputs (e.g. softmax) with loss and accuracy layers (default = false).</param>
+            <returns>The MyCaffe model description, model weights and image mean are returned as a MyCaffeModelData object.</returns>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.ConvertOnnxToMyCaffe(MyCaffe.common.CudaDnn{`0},MyCaffe.basecode.Log,Onnx.ModelProto,System.Boolean,MyCaffe.basecode.descriptors.DatasetDescriptor)">
+            <summary>
+            Convert an ONNX ModelProto to the MyCaffe model description, weights and optionally mean image.
+            </summary>
+            <param name="cuda">Specifies the connection to cuda uses to interact with the GPU.</param>
+            <param name="log">Specifies the output log used to show progress.</param>
+            <param name="onnxModel">Specifies the ONNX model.</param>
+            <param name="bFixupNeuronNodes">Optionally, specifies to fixup the neuron nodes (e.g. Relu, Prelu, Elu, Sigmoid, Tahn, etc.) by connecting them to inline nodes by connnecting them back to their parent which is common in Caffe type models (default = true).</param>
+            <param name="dsTraining">Optionally, specifies a training dataset which when supplied converts the model to a training model where inputs 
+            are replaced with data layers, and outputs (e.g. softmax) with loss and accuracy layers (default = false).</param>
+            <returns>The MyCaffe model description, model weights and image mean are returned as a MyCaffeModelData object.</returns>
+        </member>
+        <member name="F:MyCaffe.converter.onnx.MyCaffeConversionControl`1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeConversionControl`1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:MyCaffe.converter.onnx.MyCaffeModelData">
+            <summary>
+            The MyCaffeModelData object contains the model descriptor, model weights and optionally the image mean.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeModelData.#ctor(System.String,System.Byte[],System.Byte[])">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="strModelDesc">Specifies the model descriptor.</param>
+            <param name="rgWeights">Specifies the model weights.</param>
+            <param name="rgImageMean">Optionally, specifies the image mean (default = null).</param>
+        </member>
+        <member name="P:MyCaffe.converter.onnx.MyCaffeModelData.ModelDescription">
+            <summary>
+            Returns the model descriptor.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.converter.onnx.MyCaffeModelData.Weights">
+            <summary>
+            Returns the model weights.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.converter.onnx.MyCaffeModelData.ImageMean">
+            <summary>
+            Returns the image mean if one was specified, or null.
+            </summary>
+        </member>
+        <member name="M:MyCaffe.converter.onnx.MyCaffeModelData.Save(System.String,System.String)">
+            <summary>
+            Save the model data to the specified folder under the specified name.
+            </summary>
+            <param name="strFolder">Specifies the folder where the data is to be saved.</param>
+            <param name="strName">Specifies the base name of the files.</param>
+        </member>
+        <member name="P:MyCaffe.converter.onnx.MyCaffeModelData.LastSavedModeDescriptionFileName">
+            <summary>
+            Returns the file name of the last saved model description file.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.converter.onnx.MyCaffeModelData.LastSavedWeightsFileName">
+            <summary>
+            Returns the file name of the last saved weights file.
+            </summary>
+        </member>
+        <member name="P:MyCaffe.converter.onnx.MyCaffeModelData.LastSavedImageMeanFileName">
+            <summary>
+            Returns the file name of the last saved image mean file.
+            </summary>
+        </member>
+    </members>
+</doc>
